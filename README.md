@@ -5,7 +5,7 @@ test
 
 License
 ----------
-Copyright &copy; Yoshi (gpp65536@ybb.ne.jp)  
+Copyright &copy; 2013 Yoshi(gpp65536@yahoo.co.jp)  
 Distributed under the [MIT License][mit].  
 
 [MIT]: http://www.opensource.org/licenses/mit-license.php
