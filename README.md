@@ -13,8 +13,6 @@ Quick Start
 
 To install, run the following commands in the glNetViz directory.
 
-.. code-block:: bash
-
     e.g.
     $ git clone https://github.com/gpp256/glNetViz.git
     $ cd glNetVis
@@ -40,8 +38,6 @@ Some perl modules are needed for starting the glNetViz.
 
 To install some components, run the following commands.
 
-.. code-block:: bash
-
     e.g.
     Debian GNU/Linux:
     $ sudo apt-get install perl-modules
@@ -49,31 +45,16 @@ To install some components, run the following commands.
 
 You can access glNetViz sample pages with a web browser that supported WebGL.
 
-.. code-block:: bash
-
     e.g.
     http://youripaddress/glNetViz/examples/
 
-glNetViz Components
-----------------------------
-
-.. csv-table:: table #2: outline of the files that will be installed
-   :widths: 30, 70
- 
-   Location , Description 
-   docs/* , users manual
-   examples/* , sample scripts and HTML files
-   "lib/{js,css,cgi}/*", "common libraries and dependent libraries (`jQuery <http://jquery.com/>`_ , `jQuery UI <http://jqueryui.com/>`_ , `jquery-sprintf <https://github.com/azatoth/jquery-sprintf>`_ , `minMatrix <http://wgld.org/d/library/l001.html>`_ )" 
-   lib/textures/* , texture files                         
-   lib/conf/* , configuration files
-   .htaccess , apache configuration file
 
 Links
 --------
 
-:users guide(en): http://gpp256.zapto.org/glNetViz/docs/en/html/index.html
-:users guide(ja): http://gpp256.zapto.org/glNetViz/docs/ja/html/index.html
-:blog: http://gpp256.blogspot.jp
+users guide(en): http://gpp256.zapto.org/glNetViz/docs/en/html/index.html  
+users guide(ja): http://gpp256.zapto.org/glNetViz/docs/ja/html/index.html  
+blog: http://gpp256.blogspot.jp  
 
 License
 ----------
