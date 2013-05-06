@@ -1,0 +1,393 @@
+#!/usr/bin/perl
+#
+# get_sdnobjs.cgi
+#
+# Copyright (c) 2013 Yoshi 
+# This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+#
+use JSON::PP;
+#use Data::Dumper;
+
+require 'sdn.pm';
+
+# --------------------------------------------------------
+# Main Routine
+# --------------------------------------------------------
+my $MAX_POS_NUM = 642;
+my $curl_cmd = '/usr/local/bin/curl'; 
+
+my $draw_links = [];
+my $draw_objs = {};
+
+my %controller_list = ();
+my %switch_list = ();
+my %host_list = ();
+
+my $obj_index = 0;
+$conflist = undef;
+$pos_array = undef;
+
+# pos_index_poolは大き目にとる
+%used_pos_ids = ();
+$result_show_dpids = undef;
+$result_show_hosts = undef;
+$result_show_links = undef;
+$result_show_flood_stats = undef;
+
+$conflist = &sdnLib::getConf();
+$pos_array = &sdnLib::getPosPool();
+#printf("%s", Data::Dumper->Dump([$conflist], ['list']));
+#printf("%s", Data::Dumper->Dump([$pos_array], ['list']));
+&create_controller();
+&print_results();
+exit 0;
+
+# --------------------------------------------------------
+# Main Routine
+# --------------------------------------------------------
+
+sub getPos {
+	my $id = shift;
+	my $rad = shift;
+	my $pos = $pos_array->[$id % $MAX_POS_NUM];
+	$pos->[$_] *= $rad foreach (0..2) ;
+	return $pos;
+}
+
+sub addObj {
+	my $origin = shift;
+	my $posidx = shift;
+	my $rad = shift;
+	my $texture = shift;
+	my $name = shift || 'Unknown';
+	my $id = $obj_index++;
+	$draw_objs->{"$id"} = {
+    	origin => $origin, # どこを原点とするか
+    	'pos'  => &getPos($posidx, $rad), # 原点からみた相対位置
+		texture=> $texture,
+		rad	=> $rad,
+		name => $name,
+		posidx => $posidx,
+	};
+	if (@_>0) {
+		$draw_objs->{"$id"}->{otherinfo} = shift;
+	}
+	return $id;
+}
+
+sub addLink {
+    my $src = shift;
+	my $dst = shift;
+	my $color = shift;
+	my $width = shift;
+	my $cmd = 'perl get_rotateinfo.pl';
+	my @result = `$cmd $src->[0] $src->[1] $src->[2] $dst->[0] $dst->[1] $dst->[2]`;
+	chomp($result);
+	my $rot = [];
+	foreach (@result) {
+		chomp;
+		s/\s+//g;
+		next if (/[^\-,\d\.]/);
+		my @cols = split(/,/, $_);
+		push @$rot, \@cols;
+	}
+	push @$draw_links, {
+		src   => $src,   dst   => $dst, 
+		color => $color, width => $width,
+		rot => $rot
+	};
+}
+
+sub print_results(){
+	my $params = '{';
+	my $line1_param = '"objList": ';
+	$line1_param .= encode_json $draw_objs;
+	$line1_param .= ',';
+
+	my $line2_param = '"linkList": ';
+	$line2_param .= encode_json $draw_links;
+	$params .= $line1_param.$line2_param.'}';
+
+	print <<END_OF_LINE;
+Content-Type: application/json, charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1728000
+
+$params
+END_OF_LINE
+}
+
+sub create_controller {
+	foreach ( @{$conflist->{controller_list}} ) {
+		my $obj_id = &addObj(
+			$_->{origin}, 
+			getPosIndex($_->{posidx}), 
+			$_->{rad}, 
+			0,  # texture_id for controller 
+			$_->{name},
+			{},
+		);
+		$controller_list{$_->{ipaddr}}=$obj_id;
+		#die sprintf("%s", Data::Dumper->Dump([$draw_objs], ['list']));
+		#printf("%s", Data::Dumper->Dump([$result_show_dpids], ['list']));
+		#printf("%s", Data::Dumper->Dump([$result_show_hosts], ['list']));
+		#printf("%s", Data::Dumper->Dump([$result_show_links], ['list']));
+		#printf("%s", Data::Dumper->Dump([$result_show_flood_stats], ['list']));
+		# 各種コマンドを実行して情報をグローバル変数に格納
+		&getParams($_->{ipaddr});
+		&create_switch($_->{ipaddr}, $obj_id);
+	}
+}
+
+
+sub getParams() {
+	my $ipaddr = shift;
+
+	# get dpids
+	# ----------------------------
+	my $cmd = <<END_OF_LINE;
+        $curl_cmd -k -H 'Content-Type: application/json' \\
+            -X PUT https://$ipaddr/ws.v1/nox/show_dpids 2>/dev/null
+END_OF_LINE
+	#print "$cmd\n";
+	undef $result_show_dpids; 
+	my $res = `$cmd`;
+	$result_show_dpids = decode_json $res;
+#[{"dpid": "0x000000000001"}, {"dpid": "0x000000000002"}, {"dpid": "0x000000000003"}]
+	# ----------------------------
+
+#{"1": {"hw_addr": "00:0c:29:e5:a8:6e", "enable": true, "curr": 0, "name": "eth1", "enable_time": 1330793441.511647, "config": 0, "supported": 0, "enabled": true, "keep": false, "flood": true, "state": 0, "link": true, "advertised": 0, "peer": 0, "speed": 0, "port_no": 1}, "2": {"hw_addr": "00:0c:29:e5:a8:78", "enable": true, "curr": 0, "name": "eth2", "enable_time": 1330793441.511647, "config": 0, "supported": 0, "enabled": true, "keep": true, "flood": true, "state": 0, "link": true, "advertised": 0, "peer": 0, "speed": 0, "port_no": 2}, "3": {"hw_addr": "00:0c:29:e5:a8:82", "enable": true, "curr": 0, "name": "eth3", "enable_time": 1330793441.511647, "config": 0, "supported": 0, "enabled": true, "keep": true, "flood": true, "state": 0, "link": true, "advertised": 0, "peer": 0, "speed": 0, "port_no": 3}, "65534": {"hw_addr": "00:00:00:00:00:01", "enable": true, "curr": 130, "name": "tap0", "config": 0, "supported": 0, "enabled": true, "keep": false, "flood": true, "state": 0, "link": true, "advertised": 0, "peer": 0, "speed": 10, "port_no": 65534}}
+
+
+	# get flood_flags
+	# ----------------------------
+	$cmd = <<END_OF_LINE;
+        $curl_cmd -k -H 'Content-Type: application/json' \\
+            -X PUT https://$ipaddr/ws.v1/nox/show_flood_stats 2>/dev/null
+END_OF_LINE
+	undef $result_show_flood_stats; 
+	$res = `$cmd`;
+	$result_show_flood_stats = decode_json $res;
+#{"1": {"flood": [1, 2, 3], "nonflood": []}, "2": {"flood": [1, 2], "nonflood": [3]}, "3": {"flood": [1, 3, 4], "nonflood": [2]}}
+	# ----------------------------
+#src_dpid=0x000000000001, src_port=2, dst_dpid=0x000000000002, dst_port=1
+#src_dpid=0x000000000001, src_port=3, dst_dpid=0x000000000003, dst_port=3
+#src_dpid=0x000000000002, src_port=3, dst_dpid=0x000000000003, dst_port=2
+
+	# get links
+	# ----------------------------
+	$cmd = <<END_OF_LINE;
+        $curl_cmd -k -H 'Content-Type: application/json' \\
+            -X PUT https://$ipaddr/ws.v1/nox/show_links 2>/dev/null
+END_OF_LINE
+	undef $result_show_links; 
+	$res = `$cmd`;
+	$result_show_links = decode_json $res;
+#[[3, 2, 2, 3], [1, 3, 3, 3], [2, 1, 1, 2], [3, 3, 1, 3], [2, 3, 3, 2], [1, 2, 2, 1]]
+	# ----------------------------
+	# 2->3, 1->3, 1->2
+
+	# get hosts infomation
+	# ----------------------------
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' \\
+	        -X PUT https://$ipaddr/ws.v1/nox/show_hosts 2>/dev/null
+END_OF_LINE
+	undef $result_show_hosts; 
+	$res = `$cmd`;
+	$result_show_hosts = decode_json $res;
+#{"1": {"1": {"00:0c:29:03:17:33": {"ipaddr": "172.16.1.1", "timeout": 86360}}}, "3": {"4": {"00:0c:29:03:17:3d": {"timeout": 86360}}}}
+	# ----------------------------
+}
+
+
+sub create_switch {
+	my $pfc_ipaddr = shift;	
+	my $pfc_id = shift;
+
+	#print $pfc_id."\n";
+
+	# 接続されているスイッチのdpid取得
+	my @dpids = ();
+	push @dpids, $_->{dpid} foreach (@$result_show_dpids);
+
+	# スイッチオブジェクト作成
+	foreach ( @dpids ) {
+		#print $_."\n";
+		#print $conflist->{switch_list}->{$_}->{posidx}."\n";
+		#printf("%s", Data::Dumper->Dump([$draw_objs->{"$pfc_id"}->{pos}], ['list']));
+		my $pos = $draw_objs->{"$pfc_id"}->{'pos'};
+		my $obj_id = &addObj(
+			# Controllerの位置を原点にする
+			[$pos->[0], $pos->[1], $pos->[2] ],
+			(exists $conflist->{switch_list}->{$_}->{posidx}) ? 
+				getPosIndex($conflist->{switch_list}->{$_}->{posidx}) : 
+				getPosIndex(2),
+			(exists $conflist->{switch_list}->{$_}->{rad}) ? 
+				$conflist->{switch_list}->{$_}->{rad} : 3.0,
+			1,  # texture_id for switch
+			(exists $conflist->{switch_list}->{$_}->{name}) ? 
+				$conflist->{switch_list}->{$_}->{name} : 'unknown',
+			{dpid=>$_},
+		);
+		$switch_list{$_}=$obj_id;
+
+		# get ports infomation
+		my $cmd = <<END_OF_LINE;
+    	$curl_cmd -k -H 'Content-Type: application/json' \\
+    	    -d "{\\"dpid\\": \\"$_\\"}" \\
+    	    -X PUT https://$pfc_ipaddr/ws.v1/nox/show_ports 2>/dev/null
+END_OF_LINE
+		$res = `$cmd`;
+		$res = decode_json $res;
+
+		# Controllerとスイッチを接続
+		my @ports = sort {$a <=> $b} keys %$res;
+		foreach my $num (@ports) {
+			my $color = ($res->{$num}->{flood}) ?  'yellow' : 'gray';
+			# 接続先はcontroller?
+			if ($num == 65534) { # yes
+			&addLink (
+				[$pos->[0], $pos->[1], $pos->[2] ],
+				#$draw_objs->{$pfc_id}->{pos}, 
+				$draw_objs->{$obj_id}->{pos}, 
+				$color, 
+				1.0, # width
+			);
+			}
+		} # まずはControllerとの接続を完了させる
+	} # foreach (@dpids)
+
+	# スイッチとスイッチを接続
+	&connectToSwitch();
+
+	# ホストオブジェクト生成、ホストとスイッチを接続
+	&create_host();
+
+	#printf("%s", Data::Dumper->Dump([$draw_objs], ['list']));
+	#printf("%s", Data::Dumper->Dump([$draw_links], ['list']));
+	#printf("%s", Data::Dumper->Dump([\%switch_list], ['list']));
+}
+
+sub getPosIndex {
+	my $index = shift || undef;
+	if (!defined $index || 
+		(defined $index && exists $used_pos_ids{$index})) 
+	{
+		for (0..($MAX_POS_NUM-1)) {
+			next if (exists $used_pos_ids{$_}) ;
+			$index = $_; 
+			last;
+		}
+		$index = 0 if (!defined $index) ; # 空きなし
+	}
+	$used_pos_ids{$index}++;
+	return $index;
+}
+
+sub create_host {
+	my %hlist = ();
+	while (my ($dpid, $pinfo) = each(%$result_show_hosts)) {
+	while (my ($port, $hosts) = each(%$pinfo)) {
+		next if ($port == 65534);
+		foreach (keys %$hosts) {
+			next if (exists $hlist{$_});
+			$hlist{$_}++;
+			# ホストオブジェクト生成
+			my $mac = $_;
+			my $ipaddr = $hosts->{$mac}->{'ipaddr'};
+			next if (!defined $ipaddr);
+			#print "hwaddr=$mac, ipaddr=$ipaddr"."\n";
+			my $dst_dpid = sprintf("0x%012x", $dpid);
+			my $pos1 = $draw_objs->{$switch_list{$dst_dpid}}->{'pos'};
+			my $obj_id = &addObj(
+				# 接続先switchの位置を原点にする
+#				$draw_objs->{$dst_dpid}->{'pos'},
+				[$pos1->[0], $pos1->[1], $pos1->[2] ],
+				(exists $conflist->{host_list}->{$mac}->{posidx}) ? 
+					getPosIndex($conflist->{host_list}->{$mac}->{posidx}) : 
+					getPosIndex(),
+				(exists $conflist->{host_list}->{$mac}->{rad}) ? 
+#					$conflist->{host_list}->{$mac}->{rad} : 1.5,
+					$conflist->{host_list}->{$mac}->{rad} : 2.5,
+				2,  # texture_id for host
+				(exists $conflist->{host_list}->{$mac}->{name}) ? 
+					$conflist->{host_list}->{$mac}->{name} : 'unknown',
+				{ ipaddr => $ipaddr, hwaddr =>$mac, 
+					swdpid =>$dst_dpid, swport =>$port },
+			);
+			$host_list{$_}=$obj_id;
+
+			next if ($pos1->[0] == $pos2->[0] && $pos1->[1] == $pos2->[1] && $pos1->[2] == $pos2->[2]);
+
+			# ホストとスイッチを接続
+			my $pos2 = $draw_objs->{$obj_id}->{'pos'};
+			&addLink (
+#				$draw_objs->{$obj_id}->{'pos'}, 
+#				$draw_objs->{$dst_dpid}->{'pos'}, 
+				[$pos1->[0] + $pos2->[0], $pos1->[1] + $pos2->[1], $pos1->[2] + $pos2->[2] ],
+				[$pos1->[0], $pos1->[1], $pos1->[2] ],
+				&getColor($dpid, $port), 
+				1.0, # width
+			);
+		}
+	}
+	}
+}
+
+#{"1": {"flood": [1, 2, 3], "nonflood": []}, "2": {"flood": [1, 2], "nonflood": [3]}, "3": {"flood": [1, 3, 4], "nonflood": [2]}}
+	# ----------------------------
+#src_dpid=0x000000000001, src_port=2, dst_dpid=0x000000000002, dst_port=1
+#src_dpid=0x000000000001, src_port=3, dst_dpid=0x000000000003, dst_port=3
+#src_dpid=0x000000000002, src_port=3, dst_dpid=0x000000000003, dst_port=2
+# 2と3のみgray(nonflood)
+sub getColor {
+	my $sdpid = shift;
+	my $sport = shift;
+	my $color = 'gray';
+	foreach (@{$result_show_flood_stats->{$sdpid}->{"flood"}}) {
+		next if ($sport ne $_);
+		$color = 'yellow';
+		last;
+	}
+	return $color;
+}
+
+# スイッチとスイッチを接続
+sub connectToSwitch {
+	# 接続ポート取得
+	my %linkinfo = ();
+	foreach (@$result_show_links) {
+		my @ports = sort ($_->[0], $_->[2]);
+		#print "port0=$ports[0], port1=$ports[1]\n";
+		#printf "linkinfo = %d, %d\n", $ports[1], $linkinfo{$ports[0]};
+		if (defined $linkinfo{"$ports[0]:$ports[1]"}) {
+			next ; # 接続済
+		}
+		$linkinfo{"$ports[0]:$ports[1]"}++;
+		my $src_dpid = sprintf("0x%012x", $ports[0]);
+		my $dst_dpid = sprintf("0x%012x", $ports[1]);
+		my $src_port = undef;
+		my $dst_port = undef;
+		if ($_->[0] eq $ports[0]) {
+			$src_port = $_->[1]; $dst_port = $_->[3];
+		} else {
+			$src_port = $_->[3]; $dst_port = $_->[1];
+		}
+		#print "src_dpid=$src_dpid, src_port=$src_port, dst_dpid=$dst_dpid, dst_port=$dst_port\n";
+		# 退避させないと駄目?
+		my $pos1 = $draw_objs->{$switch_list{$src_dpid}}->{'pos'};
+		my $pos2 = $draw_objs->{$switch_list{$dst_dpid}}->{'pos'};
+		&addLink (
+			[ $pos1->[0], $pos1->[1], $pos1->[2] ], 
+			[ $pos2->[0], $pos2->[1], $pos2->[2] ], 
+#			&getColor($src_dpid, $src_port),
+			&getColor($ports[0], $src_port),
+			1.0, # width
+		);
+	}
+	#printf("%s", Data::Dumper->Dump([\%linkinfo], ['list']));
+}
+__END__

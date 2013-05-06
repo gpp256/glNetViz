@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Quick Start</title>
+  <link rel="stylesheet" type="text/css" href="_static/general.css" />
+  <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  <meta name="description" content="Python製ドキュメンテーションビルダー、Sphinxの日本ユーザ会">
+  <meta name="keywords" content="Sphinx,スフィンクス,ドキュメンテーション,ツール,Python,reStructuredText,reST">
+  <script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+    URL_ROOT:    '#',
+    VERSION:     '0.9.0',
+    COLLAPSE_MODINDEX: false,
+    FILE_SUFFIX: '.html',
+    HAS_SOURCE:  true
+  };
+  </script>
+  <script type="text/javascript" src="_static/jquery.js"></script>
+  <script type="text/javascript" src="_static/underscore.js"></script>
+  <script type="text/javascript" src="_static/doctools.js"></script>
+  <!-- Sticky footer -->
+  <!--[if  IE 8]>
+  <style type="text/css">
+    #wrap {display:table;}
+  </style>
+  <![endif]-->
+</head>
+<body>
+<div id="wrapper">
+  
+  <!-- header -->
+  <div id="header">
+    <div id="projInfo">
+      <h1 id="title">
+        <a href="index.html">glNetViz</a>
+      </h1>
+      <p class="docdesc">glNetViz 0.9.0 documentation</p>
+    </div>
+    <div id="headerNav">
+      <div id="searchbox">
+        <form name="search" action="search.html" method="get">
+          <fieldset class="search">
+            <input type="text" class="hint" name="q" />
+            <button class="button" title="Go" />Go</button>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+    <div id="gnav">
+      <ul>
+        <li class="home"><p><a href="index.html" title="glNetViz">glNetViz</a></p></li>
+        <li class="doc"><p><a href="doc.html" title="ドキュメント">ドキュメント</a></p></li>
+        <li class="modindex">
+          <p><a title="Index" href="genindex.html">Index</a></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /header -->
+  
+  
+  <!-- content -->
+  <div id="content">
+    <!-- current document area -->
+    <div id="document" class="left">
+  <div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="index-0"></span><span class="target" id="index-1"></span><span class="target" id="index-2"></span><div class="section" id="building-and-installing">
+<span id="index-3"></span><h2>Building and Installing<a class="headerlink" href="#building-and-installing" title="Permalink to this headline">¶</a></h2>
+<p>To install, run the following commands in the glNetViz directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre>e.g.
+<span class="nv">$ </span>git clone https://github.com/gpp256/glNetViz.git
+<span class="nv">$ </span><span class="nb">cd </span>glNetVis
+<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/opt/glNetViz
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+<span class="nv">$ </span>sudo chown -R www:www /opt/glNetViz
+<span class="nv">$ </span>sudo cp /usr/local/etc/apache/httpd.conf<span class="o">{</span>,.backup130506<span class="o">}</span>
+<span class="nv">$ </span>sudo vi /usr/local/etc/apache/httpd.conf
+<span class="nv">$ </span>sudo diff /usr/local/etc/apache/httpd.conf<span class="o">{</span>.backup130506,<span class="o">}</span>
+315a316,323
+&gt;     Alias /glNetViz/ /opt/glNetViz/
+&gt;     &lt;Directory <span class="s2">&quot;/opt/glNetViz&quot;</span>&gt;
+&gt;         AllowOverride All
+&gt;         Options ExecCGI
+&gt;         Order allow,deny
+&gt;         Allow from all
+&gt;     &lt;/Directory&gt;
+<span class="nv">$ </span>sudo /usr/local/etc/rc.d/apache restart
+<span class="nv">$ </span>sudo vi /opt/glNetViz/.htaccess
+</pre></div>
+</div>
+<span class="target" id="index-4"></span><span class="target" id="index-5"></span><span class="target" id="index-6"></span></div>
+<div class="section" id="other-dependent-components">
+<span id="index-7"></span><h2>Other Dependent Components<a class="headerlink" href="#other-dependent-components" title="Permalink to this headline">¶</a></h2>
+<p>Some perl modules are needed for starting the glNetViz.</p>
+<table border="1" class="docutils">
+<caption>table #01: other dependent components</caption>
+<colgroup>
+<col width="10%" />
+<col width="60%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Component</td>
+<td>URL</td>
+<td>License</td>
+</tr>
+<tr class="row-even"><td>CGI</td>
+<td><a class="reference external" href="http://search.cpan.org/~markstos/CGI.pm-3.63/lib/CGI.pm">http://search.cpan.org/~markstos/CGI.pm-3.63/lib/CGI.pm</a></td>
+<td>Artistic License 2.0</td>
+</tr>
+<tr class="row-odd"><td>JSON::PP</td>
+<td><a class="reference external" href="http://search.cpan.org/~makamaka/JSON-PP-2.27202/lib/JSON/PP.pm">http://search.cpan.org/~makamaka/JSON-PP-2.27202/lib/JSON/PP.pm</a></td>
+<td>Artistic License 2.0</td>
+</tr>
+<tr class="row-even"><td>YAML</td>
+<td><a class="reference external" href="http://search.cpan.org/~mstrout/YAML-0.84/lib/YAML.pm">http://search.cpan.org/~mstrout/YAML-0.84/lib/YAML.pm</a></td>
+<td>Artistic License 2.0</td>
+</tr>
+<tr class="row-odd"><td>ExtUtils::MakeMaker</td>
+<td><a class="reference external" href="http://search.cpan.org/~bingos/ExtUtils-MakeMaker-6.66/lib/ExtUtils/MakeMaker.pm">http://search.cpan.org/~bingos/ExtUtils-MakeMaker-6.66/lib/ExtUtils/MakeMaker.pm</a></td>
+<td>Artistic License 2.0</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>To install some components, run the following commands.</p>
+<div class="highlight-bash" id="index-8"><div class="highlight"><pre>e.g.
+Debian GNU/Linux:
+<span class="nv">$ </span>sudo apt-get install perl-modules
+<span class="nv">$ </span>sudo apt-get install libyaml-perl
+</pre></div>
+</div>
+<p>You can access glNetViz sample pages with a web browser that supported WebGL.</p>
+<div class="highlight-bash"><div class="highlight"><pre>e.g.
+http://youripaddress/glNetViz/examples/
+</pre></div>
+</div>
+<span class="target" id="index-9"></span><span class="target" id="index-10"></span></div>
+<div class="section" id="glnetviz-components">
+<span id="index-11"></span><h2>glNetViz Components<a class="headerlink" href="#glnetviz-components" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<caption>table #2: outline of the files that will be installed</caption>
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Location</td>
+<td>Description</td>
+</tr>
+<tr class="row-even"><td>docs/*</td>
+<td>users manual</td>
+</tr>
+<tr class="row-odd"><td>examples/*</td>
+<td>sample scripts and HTML files</td>
+</tr>
+<tr class="row-even"><td>lib/{js,css,cgi}/*</td>
+<td>common libraries and dependent libraries (<a class="reference external" href="http://jquery.com/">jQuery</a> , <a class="reference external" href="http://jqueryui.com/">jQuery UI</a> , <a class="reference external" href="https://github.com/azatoth/jquery-sprintf">jquery-sprintf</a> , <a class="reference external" href="http://wgld.org/d/library/l001.html">minMatrix</a> )</td>
+</tr>
+<tr class="row-odd"><td>lib/textures/*</td>
+<td>texture files</td>
+</tr>
+<tr class="row-even"><td>lib/conf/*</td>
+<td>configuration files</td>
+</tr>
+<tr class="row-odd"><td>.htaccess</td>
+<td>apache configuration file</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+    <!-- /current document area -->
+    <!-- sidebar -->
+    
+  <div id="sidebar" class="left">
+    <div id="sidebarWrap">
+      <div id="toc" class="sidebarRow">
+        <h3>Table Of Contents</h3>
+        <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-and-installing">Building and Installing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-dependent-components">Other Dependent Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#glnetviz-components">glNetViz Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contents02.html">glNetViz Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">glNetViz Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+        </div>
+        <div id="rel" class="sidebarRow">
+          <div class="relRow prev">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">The glNetViz Manual</a></p>
+          </div>
+          <div class="relRow next">
+            <h4>Next topic</h4>
+            <p class="topless"><a href="contents02.html" title="next chapter">glNetViz Examples</a></p>
+          </div>
+      </div>
+      <div id="source" class="sidebarRow">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="_sources/contents01.txt" rel="nofollow">Show Source</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    <!-- /sidebar -->
+  </div>
+  
+  <!-- /content -->
+</div>
+  <!-- footer -->
+  
+  <div id="footer">
+    <div class="footerCol">
+      <h1><a href="index.html">glNetViz</a></h1>
+      <p class="copy">
+      &copy; Copyright 2013, Gpp Apps.
+      </p>
+      <p class="sp">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      </p>
+    </div>
+    <div class="footerCol">
+    
+  <div class="relbar">
+    <dl id="relPrev">
+      <dt class="prev">Previous topic</dt>
+      <dd class="relTitle"><a href="index.html" title="previous chapter" accesskey="N">The glNetViz Manual</a></dd>
+    </dl>
+    <dl id="relNext">
+      <dt class="next">Next topic</dt>
+      <dd class="relTitle"><a href="contents02.html" title="next chapter" >glNetViz Examples</a></dd>
+    </dl>
+  </div>
+    </div>
+  </div>
+ 
+ <!-- /footer -->
+</body>
+</html>

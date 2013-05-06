@@ -1,0 +1,21 @@
+use ExtUtils::MakeMaker;
+WriteMakefile(
+    'NAME'   => 'myprimitive',
+    'INC'    => '-I/usr/local/include -I.',
+    'LIBS'   => '-L/usr/local/lib -lm',
+    'PREFIX' => '@prefix@/lib/cgi',
+    'INSTALLSITEARCH' => '@prefix@/lib/cgi/lib/perl5',
+    'PREREQ_PM' => {
+        'Data::Dumper' => 0,
+        'YAML' => 0,
+        'CGI' => 0,
+        'JSON::PP' => 0,
+    },
+#    'BUILD_REQUIRES' => {
+#        'Data::Dumper' => 0,
+#        'YAML' => 0,
+#        'CGI' => 0,
+#        'JSON::PP' => 0,
+#    },
+    'OBJECT' => 'myprimitive.o myprimitive_wrap.o'
+);

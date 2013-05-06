@@ -1,0 +1,29 @@
+prefix= @prefix@
+#exec_prefix = @exec_prefix@
+#bindir = @bindir@
+#sysconfdir = @sysconfdir@
+CC = @CC@
+INSTALL = @INSTALL@
+TARGET= perl_modules/myprimitive.built
+
+.SUFFIXES: .built
+
+all: $(TARGET)
+
+.c.built:
+	(cd perl_modules/; perl Makefile.PL; make)
+	touch perl_modules/myprimitive.built
+
+install: $(TARGET)
+	mkdir -p @prefix@/examples @prefix@/lib @prefix@/docs
+	tar -C examples -cf - . | tar -C @prefix@/examples -xvf - >/dev/null 2>&1
+	tar -C lib -cf - . | tar -C @prefix@/lib -xvf - >/dev/null 2>&1
+	tar -C docs -cf - . | tar -C @prefix@/docs -xvf - >/dev/null 2>&1
+	(cd perl_modules/; make install)
+	find @prefix@ -type f -exec chmod 644 {} \;
+	find @prefix@ -name "*.pl" -exec chmod 755 {} \;
+	find @prefix@ -name "*.cgi" -exec chmod 755 {} \;
+	$(INSTALL) -m640 htaccess @prefix@/.htaccess
+
+clean:
+	-file -f "$(TARGET)" && (cd perl_modules/; make clean; rm -f Makefile.old myprimitive.built)

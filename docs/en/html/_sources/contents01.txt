@@ -1,17 +1,25 @@
-glNetViz
-========
-
-Welcome!
-----------
-
-The glNetViz is a free tool for visualizing computer network topologies with WebGL.
-
-With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently.
-
+#############################
 Quick Start
-------------
+#############################
+ 
+.. Prerequisites for building
+.. ---------------------------
+.. a and b is needed for building the glNetViz. 
+
+.. index:: 
+   pair: Git; git clone 
+.. index:: Autotools
+.. index:: 
+   pair: Apache; httpd.conf
+.. index:: 
+   pair: Apacht; .htaccess
+
+Building and Installing
+---------------------------
 
 To install, run the following commands in the glNetViz directory.
+
+.. The steps for building this tools are as follows.
 
 .. code-block:: bash
 
@@ -36,9 +44,37 @@ To install, run the following commands in the glNetViz directory.
     $ sudo /usr/local/etc/rc.d/apache restart
     $ sudo vi /opt/glNetViz/.htaccess
 
+..  check and edit the apache configuration file(/opt/glNetViz/.htaccess). 
+
+.. index:: 
+   pair: Perl; CGI.pm
+.. index:: 
+   pair: Perl; "JSON::PP.pm"
+.. index:: 
+   pair: Perl; "YAML.pm"
+.. index:: 
+   pair: Perl; "ExtUtils::MakeMaker"
+
+Other Dependent Components
+----------------------------
+
 Some perl modules are needed for starting the glNetViz. 
 
+.. csv-table:: table #01: other dependent components
+   :widths: 10, 60, 30
+
+   Component, URL, License
+   CGI, http://search.cpan.org/~markstos/CGI.pm-3.63/lib/CGI.pm,  Artistic License 2.0
+   JSON::PP, http://search.cpan.org/~makamaka/JSON-PP-2.27202/lib/JSON/PP.pm, Artistic License 2.0
+   YAML, http://search.cpan.org/~mstrout/YAML-0.84/lib/YAML.pm, Artistic License 2.0
+   ExtUtils::MakeMaker, http://search.cpan.org/~bingos/ExtUtils-MakeMaker-6.66/lib/ExtUtils/MakeMaker.pm, Artistic License 2.0
+
+|
+
 To install some components, run the following commands.
+
+.. index:: 
+   pair: Perl; YAML.pm
 
 .. code-block:: bash
 
@@ -47,12 +83,20 @@ To install some components, run the following commands.
     $ sudo apt-get install perl-modules
     $ sudo apt-get install libyaml-perl
 
+
 You can access glNetViz sample pages with a web browser that supported WebGL.
 
 .. code-block:: bash
 
     e.g.
     http://youripaddress/glNetViz/examples/
+
+
+.. index:: 
+   pair: jQuery; jQuery UI
+.. index:: 
+   pair: jQuery; jquery-sprintf
+.. index:: minMatrix
 
 glNetViz Components
 ----------------------------
@@ -68,16 +112,4 @@ glNetViz Components
    lib/conf/* , configuration files
    .htaccess , apache configuration file
 
-Links
---------
-
-:users guide(en): http://gpp256.zapto.org/glNetViz/docs/en/html/index.html
-:users guide(ja): http://gpp256.zapto.org/glNetViz/docs/ja/html/index.html
-:blog: http://gpp256.blogspot.jp
-
-License
-----------
-Copyright &copy; 2013 Yoshi(gpp65536@yahoo.co.jp)  
-Distributed under the [MIT License][mit].  
-
-[MIT]: http://www.opensource.org/licenses/mit-license.php
+|

@@ -1,0 +1,150 @@
+#!/usr/bin/perl
+#
+# get_otherobjs.cgi
+#
+# Copyright (c) 2013 Yoshi 
+# This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+#
+use CGI qw(param);
+use JSON::PP;
+
+#use Data::Dumper;
+#use CGI::Carp qw(fatalsToBrowser); # デバッグ用
+require './sdn.pm';
+
+my $MAX_POS_NUM = 642;
+my $conflist = &sdnLib::getConf('../conf/network.conf');
+my $pos_array = &sdnLib::getPosPool();
+
+# 要入力チェック
+my $outinfo = {
+	links => $conflist->{other_link},
+	objs => $conflist->{other_obj},
+	switches => $conflist->{switch_list},
+	hosts => $conflist->{host_list},
+};
+
+while (my ($k, $v) = each (%{$outinfo->{switches}})) {
+	$v->{origin} = [ 0.0, 0.0, 0.0 ]; 
+	$v->{pos} = &getPos($v->{posidx}, $v->{rad});
+}
+
+while (my ($k, $v) = each (%{$outinfo->{hosts}})) {
+	$v->{pos} = &getPos($v->{posidx}, $v->{rad});
+	$v->{origin} = [ 0.0, 0.0, 0.0 ]; 
+	if (exists $conflist->{switch_list}->{$v->{neighbor_obj}}) {
+		$v->{origin} = &getPos(
+			$conflist->{switch_list}->{$v->{neighbor_obj}}->{posidx}, 
+			$conflist->{switch_list}->{$v->{neighbor_obj}}->{rad}
+		);
+	}
+}
+
+foreach my $n (@{$outinfo->{objs}}) {
+	$n->{pos} = &getPos($n->{posidx}, $n->{rad});
+	$n->{origin} = [ 0.0, 0.0, 0.0 ];
+	if (exists $conflist->{switch_list}->{$n->{neighbor_obj}}) {
+		$n->{origin} = &getPos(
+			$conflist->{switch_list}->{$n->{neighbor_obj}}->{posidx}, 
+			$conflist->{switch_list}->{$n->{neighbor_obj}}->{rad}
+		);
+	}
+}
+
+foreach my $n (@{$outinfo->{links}}) {
+	if (exists $n->{sobj} && exists $n->{dobj}) {
+		if (exists $conflist->{switch_list}->{$n->{sobj}}) {
+			$n->{src} = &getPos(
+				$conflist->{switch_list}->{$n->{sobj}}->{posidx}, 
+				$conflist->{switch_list}->{$n->{sobj}}->{rad}
+			);
+			$n->{src}->[$_] += $n->{offset}->[$_] foreach (0..2) ;
+		}
+		foreach my $o (@{$outinfo->{objs}}) {
+			next if ($o->{name} ne $n->{dobj});
+			foreach (0..2) {
+				$n->{dst}->[$_] = 
+					$o->{origin}->[$_] + $o->{pos}->[$_] + $n->{offset}->[$_];
+			}
+			last;
+		}
+	}
+	$n->{rot} = &sdnLib::getRot($n->{src}, $n->{dst});
+}
+#die sprintf("%s", Data::Dumper->Dump([$outinfo,], ["*list",]));
+
+my $data = encode_json $outinfo ;
+
+my $ret = 0;
+print <<END_OF_LINE;
+Content-Type: application/json, charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1728000
+
+$data
+END_OF_LINE
+
+sub getPos {
+	my $id = shift;
+	my $rad = shift;
+	my $pos = $pos_array->[$id % $MAX_POS_NUM];
+	return [$pos->[0] * $rad, $pos->[1] * $rad, $pos->[2] * $rad ] ;
+}
+
+
+exit 0;
+__END__
+ %list = (
+           'objs' => [
+                       {
+                         'texture_id' => '8',
+                         'posidx' => '489',
+                         'objtype' => 'cube',
+                         'scale' => [
+                                      '1.2',
+                                      '1.6',
+                                      '1.2'
+                                    ],
+                         'name' => 'FW01',
+                         'pos' => [
+                                    '4.221725',
+                                    '0.74783',
+                                    '2.57251'
+                                  ],
+                         'neighbor_obj' => '0x000000000003',
+                         'rad' => '5'
+                       }
+                     ],
+           'links' => [
+                        {
+                          'color' => 'yellow',
+                          'src' => [
+                                     '1.118105',
+                                     '-3.29477',
+                                     '3.590865'
+                                   ],
+                          'name' => 'FW_LINK01',
+                          'rot' => [
+                                     [
+                                       '133.142076',
+                                       '0',
+                                       '1',
+                                       '0'
+                                     ],
+                                     [
+                                       '41.514376',
+                                       '0',
+                                       '0',
+                                       '1'
+                                     ]
+                                   ],
+                          'dst' => [
+                                     '-2.882175',
+                                     '0.483594',
+                                     '-0.67764'
+                                   ]
+                        }
+                      ]
+         );

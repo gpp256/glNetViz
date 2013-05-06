@@ -1,0 +1,120 @@
+<!--
+ sample.html ver.1.0
+
+ Copyright (c) 2013 Yoshi 
+ This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+-->
+
+<html>
+<head>
+<title>WebGL and jQuery - sample06 </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta content="chrome=1" http-equiv="X-UA-Compatible" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="Sat, 31 Aug 2000 17:35:42 GMT">
+<!-- global variables -->
+<script type="text/javascript" src="global.js"></script>
+<!-- common libraries -->
+<link type="text/css" rel="stylesheet" href="../../lib/css/jquery-ui-1.css">
+<link type="text/css" rel="stylesheet" href="../../lib/css/jslider.css">
+<script type="text/javascript" src="../../lib/js/jquery-1.7.min.js"> </script>
+<script type="text/javascript" src="../../lib/js/jquery-ui-1.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery.sprintf.js"></script>
+<script type="text/javascript" src="../../lib/js/minMatrix.js"></script>
+<script type="text/javascript" src="../../lib/js/event_common.js"></script>
+<script type="text/javascript" src="../../lib/js/shader_common.js"></script>
+<script type="text/javascript" src="../../lib/js/primitive_common.js"></script>
+<script type="text/javascript" src="../../lib/js/shader.js"></script>
+<script type="text/javascript" src="../../lib/js/mouse_event.js"></script>
+<!-- scripts for sample06 -->
+<link type="text/css" rel="stylesheet" href="webui.css">
+<script type="text/javascript" src="pos642.json"></script>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+<!-- left ui -->
+<div id="framerate" style="font-size: x-small"></div>
+<div id="displayinfo" style="font-size: xx-small; "> 
+<font size"+0" color="yellow"><b>―</b></font> Flood Flag = true の口と接続中のケーブル<br>
+<font size"+0" color="gray"><b>―</b></font> Flood Flag = false の口と接続中のケーブル<br>
+<font size"+0" color="red"><b>←</b></font>TCPのパケットの流れを示す矢印<br>
+<font size"+0" color="blue"><b>←</b></font>UDPのパケットの流れを示す矢印<br>
+<font size"+0" color="mazenda"><b>←</b></font>ICMPのパケットの流れを示す矢印<br>
+</div>
+<div id="objinfo" style="font-size: x-small; font-color: yellow"> 
+Device Infomation:<br>
+</div>
+<!-- left ui -->
+<table><tr>
+<td nowrap> <canvas id="canvas"></canvas> </td>
+<td nowrap valign="top" style="font-size: x-small; margin: 20px">
+■描画パラメータ
+<br><br>
+・透視投影 or 平行投影: <p>
+<p class="switch">
+<label id="perspective-enable" class="perspective-enable"><span>透視投影</span></label>
+<label id="perspective-disable" class="perspective-disable selected"><span>平行投影</span></label>
+</p>
+<br></br> <br></br>
+
+■装置ラベル: <p>
+
+<p class="switch">
+	<label id="obj-label-enable" class="obj-label-enable"><span>表示</span></label>
+	<label id="obj-label-disable" class="obj-label-disable selected"><span>非表示</span></label>
+</p>
+<br></br> <br></br>
+
+■流量(パケット数): <p>
+
+<p class="switch">
+	<label id="flow-label-enable" class="flow-label-enable selected"><span>表示</span></label>
+	<label id="flow-label-disable" class="flow-label-disable"><span>非表示</span></label>
+</p>
+<br></br> <br></br>
+
+<p>
+
+■選択中のオブジェクトの配置変更
+<br>
+<table width="100%">
+<tr style="font-size: xx-small"> 
+<td nowrap align="left">
+位置情報Index: <span id="selected-obj-pos-slider-value-left">10</span>
+</td>
+<td nowrap align="right">
+<input type="button" name="selected-obj-pos-value" value="反映" onClick="changeObjPos($('#selected-obj-pos-slider-value-left').text());">
+</td>
+</tr>
+</table>
+<div id="selected-obj-pos-slider"> </div>
+<script type="text/javascript" charset="utf-8">
+$('#selected-obj-pos-slider').slider({ 
+//	min: 1, max: 162, step: 1, range: false, value: 10,
+	min: 1, max: 642, step: 1, range: false, value: 10,
+	slide: function(event, ui) {
+		//var cols = $('#selected-obj-pos-slider').slider("option", "value");
+		$('#selected-obj-pos-slider-value-left').text(ui.value);
+//		$('#selected-obj-pos-slider-value-right').text(cols[1]);
+	}
+});
+</script>
+<br>
+
+
+</td>
+<tr></table>
+<!-- right ui -->
+<div id="uiContainer"> <div id="ui"> </div> </div>
+<div id="scale_slider">:    1</div>
+<div id="switch_rotation_slider">:    1</div>
+<div id="controller_rotation_slider">:    1</div>
+<div id="host_rotation_slider">:    1</div>
+<div id="xaxis_rotation_slider">:    1</div>
+<!-- right ui -->
+<div id="debug"></div>
+</body>
+</html>

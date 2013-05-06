@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>glNetViz サンプル</title>
+  <link rel="stylesheet" type="text/css" href="_static/general.css" />
+  <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  <meta name="description" content="Python製ドキュメンテーションビルダー、Sphinxの日本ユーザ会">
+  <meta name="keywords" content="Sphinx,スフィンクス,ドキュメンテーション,ツール,Python,reStructuredText,reST">
+  <script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+    URL_ROOT:    '#',
+    VERSION:     '0.9.0',
+    COLLAPSE_MODINDEX: false,
+    FILE_SUFFIX: '.html',
+    HAS_SOURCE:  true
+  };
+  </script>
+  <script type="text/javascript" src="_static/jquery.js"></script>
+  <script type="text/javascript" src="_static/underscore.js"></script>
+  <script type="text/javascript" src="_static/doctools.js"></script>
+  <script type="text/javascript" src="_static/translations.js"></script>
+  <!-- Sticky footer -->
+  <!--[if  IE 8]>
+  <style type="text/css">
+    #wrap {display:table;}
+  </style>
+  <![endif]-->
+</head>
+<body>
+<div id="wrapper">
+  
+  <!-- header -->
+  <div id="header">
+    <div id="projInfo">
+      <h1 id="title">
+        <a href="index.html">glNetViz</a>
+      </h1>
+      <p class="docdesc">glNetViz 0.9.0 documentation</p>
+    </div>
+    <div id="headerNav">
+      <div id="searchbox">
+        <form name="search" action="search.html" method="get">
+          <fieldset class="search">
+            <input type="text" class="hint" name="q" />
+            <button class="button" title="検索" />検索</button>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+    <div id="gnav">
+      <ul>
+        <li class="home"><p><a href="index.html" title="glNetViz">glNetViz</a></p></li>
+        <li class="doc"><p><a href="doc.html" title="ドキュメント">ドキュメント</a></p></li>
+        <li class="modindex">
+          <p><a title="索引" href="genindex.html">索引</a></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /header -->
+  
+  
+  <!-- content -->
+  <div id="content">
+    <!-- current document area -->
+    <div id="document" class="left">
+  <div class="section" id="glnetviz-examples">
+<h1>glNetViz サンプル<a class="headerlink" href="#glnetviz-examples" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="webgl">
+<h2>WebGL<a class="headerlink" href="#webgl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<table border="1" class="glnetviz docutils">
+<caption>WebGL Samples</caption>
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">イメージ</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>sample01:</strong>
+<a class="reference internal" href="_images/webgl_example01.png"><img alt="sample01" src="_images/webgl_example01.png" style="width: 192.0px; height: 136.2px;" /></a></td>
+<td><p class="first">一つのシェーダプログラムを用いて作成したWebGLのサンプルページです。</p>
+<ul class="last simple">
+<li>マウスイベントとタッチイベントの両方に対応しました。Android端末(4.0+Chrome Beta)からも表示したオブジェクトの操作が可能です。</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><strong>sample02:</strong>
+<a class="reference internal" href="_images/webgl_example02.png"><img alt="sample02" src="_images/webgl_example02.png" style="width: 192.0px; height: 134.7px;" /></a></td>
+<td>複数のシェーダプログラムを用いて作成したWebGLのサンプルページです。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="network-visualization">
+<h2>Network Visualization<a class="headerlink" href="#network-visualization" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<table border="1" class="glnetviz docutils">
+<caption>Network Visualization Sample</caption>
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">イメージ</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>sample03:</strong>
+<a class="reference internal" href="_images/netviz_example01.png"><img alt="sample03" src="_images/netviz_example01.png" style="width: 192.0px; height: 135.6px;" /></a></td>
+<td><p class="first">OpenFlowネットワーク下で形成された仮想ネットワークの構成を見える化してみたサンプルです。</p>
+<ul class="last">
+<li><p class="first">キーボードイベントに対応しました。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">s: stop the rotation</div>
+<div class="line">left or right: rotation around the y-axis</div>
+<div class="line">up or down: rotation around the x-axis</div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><strong>sample04:</strong>
+<a class="reference internal" href="_images/netviz_example02.png"><img alt="sample04" src="_images/netviz_example02.png" style="width: 192.0px; height: 136.2px;" /></a></td>
+<td><p class="first">OpenFlowネットワーク下で形成された仮想ネットワークの構成を見える化してみたサンプルです。</p>
+<p>sample03を改造し、次の機能に対応しました。</p>
+<ul class="last simple">
+<li>WebGLでのPicking</li>
+<li>選択したネットワーク装置が持つ情報の表示</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><strong>sample05:</strong>
+<a class="reference internal" href="_images/netviz_example03.png"><img alt="sample05" src="_images/netviz_example03.png" style="width: 192.0px; height: 135.3px;" /></a></td>
+<td><p class="first">OpenFlowネットワーク下で形成された仮想ネットワークの構成を見える化してみたサンプルです。</p>
+<p>sample04を改造し、次の機能に対応しました。</p>
+<ul class="last simple">
+<li>通信の流れの見える化</li>
+<li>通信量の見える化</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><strong>sample06:</strong>
+<a class="reference internal" href="_images/netviz_example04.png"><img alt="sample06" src="_images/netviz_example04.png" style="width: 192.0px; height: 130.8px;" /></a></td>
+<td><p class="first">OpenFlowネットワーク下で形成された仮想ネットワークの構成を見える化してみたサンプルです。</p>
+<p>sample05を改造し、次の機能に対応しました。</p>
+<ul class="last simple">
+<li>各ネットワーク装置の配置変更</li>
+<li>各ネットワークデバイスのY軸まわりの回転</li>
+<li>文字情報の表示/非表示</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="demo">
+<h2>デモ<a class="headerlink" href="#demo" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="../../../examples/sample01/sample01.html">sample01</a></li>
+<li><a class="reference external" href="../../../examples/sample02/sample02.html">sample02</a></li>
+<li><a class="reference external" href="../../../examples/sample03/sample03.html">sample03</a></li>
+<li><a class="reference external" href="../../../examples/sample04/sample04.html">sample04</a></li>
+<li><a class="reference external" href="../../../examples/sample05/sample05.html">sample05</a></li>
+<li><a class="reference external" href="../../../examples/sample06/sample06.html">sample06</a></li>
+</ul>
+</div>
+<div class="section" id="application-example">
+<h2>活用事例<a class="headerlink" href="#application-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>This contents is under construction.</p>
+<ul class="simple">
+<li>mongoDB + fluentd + glNetViz</li>
+<li>nox + glNetViz</li>
+<li>pox + glNetViz</li>
+<li>trema + glNetViz</li>
+<li>sDashboard + glNetViz</li>
+<li>jqPlot + glNetViz</li>
+<li>Vimage Jail + glNetViz</li>
+<li>Android + PhoneGap + glNetViz</li>
+<li>libgeoip + glNetViz</li>
+<li>マルウェアの動的解析の自動化</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+    <!-- /current document area -->
+    <!-- sidebar -->
+    
+  <div id="sidebar" class="left">
+    <div id="sidebarWrap">
+      <div id="toc" class="sidebarRow">
+        <h3>目次</h3>
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contents01.html">セットアップ手順</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">glNetViz サンプル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#webgl">WebGL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#network-visualization">Network Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#demo">デモ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-example">活用事例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">glNetViz ライブラリリファレンス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">更新履歴</a></li>
+</ul>
+
+        </div>
+        <div id="rel" class="sidebarRow">
+          <div class="relRow prev">
+            <h4>前のトピックへ</h4>
+            <p class="topless"><a href="contents01.html" title="前の章へ">セットアップ手順</a></p>
+          </div>
+          <div class="relRow next">
+            <h4>次のトピックへ</h4>
+            <p class="topless"><a href="doc.html" title="次の章へ">glNetViz ライブラリリファレンス</a></p>
+          </div>
+      </div>
+      <div id="source" class="sidebarRow">
+        <h3>このページ</h3>
+        <ul class="this-page-menu">
+          <li><a href="_sources/contents02.txt" rel="nofollow">ソースコードを表示</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    <!-- /sidebar -->
+  </div>
+  
+  <!-- /content -->
+</div>
+  <!-- footer -->
+  
+  <div id="footer">
+    <div class="footerCol">
+      <h1><a href="index.html">glNetViz</a></h1>
+      <p class="copy">
+      &copy; Copyright 2013, Gpp Apps.
+      </p>
+      <p class="sp">
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3 で生成しました。
+      </p>
+    </div>
+    <div class="footerCol">
+    
+  <div class="relbar">
+    <dl id="relPrev">
+      <dt class="prev">前のトピックへ</dt>
+      <dd class="relTitle"><a href="contents01.html" title="前の章へ" accesskey="N">セットアップ手順</a></dd>
+    </dl>
+    <dl id="relNext">
+      <dt class="next">次のトピックへ</dt>
+      <dd class="relTitle"><a href="doc.html" title="次の章へ" >glNetViz ライブラリリファレンス</a></dd>
+    </dl>
+  </div>
+    </div>
+  </div>
+ 
+ <!-- /footer -->
+</body>
+</html>

@@ -1,0 +1,72 @@
+/*!
+ * webui.css
+ *
+ * Copyright (c) 2013 Yoshi 
+ * This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+ */
+
+#framerate {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 220px;
+  background-color: rgba(0,0,0,0.3);
+  padding: 1em;
+  color: white;
+}
+#displayinfo {
+  position: absolute;
+  top: 55px;
+  left: 20px;
+  width: 220px;
+  background-color: rgba(0,0,0,0.3);
+  padding: 1em;
+  color: white;
+}
+#uiContainer {
+  z-index: 2;
+  padding: 1em;
+  padding-left: -20px;
+  left: 480px;
+  position: absolute;
+  top: 20px;
+  width: 200px;
+  background: rgba(0,0,0,0.2);
+  color: white;
+  font-size: xx-small;
+}
+#ui {
+  padding: 5px;
+
+}
+#Scale {
+  margin-bottom: 6px;
+}
+#scale_slider {
+  position: absolute;
+  top: 24px;
+  left: 520px;
+  padding: 1em;
+  color: white;
+  font-size: xx-small;
+  height: 50px;
+}
+#xaxis_rotation_slider {
+  position: absolute;
+  top: 50px;
+  left: 620px;
+  padding: 1em;
+  color: white;
+  font-size: xx-small;
+  height: 50px;
+}
+
+/* Used for the Switch effect: */
+.perspective-enable, .perspective-disable, .perspective-enable span, .perspective-disable span { background: url(images/switch.gif) repeat-x; display: block; float: left; }
+.perspective-enable span, .perspective-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
+.perspective-enable span { background-position: left -90px; padding: 0 10px; }
+.perspective-disable span { background-position: right -180px;padding: 0 10px; }
+.perspective-disable.selected { background-position: 0 -30px; }
+.perspective-disable.selected span { background-position: right -210px; color: #fff; }
+.perspective-enable.selected { background-position: 0 -60px; }
+.perspective-enable.selected span { background-position: left -150px; color: #fff; }

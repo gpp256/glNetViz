@@ -1,0 +1,223 @@
+#!/usr/bin/perl
+#
+# sdn.pm
+#
+# Copyright (c) 2013 Yoshi 
+# This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+#
+package sdnLib;
+use JSON::PP;
+#use Data::Dumper;
+use YAML;
+
+use constant NETWORK_CONF =>'../conf/network.conf';
+
+my $curl_cmd = '@CMD_CURL@'; 
+my $pos_pool = '../conf/pos642.json';
+
+sub getConf2 {
+	my $conf = shift || '../conf/sdn.conf';
+	my $lines = '';
+	open(DATA, "< ".$conf);
+	$lines .= $_ while(<DATA>);
+	close(DATA);
+	my $data = decode_json($lines);
+#die sprintf("%s", Data::Dumper->Dump([$data], ['list']));
+	return $data->{"data"};
+}
+
+sub setConf {
+	my $conf = shift;
+	my $file = shift;
+	#my $data = encode_json $conf ;
+	#open(DATA, ">$file");
+	#print DATA $data;
+	#close(DATA);
+	YAML::DumpFile($file, $conf);
+}
+
+sub getConf {
+	my $file = shift || NETWORK_CONF;
+	my $conf = {};
+	eval {
+	        ($conf) = YAML::LoadFile($file);
+	};
+	if($@) {
+		return {};
+	}
+	return $conf;
+
+#	return $conflist = {
+#		controller_list => [
+#			{
+#				ipaddr => '192.168.1.4',
+#				origin => [ 0.0, 0.0, 0.0 ],
+#				posidx => 0,
+#				rad    => 0.0,
+#				name   => 'Controller01',
+#			},
+#		],
+##[{"dpid": "0x000000000001"}, {"dpid": "0x000000000002"}, {"dpid": "0x000000000003"}]
+#		switch_list => {
+#			'0x000000000001' => {
+#				posidx => 0,
+#				rad    => 5.0,
+#				name   => 'SW01',
+#			},
+#			'0x000000000002' => {
+#				posidx => 13,
+#				rad    => 5.0,
+#				name   => 'SW02',
+#			},
+#			'0x000000000003' => {
+#				posidx => 14,
+#				rad    => 5.0,
+#				name   => 'SW03',
+#			},
+#		},
+#		host_list => {
+#			'00:0c:29:03:17:33' => {
+#				posidx => 5,
+#				rad    => 3.0,
+#				name   => 'Host01',
+#			},
+#			'00:0c:29:e9:84:49' => {
+#				posidx => 4,
+#				rad    => 3.0,
+#				name   => 'Host02',
+#			},
+#			'00:0c:29:1f:8e:8a' => {
+#				posidx => 6,
+#				rad    => 3.0,
+#				name   => 'Host03',
+#			},
+#			'00:0c:29:d9:d2:0b' => {
+#				posidx => 26,
+#				rad    => 3.0,
+#				name   => 'FW-eth0',
+#			},
+#			'00:0c:29:d9:d2:15' => {
+#				posidx => 4,
+#				rad    => 3.0,
+#				name   => 'FW-eth1',
+#			},
+#		},
+#	};
+	# pos = 10, 20, 29 縺ｯ NG(x=0 or y=0縺ｯNG)
+}
+
+sub getPosPool {
+	my $lines = '';
+	open(DATA, "< $pos_pool");
+	$lines .= $_ while(<DATA>);
+	close(DATA);
+	my $data = decode_json($lines);
+	$pos_array = $data->{"data"};
+}
+
+sub getHostInfo {
+	my $ipaddr = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/show_hosts 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getActionList {
+	my $ipaddr = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/dump_actions 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getDpids {
+	my $ipaddr = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/show_dpids 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getLinks {
+	my $ipaddr = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/show_links 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getTableStats {
+	my $ipaddr = shift;
+	my $dpid = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+			-d "{¥¥"dpid¥¥": ¥¥"$dpid¥¥"}" ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/show_tstats 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getPortStats {
+	my $ipaddr = shift;
+	my $dpid = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+			-d "{¥¥"dpid¥¥": ¥¥"$dpid¥¥"}" ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/show_pstats 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getPortsInfo {
+	my $ipaddr = shift;
+	my $dpid = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+			-d "{¥¥"dpid¥¥": ¥¥"$dpid¥¥"}" ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/show_ports 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getFlowInfo {
+	my $ipaddr = shift;
+	my $dpid = shift;
+	$cmd = <<END_OF_LINE;
+	    $curl_cmd -k -H 'Content-Type: application/json' ¥¥
+			-d "{¥¥"dpid¥¥": ¥¥"$dpid¥¥"}" ¥¥
+	        -X PUT https://$ipaddr/ws.v1/nox/dump_flows 2>/dev/null
+END_OF_LINE
+	my $res = `$cmd`;
+	return decode_json $res;
+}
+
+sub getRot {
+    my $src = shift;
+	my $dst = shift;
+	my $cmd = 'perl get_rotateinfo.pl';
+	my @result = `$cmd $src->[0] $src->[1] $src->[2] $dst->[0] $dst->[1] $dst->[2]`;
+	chomp($result);
+	my $rot = [];
+	foreach (@result) {
+		chomp;
+		s/\s+//g;
+		next if (/[^\-,\d\.]/);
+		my @cols = split(/,/, $_);
+		push @$rot, \@cols;
+	}
+	return $rot;
+}
+
+1;
