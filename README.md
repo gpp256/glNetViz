@@ -1,12 +1,15 @@
 glNetViz
 ========
 
-Welcome!
-----------
-
 The glNetViz is a free tool for visualizing computer network topologies with WebGL.
 
-With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently.
+With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently. The glNetViz is aiming for the convenient tool which can easily visualize the network topologies from the serialized data in YAML or JSON.
+
+Examples
+---------
+![http://gpp256.zapto.org/glNetViz/examples/sample08_01.png](http://gpp256.zapto.org/glNetViz/examples/sample08_01.png)
+
+* [http://gpp256.zapto.org/glNetViz/examples/](http://gpp256.zapto.org/glNetViz/examples/)
 
 Quick Start
 ------------
@@ -58,7 +61,7 @@ blog: http://gpp256.blogspot.jp
 
 License
 ----------
-Copyright &copy; 2013 Yoshi(gpp65536@yahoo.co.jp)  
+Copyright &copy; 2013 Yoshi(@gpp256)  
 Distributed under the [MIT License][mit].  
 
 [MIT]: http://www.opensource.org/licenses/mit-license.php
