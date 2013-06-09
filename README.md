@@ -35,7 +35,7 @@ To install, run the following commands in the glNetViz directory.
     >         Allow from all
     >     </Directory>
     $ sudo /usr/local/etc/rc.d/apache restart
-    $ sudo vi /opt/glNetViz/.htaccess
+    $ sudo cat /opt/glNetViz/.htaccess
 
 Some perl modules are needed for starting the glNetViz. 
 
