@@ -5,9 +5,6 @@
  * This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
  */
 
-// Initialize glNetViz functions
-var glNetViz = {}; 
-
 // webgl context
 var gl = undefined;
 
@@ -67,7 +64,8 @@ var g = {
 	drawinfo_flows: [],
 	gwflowstat: {},
 	drawinfo_gwflows: [],
-	arrow_default_pos: [0, 48, 100],
+	//arrow_default_pos: [0, 48, 100],
+	arrow_default_pos: [0],
 	arrow_delta: 0.5,
 	getflow_updateflag: 1,
 	getstat_interval: 1800, // 65fps: 27s, 60fps: 30s

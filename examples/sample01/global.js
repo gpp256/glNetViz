@@ -5,9 +5,6 @@
  * This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
  */
 
-// Initialize glNetViz functions
-var glNetViz = {}; 
-
 // webgl context
 var gl = undefined;
 
@@ -40,6 +37,8 @@ var g = {
 	old_view_mode: 1,
 	// number of polygons
 	polygon_num: 0,
+	// parameters to draw flows
+	drawinfo_flows: [],
 	// rotation arrays
 	rinfo: {}
 };

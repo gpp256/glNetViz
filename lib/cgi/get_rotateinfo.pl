@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 #
 # get_rotateinfo.pl
 #

@@ -5,9 +5,6 @@
  * This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
  */
 
-// Initialize glNetViz functions
-var glNetViz = {}; 
-
 // webgl context
 var gl = undefined;
 

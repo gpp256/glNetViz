@@ -1,0 +1,82 @@
+<!--
+ sample.html ver.1.0
+
+ Copyright (c) 2013 Yoshi 
+ This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+-->
+
+<html>
+<head>
+<title>WebGL and jQuery - sample08 </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta content="chrome=1" http-equiv="X-UA-Compatible" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="Sat, 31 Aug 2000 17:35:42 GMT">
+<!-- global variables -->
+<script type="text/javascript" src="global.js"></script>
+<!-- common libraries -->
+<link type="text/css" rel="stylesheet" href="../../lib/css/jquery-ui-1.css">
+<link type="text/css" rel="stylesheet" href="../../lib/css/jslider.css">
+<script type="text/javascript" src="../../lib/js/jquery-1.7.min.js"> </script>
+<script type="text/javascript" src="../../lib/js/jquery-ui-1.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery.sprintf.js"></script>
+<script type="text/javascript" src="../../lib/js/minMatrix.js"></script>
+<script type="text/javascript" src="../../lib/js/glNetViz.js"></script>
+<script type="text/javascript" src="../../lib/js/mouse_event.js"></script>
+<!-- scripts for sample08 -->
+<link type="text/css" rel="stylesheet" href="webui.css">
+<script type="text/javascript" src="../common.js"> </script>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+<!-- left ui -->
+<div id="framerate" style="font-size: x-small"></div>
+<div id="displayinfo" style="font-size: xx-small; "> 
+<font size"+0" color="yellow"><b>―</b></font> Network cables (Flooding is enabled)<br>
+<font size"+0" color="gray"><b>―</b></font> Network cables (Flooding is disabled)<br>
+<font size"+0" color="red"><b>←</b></font> TCP Packets<br>
+<font size"+0" color="blue"><b>←</b></font> UDP Packets<br>
+<font size"+0" color="mazenda"><b>←</b></font> ICMP Packets<br>
+</div>
+<div id="objinfo" style="font-size: x-small; font-color: yellow"> 
+Device Infomation:<br>
+</div>
+<!-- left ui -->
+<table><tr>
+<td nowrap> <canvas id="canvas"></canvas> </td>
+<td nowrap valign="top" style="font-size: x-small; margin: 20px">
+<b><font size="+1">Drawing Parameters</font></b>
+<hr>
+<br>
+<b>Toggle Perspective/Orthographic:</b> <p>
+<p class="switch">
+<label id="perspective-enable" class="perspective-enable"><span>Perspective</span></label>
+<label id="perspective-disable" class="perspective-disable selected"><span>Orthographic</span></label>
+</p>
+<br><br><br><br>
+<p>
+<b>Select a Network Topology:</b> <p>
+<div>
+  <select name="snum" id="snum" size="5" style="width: 100%" onChange="changeNetworkTopologies(this);">
+   <option value="2">Switch x 2, Host x 2
+   <option value="3">Switch x 3, Host x 3
+   <option value="4">Switch x 3, Host x 3, Firewall x 1
+   <option value="8" selected>Switch x 8, Host x 2
+   <option value="27">Switch x 26, Host x 8
+  </select>
+</div>
+<br><br>
+
+</td>
+<tr></table>
+<!-- right ui -->
+<div id="uiContainer"> <div id="ui"> </div> </div>
+<div id="scale_slider">:    1</div>
+<div id="xaxis_rotation_slider">:    1</div>
+<!-- right ui -->
+<div id="debug"></div>
+</body>
+</html>

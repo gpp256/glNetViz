@@ -107,8 +107,9 @@ sub getConf {
 }
 
 sub getPosPool {
+	my $conf = shift || $pos_pool;
 	my $lines = '';
-	open(DATA, "< $pos_pool");
+	open(DATA, "< $conf");
 	$lines .= $_ while(<DATA>);
 	close(DATA);
 	my $data = decode_json($lines);
@@ -206,7 +207,7 @@ END_OF_LINE
 sub getRot {
     my $src = shift;
 	my $dst = shift;
-	my $cmd = 'perl get_rotateinfo.pl';
+	my $cmd = shift || 'perl get_rotateinfo.pl';
 	my @result = `$cmd $src->[0] $src->[1] $src->[2] $dst->[0] $dst->[1] $dst->[2]`;
 	chomp($result);
 	my $rot = [];

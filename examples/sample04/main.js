@@ -6,7 +6,7 @@
  */
 
 // jQuery Ready Function
-$(function () { glNetViz.initEvent(); initUI(); });
+$(function () { glnv = new glNetViz(); glnv.initEvent(); initUI(); });
 
 window.onload = function(){
 	// ---------------------------------------------------------------
@@ -18,46 +18,33 @@ window.onload = function(){
 
 	// create shader programs
 	var prg = {}; var texprg = {} ;
-	var uniLocation = new Array(); var attLocation = new Array();
-	var attStride = new Array();
 	initShader();
-
 	// create textures
-	var textureList = new Array(); initTexture();
-
-	// create objects
-	var pos_vbo = {}; var nor_vbo = {}; var col_vbo = {}; var ibo = {};
-	var arrows = {};
+	glnv.initTextures('../../lib/textures');
 	// get parameters for visualizing objects
 	loadObject();
-	// create arrows
-	createArrows();
-	// create spheres
-	glNetViz.generateSphereObjects(prg);
 	// create cubes
-	glNetViz.generateCubeObjects(prg);
+	glnv.generateCubes(prg, [ {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0} ]);
 	// create rectangles
-	glNetViz.generateRectangles(texprg);
-	// create cylinders
-	glNetViz.generateCylinderObjects(prg);
+	glnv.generateCylinders(prg, [
+		{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
+		{id: "gray", r: 0.1, g: 0.1, b: 0.1, a: 1.0}
+	]);
 	// create cones
-	glNetViz.generateConeObjects(prg);
+	glnv.generateCones(prg, [{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0}]);
 	// show number of polygons
 	$("#displayinfo").append("Number of Polygons: " + g.polygon_num);
 
-	// initialize projection matrix
-	var mvMatrixStack = [];
+	// initialize Model View Matrix
 	var m = new matIV();
-	var mMatrix = m.identity(m.create()); var vMatrix = m.identity(m.create());
-	var pMatrix = m.identity(m.create()); var tmpMatrix = m.identity(m.create());
+	glnv.mMatrix = m.identity(m.create()); 
+	// initialize View Projection Matrix
+	var vMatrix = m.identity(m.create()); var pMatrix = m.identity(m.create()); 
 	var mvpMatrix = m.identity(m.create()); var invMatrix = m.identity(m.create());
-	m.lookAt([0.0, 0.0, 18.0], [0, 0, 0], [0, 1, 0], vMatrix);
-	g.mRatio = c.width / c.height;
-	gl.viewportWidth = c.width; gl.viewportHeight = c.height;
-	m.perspective(45, c.width / c.height, 0.1, 100, pMatrix);
-	m.multiply(pMatrix, vMatrix, tmpMatrix);
-	var then = 0.0;
+	initVPMatrix();
 
+	// set mouse event parameters
+	var then = 0.0;
 	// -- Create Slider --
 	createSliderUI();
  
@@ -117,40 +104,29 @@ window.onload = function(){
 						return true;
 					}
 				}
-				mvPushMatrix();
+				glnv.mvPushMatrix();
 				// Switch
 				if (val['texture'] == 1) {
-	    			m.translate(mMatrix, val['pos'], mMatrix);
-					//if (g.drawObjLabelsFlag) 
-					//	putStr(val['name'], 0.15, [0.0, 0.48, 0.0], 0.32, "green");
-					m.scale(mMatrix, [1.0, 1.1, 1.0], mMatrix);
-	    			//m.rotate(mMatrix, glNetViz.degToRad(g.switch_rotate_param*10), 
-					//	[0, 1, 0], mMatrix);
+	    			m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+					m.scale(glnv.mMatrix, [1.0, 1.1, 1.0], glnv.mMatrix);
 					drawCube(1, 0.0);
 				// Controller
 				} else if (val['texture']==0) {
-	    		    m.translate(mMatrix, val['pos'], mMatrix);
-					//if (g.drawObjLabelsFlag) 
-					//	putStr(val['name'], 0.15, [0.0, 0.52, 0.0], 0.32, "green");
-					m.scale(mMatrix, [1.2, 1.6, 1.2], mMatrix);
-	    			//m.rotate(mMatrix, 
-					//	glNetViz.degToRad(g.controller_rotate_param*10), [0, 1, 0], mMatrix);
+	    		    m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+					m.scale(glnv.mMatrix, [1.2, 1.6, 1.2], glnv.mMatrix);
 					drawCube(0, 0.0);
 				// Host
 				} else if (val['texture']==2) {
-	    		    m.translate(mMatrix, val['origin'], mMatrix);
-	    		    m.translate(mMatrix, val['pos'], mMatrix);
-					//if (g.drawObjLabelsFlag) 
-					//	putStr(val['name'], 0.15, [0.0, 0.72, 0.0], 0.32, "green");
-					m.scale(mMatrix, [0.6, 0.6, 0.6], mMatrix);
-	    			//m.rotate(mMatrix, glNetViz.degToRad(g.host_rotate_param*10), 
-					//	[0, 1, 0], mMatrix);
+	    		    m.translate(glnv.mMatrix, val['origin'], glnv.mMatrix);
+	    		    m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+					m.scale(glnv.mMatrix, [0.6, 0.6, 0.6], glnv.mMatrix);
 					drawCube(2, 90.0);
 				// Others
 				} else {
 				}
-				if (g.check_intersect == 1) result_intersect = intersect(key, result_intersect);
-				mvPopMatrix();
+				if (g.check_intersect == 1) 
+					result_intersect = glnv.intersect(key, result_intersect);
+				glnv.mvPopMatrix();
 			});
 		} else {
 		}
@@ -159,17 +135,16 @@ window.onload = function(){
 		if (g.other_objs["objs"] != undefined) {
 		for (var i=0; i<g.other_objs["objs"].length; i++) {
 			var objinfo = g.other_objs["objs"][i];
-			mvPushMatrix();
+			glnv.mvPushMatrix();
 			if (objinfo['origin'] != undefined) {
-				m.translate(mMatrix, objinfo['origin'], mMatrix);
+				m.translate(glnv.mMatrix, objinfo['origin'], glnv.mMatrix);
 			} else {
-				m.translate(mMatrix, [0.0, 0.0, 0.0], mMatrix);
+				m.translate(glnv.mMatrix, [0.0, 0.0, 0.0], glnv.mMatrix);
 			}
-			m.translate(mMatrix, objinfo['pos'], mMatrix);
-			m.scale(mMatrix, objinfo['scale'], mMatrix);
-			//mat4.rotate(mvMatrix, degToRad(g.switch_rotate_param*10), [0, 1, 0]);
+			m.translate(glnv.mMatrix, objinfo['pos'], glnv.mMatrix);
+			m.scale(glnv.mMatrix, objinfo['scale'], glnv.mMatrix);
 			drawCube(objinfo['texture_id'], 0.0);
-			mvPopMatrix();
+			glnv.mvPopMatrix();
 		}
 		}
 
@@ -207,92 +182,40 @@ window.onload = function(){
 				g.selected_obj = -1;
 			}
 			g.intersect_index = result_intersect.touch_flag;
-		}
-
+		} // if 
 		gl.useProgram(prg);
 	}
 
 	// draw cube
 	function drawCube(texture_num, rot) {
 		gl.uniform1i(texprg.samplerUniform, texture_num);
-		mvPushMatrix();
-    	m.rotate(mMatrix, glNetViz.degToRad(rot), [0, 0, 1], mMatrix);
-		m.scale(mMatrix, [0.8, 0.23, 0.8], mMatrix);
-		setMatrixTextureUniforms();
-		glNetViz.putCube(
+		glnv.mvPushMatrix();
+    	m.rotate(glnv.mMatrix, glnv.degToRad(rot), [0, 0, 1], glnv.mMatrix);
+		m.scale(glnv.mMatrix, [0.8, 0.23, 0.8], glnv.mMatrix);
+		glnv.setMatrixUniforms(texprg, 'use_texture');
+		glnv.putCube(
 			prg.cubes["red"]["v"], prg.cubes["red"]["n"], 
 			prg.cubes["red"]["t"], prg.cubes["red"]["i"], [
 				texprg.vertexPositionAttribute,
 				texprg.vertexNormalAttribute, 
 				texprg.textureCoordAttribute ], [ 3, 3, 2 ]);
-		mvPopMatrix();
+		glnv.mvPopMatrix();
 	}
 
 	// draw cones
 	function putCones(pos, color) {
 		g.intersect_rot+=2;
-		mvPushMatrix();
-		m.translate(mMatrix, [-pos[0], -pos[1]+1.7, -pos[2]], mMatrix);
-		m.scale(mMatrix, [0.45, 0.45, 0.45], mMatrix);
-	    m.rotate(mMatrix, glNetViz.degToRad(g.intersect_rot), [0, 1, 0], mMatrix);
-	    m.rotate(mMatrix, glNetViz.degToRad(-180), [1, 0, 0], mMatrix);
-		setMatrixUniforms();
-		glNetViz.putCone(
+		glnv.mvPushMatrix();
+		m.translate(glnv.mMatrix, [-pos[0], -pos[1]+1.7, -pos[2]], glnv.mMatrix);
+		m.scale(glnv.mMatrix, [0.45, 0.45, 0.45], glnv.mMatrix);
+	    m.rotate(glnv.mMatrix, glnv.degToRad(g.intersect_rot), [0, 1, 0], glnv.mMatrix);
+	    m.rotate(glnv.mMatrix, glnv.degToRad(-180), [1, 0, 0], glnv.mMatrix);
+		glnv.setMatrixUniforms(prg, 'default');
+		glnv.putCone(
 			prg.cones[color]["v"], prg.cones[color]["n"], 
-			prg.cones[color]["c"], prg.cones[color]["i"], attLocation, [ 3, 3, 4 ]
+			prg.cones[color]["c"], prg.cones[color]["i"], prg.attLocation, [ 3, 3, 4 ]
 		);
-		mvPopMatrix();
-	}
-
-	// push model view matrix
-	function mvPushMatrix() {
-	    var copy = m.create();
-	    m.set(mMatrix, copy);
-	    mvMatrixStack.push(copy);
-	}
-
-	// pop model view matrix
-	function mvPopMatrix() {
-	    if (mvMatrixStack.length == 0) {
-	        throw "Invalid popMatrix!";
-	    }
-	    mMatrix = mvMatrixStack.pop();
-	}
-
-	// set Matirx Uniforms
-	function setMatrixUniforms() {
-		m.multiply(tmpMatrix, mMatrix, mvpMatrix);
-		m.inverse(mMatrix, invMatrix);
-		gl.uniformMatrix4fv(uniLocation[0], false, mvpMatrix);
-		gl.uniformMatrix4fv(uniLocation[1], false, invMatrix);
-	}
-
-	// set Matirx Uniforms
-	function setMatrixTextureUniforms() {
-		gl.uniformMatrix4fv(texprg.pMatrixUniform, false, tmpMatrix);
-		gl.uniformMatrix4fv(texprg.mvMatrixUniform, false, mMatrix);
-		var normalMatrix = new Float32Array(9);
-		gl.uniformMatrix3fv(texprg.nMatrixUniform, false, normalMatrix);
-	}
-	
-	// draw Arrow Objects
-	function drawArrow(pos_vbo, nor_vbo, col_vbo, attLocation, attStride) {
-		m.translate(mMatrix, [0.0, 35.0/2.0, 0.0], mMatrix);
-		setMatrixUniforms();
-		// VBO を登録する
-		var objs = ['cylinder', 'cone'];
-		for (var i = 0; i<objs.length; i++) {
-			if (objs[i] == 'cone') {
-				m.translate(mMatrix, [0.0, 35.0, 0.0], mMatrix);
-				setMatrixUniforms();
-			}
-			glNetViz.setAttribute(
-				[pos_vbo[objs[i]], nor_vbo[objs[i]], col_vbo[objs[i]]], attLocation, attStride);
-			// IBOをバインドして登録する
-			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo[objs[i]]);
-			// モデルの描画
-			gl.drawElements(ibo[objs[i]].drawMethod, ibo[objs[i]].numItems, gl.UNSIGNED_SHORT, 0);
-		}
+		glnv.mvPopMatrix();
 	}
 
 	// draw cylinders
@@ -301,24 +224,24 @@ window.onload = function(){
 			+(end[1]-start[1])*(end[1]-start[1])+(end[2]-start[2])*(end[2]-start[2]));
 		length1 *= 0.31;
 		
-		mvPushMatrix();
-		m.translate(mMatrix, [start[0],start[1],start[2]], mMatrix);
-		m.scale(mMatrix, [length1, length1, length1], mMatrix);
+		glnv.mvPushMatrix();
+		m.translate(glnv.mMatrix, [start[0],start[1],start[2]], glnv.mMatrix);
+		m.scale(glnv.mMatrix, [length1, length1, length1], glnv.mMatrix);
 		for (var i=0; i<rot.length; i++) 
-			m.rotate(mMatrix, glNetViz.degToRad(
-				rot[i][0]), [rot[i][1], rot[i][2], rot[i][3]], mMatrix);
-		m.scale(mMatrix, [1.0, 1.4/length1, 1.4/length1], mMatrix);
-		m.rotate(mMatrix, glNetViz.degToRad(-90.0), [0, 0, 1], mMatrix);
+			m.rotate(glnv.mMatrix, glnv.degToRad(
+				rot[i][0]), [rot[i][1], rot[i][2], rot[i][3]], glnv.mMatrix);
+		m.scale(glnv.mMatrix, [1.0, 1.4/length1, 1.4/length1], glnv.mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(-90.0), [0, 0, 1], glnv.mMatrix);
 
-		m.translate(mMatrix, [0.0, 3.0/2.0, 0.0], mMatrix);
+		m.translate(glnv.mMatrix, [0.0, 3.0/2.0, 0.0], glnv.mMatrix);
 
-		setMatrixUniforms();
-		glNetViz.putCylinder(
+		glnv.setMatrixUniforms(prg, 'default');
+		glnv.putCylinder(
 			prg.cylinders[color]["v"], prg.cylinders[color]["n"], 
 			prg.cylinders[color]["c"], prg.cylinders[color]["i"], 
-			attLocation, [ 3, 3, 4 ]
+			prg.attLocation, [ 3, 3, 4 ]
 		);
-		mvPopMatrix();
+		glnv.mvPopMatrix();
 	}
 
 	// create slider ui
@@ -334,183 +257,33 @@ window.onload = function(){
 		}
 	}
 
-	// initialize  textures
-	function initTexture() {
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/pfc_texture01.png', 0, 256, 128);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/sw_texture01.png', 1, 256, 128);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/pc_texture01.png', 2, 256, 128);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/fw_texture01.png', 3, 256, 128);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/earthmap.png', 4, 256, 128);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/font_red.png', 5, 256, 256);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/font_green.png', 6, 256, 256);
-		glNetViz.createTexture(textureList, 
-			'../../lib/textures/font_blue.png', 7, 256, 256);
+	// initialize View Projection Matrix
+	function initVPMatrix() {
+		glnv.vpMatrix = m.identity(m.create());
+		m.lookAt([0.0, 0.0, 2.5], [0, 0, 0], [0, 1, 0], vMatrix);
+		g.mRatio = c.width / c.height;
+		gl.viewportWidth = c.width; gl.viewportHeight = c.height;
+		m.perspective(45, c.width / c.height, 0.1, 100, pMatrix);
+		m.multiply(pMatrix, vMatrix, glnv.vpMatrix);
 	}
 
 	// initialize shader programs
 	function initShader() {
-		var v_shader = glNetViz.createShader(
-			'raw', 'x-shader/x-vertex', glNetViz.getVertexShader('default'));
-		var f_shader = glNetViz.createShader(
-			'raw', 'x-shader/x-fragment', glNetViz.getFragmentShader('default'));
-		prg = glNetViz.createProgram(v_shader, f_shader);
-		v_shader = glNetViz.createShader(
-			'raw', 'x-shader/x-vertex', glNetViz.getVertexShader('use_texture'));
-		f_shader = glNetViz.createShader(
-			'raw', 'x-shader/x-fragment', glNetViz.getFragmentShader('use_texture'));
-		texprg = glNetViz.createProgram(v_shader, f_shader);
+		var v_shader = glnv.createShader(
+			'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+		var f_shader = glnv.createShader(
+			'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+		prg = glnv.createProgram(v_shader, f_shader);
+		glnv.initUniformLocation(prg, 'default');
 
-		// get parameter locations for prg
-		uniLocation[0] = gl.getUniformLocation(prg, 'mvpMatrix');
-		uniLocation[1] = gl.getUniformLocation(prg, 'invMatrix');
-		uniLocation[2] = gl.getUniformLocation(prg, 'lightDirection');
-		uniLocation[3] = gl.getUniformLocation(prg, 'eyeDirection');
-		uniLocation[4] = gl.getUniformLocation(prg, 'ambientColor');
-		attLocation[0] = gl.getAttribLocation(prg, 'position');
-		attLocation[1] = gl.getAttribLocation(prg, 'normal');
-		attLocation[2] = gl.getAttribLocation(prg, 'color');
-		attStride[0] = 3; attStride[1] = 3; attStride[2] = 4;
+		v_shader = glnv.createShader(
+			'raw', 'x-shader/x-vertex', glnv.getVertexShader('use_texture'));
+		f_shader = glnv.createShader(
+			'raw', 'x-shader/x-fragment', glnv.getFragmentShader('use_texture'));
+		texprg = glnv.createProgram(v_shader, f_shader);
+		glnv.initUniformLocation(texprg, 'use_texture');
 
-		// get parameter locations
-        texprg.vertexPositionAttribute = gl.getAttribLocation(texprg, "aVertexPosition");
-        gl.enableVertexAttribArray(texprg.vertexPositionAttribute);
-        texprg.vertexNormalAttribute = gl.getAttribLocation(texprg, "aVertexNormal");
-        gl.enableVertexAttribArray(texprg.vertexNormalAttribute);
-        texprg.textureCoordAttribute = gl.getAttribLocation(texprg, "aTextureCoord");
-        gl.enableVertexAttribArray(texprg.textureCoordAttribute);
-
-        texprg.mvMatrixUniform = gl.getUniformLocation(texprg, "uMVMatrix");
-        texprg.pMatrixUniform = gl.getUniformLocation(texprg, "uPMatrix");
-        texprg.nMatrixUniform = gl.getUniformLocation(texprg, "uNMatrix");
-        texprg.ambientColorUniform = gl.getUniformLocation(texprg, "uAmbientColor");
-        texprg.lightingDirectionUniform = gl.getUniformLocation(texprg, "uLightingDirection");
-        texprg.directionalColorUniform = gl.getUniformLocation(texprg, "uDirectionalColor");
-        texprg.useLightingUniform = gl.getUniformLocation(texprg, "uUseLighting");
-
-        texprg.alphaUniform = gl.getUniformLocation(texprg, "uAlpha");
-        texprg.samplerUniform = gl.getUniformLocation(texprg, "uSampler");
-        texprg.useTextureUniform = gl.getUniformLocation(texprg, "uUseTexture");
-        texprg.useArrowUniform = gl.getUniformLocation(texprg, "uUseArrow");
-
-		// initialize parameters
-		gl.uniform3f(texprg.ambientColorUniform, 0.8, 0.8, 0.8);
-    	var adjustedLD = new Float32Array(3);
-		adjustedLD[0] = 0.0; adjustedLD[0] = 0.0; adjustedLD[0] = -1.0;
-    	gl.uniform3fv(texprg.lightingDirectionUniform, adjustedLD);
-		gl.uniform3f(texprg.directionalColorUniform, 0.6, 0.6, 0.6);
-    	gl.uniform1i(texprg.useLightingUniform, 1);
-
-    	gl.uniform1f(texprg.alphaUniform, 1.0);
-    	gl.uniform1i(texprg.samplerUniform, 0);
-    	gl.uniform1i(texprg.useTextureUniform, 1);
-    	gl.uniform1i(texprg.useArrowUniform, 0);
-
-		// set the default shader program
 		gl.useProgram(prg);
-		var lightDirection = [-0.5, 0.5, 0.5]; 
-		var eyeDirection = [0.0, 0.0, 25.0]; 
-		var ambientColor = [0.2, 0.2, 0.2, 1.0]; 
-		gl.uniform3fv(uniLocation[2], lightDirection);
-		gl.uniform3fv(uniLocation[3], eyeDirection);
-		gl.uniform4fv(uniLocation[4], ambientColor);
-
-	}
-
-	function putStr(outchar, size, pos, c_spacing, color) {
-		gl.enable(gl.BLEND);
-		gl.disable(gl.DEPTH_TEST);
-		gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-	
-		mvPushMatrix();
-    	m.translate(mMatrix, pos, mMatrix);
-		m.scale(mMatrix, [size*c_spacing, size*0.9, size], mMatrix);
-		var dx = 1.4;
-		var start_pos = (outchar.length/2.0-0.5)*-dx;
-		for (var i=0; i<outchar.length; i++) {
-			mvPushMatrix();
-    		m.translate(mMatrix, [start_pos+i*dx, 0.0, 0.0], mMatrix);
-			setMatrixTextureUniforms();
-			glNetViz.putChar(texprg, outchar[i], color);
-			mvPopMatrix();
-		}
-		mvPopMatrix();
-
-		gl.disable(gl.BLEND);
-		gl.enable(gl.DEPTH_TEST);
-	}
-
-	// 視線追跡、交点調査
-	// x=lt+x1
-	// y=mt+y1
-	// z=nt+z1
-	// (x-x0)^2+(y-y0)^2+(z-z0)^2=R^2
-	
-	// x^2+y^2+z^2-2(x0x+y0y+z0z)+x0^2+y0^2+z0^2-R^2=0
-	// (l^2+m^2+n^2)t^2+2{l(x1-x0)+m(y1-y0)+n(z1-z0)}t
-	// +x1^2+y1^2+z1^2+x0^2+y0^2+z0^2-R^2-2(x1x0+y1y0+z1z0)=0
-	// a=l^2+m^2+n^2
-	// b=l(x1-x0)+m(y1-y0)+n(z1-z0)
-	// c=x1^2+y1^2+z1^2+x0^2+y0^2+z0^2-R^2-2(x1x0+y1y0+z1z0)
-	
-	// at^2+2bt+c=0
-	// t=(-b+-sqrt(b^2-ac))/a
-	// b^2-ac>0 or b^2-ac<=0
-	// var objid = intersect(g_eye.pos, g_eye.v);
-	//function intersect(tmin, s, P, D) { 
-	function multiplyVec3(a,b,c){
-		var d=b[0],e=b[1];b=b[2];
-		c[0]=a[0]*d+a[4]*e+a[8]*b+a[12];
-		c[1]=a[1]*d+a[5]*e+a[9]*b+a[13];
-		c[2]=a[2]*d+a[6]*e+a[10]*b+a[14];
-	}
-	function intersect(objid, result) { 
-		var tol = 1.0e-7;
-		var obj_size = g.scale / 30.0;
-		var rr = obj_size*obj_size * 0.1;
-		//define vecDot(A, B) ((A.x)*(B.x)+(A.y)*(B.y)+(A.z)*(B.z))
-		//function vecComb(A, a, B, C) {
-		//	(A.x)=((C.x)+(a)*(B.x)); //	(A.y)=((C.y)+(a)*(B.y)); //	(A.z)=((C.z)+(a)*(B.z));
-		//}
-		pos = [0, 0, 0];
-		multiplyVec3(mMatrix, [0, 0, 0], pos); 
-		//vecComb(V,-1.0,(P),pos); 
-		// 視点
-	    var V = [0, 0, 0];
-		V[0] = pos[0]-g.eye.x;
-		V[1] = pos[1]-g.eye.y;
-		V[2] = pos[2]-g.eye.z;
-		// 視線ベクトル
-		var D = [0, 0, -1.0];
-		// 透視投影の場合は視点と視線ベクトルを変える必要がある(未実装)
-		//b=vecDot((D),V); 
-		var b = D[0]*V[0]+D[1]*V[1]+D[2]*V[2];
-		//root = b*b-vecDot(V,V)+rr; 
-		var root = b*b-(V[0]*V[0]+V[1]*V[1]+V[2]*V[2])+rr;
-		root = (root > 0) ? Math.sqrt(root) : 1.0e31;
-		root = (b-root > tol) ? b - root : b + root;
-		if ( root>=tol && root<result.tmin){ 
-			result.touch_flag=objid; 
-			result.tmin=root; 
-		}
-		return result;
-	}
-
-	// create arrows
-	function createArrows() {
-		glNetViz.createArrow({r: 1.0, g: 0.0, b: 0.0, a: 1.0}, 
-			pos_vbo, nor_vbo, col_vbo, ibo);
-		arrows["red"] = {v: pos_vbo, n: nor_vbo, c: $.extend({}, col_vbo), i: ibo};
-		glNetViz.changeArrowColor({r: 0.0, g: 1.0, b: 0.0, a: 1.0}, col_vbo, ibo);
-		arrows["green"] = {v: pos_vbo, n: nor_vbo, c: $.extend({}, col_vbo), i: ibo};
-		glNetViz.changeArrowColor({r: 0.0, g: 0.0, b: 1.0, a: 1.0}, col_vbo, ibo);
-		arrows["blue"] = {v: pos_vbo, n: nor_vbo, c: $.extend({}, col_vbo), i: ibo};
 	}
 
 	// initialize a canvas
@@ -519,14 +292,14 @@ window.onload = function(){
     	gl.viewport(0, 0, c.width, c.height);
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		// active textures 
-		gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, textureList[0]);
-		gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, textureList[1]);
-		gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, textureList[2]);
-		gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, textureList[3]);
-		gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, textureList[4]);
-		gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, textureList[5]);
-		gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, textureList[6]);
-		gl.activeTexture(gl.TEXTURE7); gl.bindTexture(gl.TEXTURE_2D, textureList[7]);
+		gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[0]);
+		gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[1]);
+		gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[2]);
+		gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[3]);
+		gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[4]);
+		gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[5]);
+		gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[6]);
+		gl.activeTexture(gl.TEXTURE7); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[7]);
 
 		if (g.view_mode != g.old_view_mode) {
 			if (g.view_mode) {
@@ -535,15 +308,14 @@ window.onload = function(){
 			var ratio = c.width / c.height;
 			m.ortho(-5, 5, -5/ratio, 5/ratio, -50.0, 50.0, pMatrix);
 			}
-			m.multiply(pMatrix, vMatrix, tmpMatrix);
+			m.multiply(pMatrix, vMatrix, glnv.vpMatrix);
 			g.old_view_mode = g.view_mode;
 		}
-
-		m.identity(mMatrix);
+		m.identity(glnv.mMatrix);
 
 		// -- Keyboard Event --
-		m.rotate(mMatrix, glNetViz.degToRad(g.xRot), [1, 0, 0], mMatrix);
-		m.rotate(mMatrix, glNetViz.degToRad(g.yRot), [0, 1, 0], mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(g.xRot), [1, 0, 0], glnv.mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(g.yRot), [0, 1, 0], glnv.mMatrix);
 
 		// -- Mouse Event --
 		// dampen the velocity
@@ -555,18 +327,17 @@ window.onload = function(){
 		g.scrollX += g.moveVelocityX * elapsedTime;
 		g.scrollY += g.moveVelocityY * elapsedTime;
 		// trackball
-		var tscale = glNetViz.degToRad(-g.scrollY)*0.4+2.0;
-		m.scale(mMatrix, [tscale, tscale, tscale], mMatrix);
-		m.rotate(mMatrix, glNetViz.degToRad(g.scrollX), [0, 1, 0], mMatrix);
+		var tscale = glnv.degToRad(-g.scrollY)*0.4+2.0;
+		m.scale(glnv.mMatrix, [tscale, tscale, tscale], glnv.mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(g.scrollX), [0, 1, 0], glnv.mMatrix);
 
 		// -- Slider Event --
 		var obj_size = g.scale / 30.0;
 		obj_size = obj_size * 0.30;
-		m.scale(mMatrix, [obj_size, obj_size, obj_size], mMatrix);
-		m.rotate(mMatrix, glNetViz.degToRad(g.xaxis_rotate_param*5.0), [1, 0, 0], mMatrix);
-		m.multiply(tmpMatrix, mMatrix, mvpMatrix);
-		m.inverse(mMatrix, invMatrix);
+		m.scale(glnv.mMatrix, [obj_size, obj_size, obj_size], glnv.mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(g.xaxis_rotate_param*5.0), [1, 0, 0], glnv.mMatrix);
+		m.multiply(glnv.vpMatrix, glnv.mMatrix, mvpMatrix);
+		m.inverse(glnv.mMatrix, invMatrix);
 	}
-
 };
 // __END__
