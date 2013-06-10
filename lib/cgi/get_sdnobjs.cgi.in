@@ -6,7 +6,6 @@
 # This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
 #
 use JSON::PP;
-#use Data::Dumper;
 
 require 'sdn.pm';
 
@@ -14,7 +13,7 @@ require 'sdn.pm';
 # Main Routine
 # --------------------------------------------------------
 my $MAX_POS_NUM = 642;
-my $curl_cmd = '/usr/local/bin/curl'; 
+my $curl_cmd = '@CMD_CURL@'; 
 
 my $draw_links = [];
 my $draw_objs = {};

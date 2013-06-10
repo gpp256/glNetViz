@@ -11,6 +11,7 @@ AC_PROG_CC
 AC_PROG_INSTALL
 #AC_PATH_PROG([CMD_CURL],[curl],AC_MSG_ERROR(curl command not found.))
 AC_PATH_PROG([CMD_CURL],[curl],[/usr/bin/curl])
+AC_PATH_PROG([CMD_PERL],[perl],[/usr/bin/perl])
 
 # Checks for libraries.
 
@@ -28,6 +29,7 @@ AC_CHECK_FUNCS([memset])
 AC_CONFIG_FILES([Makefile
                  perl_modules/Makefile.PL
                  lib/cgi/sdn.pm
+                 lib/cgi/get_sdnobjs.cgi
                  tools/Makefile
 ])
 AC_OUTPUT
