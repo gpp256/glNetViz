@@ -1,0 +1,23 @@
+CC := @CC@
+INSTALL = @INSTALL@
+TARGET := earthmap
+LIBS := -lm
+CFLAGS := -Wall -O3
+prefix= @prefix@
+
+all: $(TARGET)
+
+install: $(TARGET)
+	mkdir -p @prefix@/lib/tools
+	$(INSTALL) -m755 $(TARGET) @prefix@/lib/tools/
+
+earthmap: earthmap.o
+	$(CC) -o $@ $? $(LIBS)
+
+.c.o: 
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean:
+	test -z " $(TARGET) " || rm -f *.o *~ $(TARGET)
+
+earthmap.o: type.h g_variable.h

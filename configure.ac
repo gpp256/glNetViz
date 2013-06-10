@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 #AC_PREREQ([2.68])
-AC_INIT([glNetViz], [0.9], [gpp65536@yahoo.co.jp])
+AC_INIT([glNetViz], [0.91], [@gpp256])
 AC_CONFIG_SRCDIR([perl_modules/myprimitive.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -28,5 +28,6 @@ AC_CHECK_FUNCS([memset])
 AC_CONFIG_FILES([Makefile
                  perl_modules/Makefile.PL
                  lib/cgi/sdn.pm
+                 tools/Makefile
 ])
 AC_OUTPUT
