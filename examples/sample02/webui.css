@@ -62,7 +62,7 @@
 }
 
 /* Used for the Switch effect: */
-.perspective-enable, .perspective-disable, .perspective-enable span, .perspective-disable span { background: url(images/switch.gif) repeat-x; display: block; float: left; }
+.perspective-enable, .perspective-disable, .perspective-enable span, .perspective-disable span { background: url(../../lib/css/images/switch.gif) repeat-x; display: block; float: left; }
 .perspective-enable span, .perspective-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
 .perspective-enable span { background-position: left -90px; padding: 0 10px; }
 .perspective-disable span { background-position: right -180px;padding: 0 10px; }

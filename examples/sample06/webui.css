@@ -98,7 +98,7 @@
 }
 
 /* Used for the Switch effect: */
-.perspective-enable, .perspective-disable, .perspective-enable span, .perspective-disable span { background: url(images/switch.gif) repeat-x; display: block; float: left; }
+.perspective-enable, .perspective-disable, .perspective-enable span, .perspective-disable span { background: url(../../lib/css/images/switch.gif) repeat-x; display: block; float: left; }
 .perspective-enable span, .perspective-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
 .perspective-enable span { background-position: left -90px; padding: 0 10px; }
 .perspective-disable span { background-position: right -180px;padding: 0 10px; }
@@ -107,7 +107,7 @@
 .perspective-enable.selected { background-position: 0 -60px; }
 .perspective-enable.selected span { background-position: left -150px; color: #fff; }
 
-.obj-label-enable, .obj-label-disable, .obj-label-enable span, .obj-label-disable span { background: url(images/switch.gif) repeat-x; display: block; float: left; }
+.obj-label-enable, .obj-label-disable, .obj-label-enable span, .obj-label-disable span { background: url(../../lib/css/images/switch.gif) repeat-x; display: block; float: left; }
 .obj-label-enable span, .obj-label-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
 .obj-label-enable span { background-position: left -90px; padding: 0 10px; }
 .obj-label-disable span { background-position: right -180px;padding: 0 10px; }
@@ -116,7 +116,7 @@
 .obj-label-enable.selected { background-position: 0 -60px; }
 .obj-label-enable.selected span { background-position: left -150px; color: #fff; }
 
-.flow-label-enable, .flow-label-disable, .flow-label-enable span, .flow-label-disable span { background: url(images/switch.gif) repeat-x; display: block; float: left; }
+.flow-label-enable, .flow-label-disable, .flow-label-enable span, .flow-label-disable span { background: url(../../lib/css/images/switch.gif) repeat-x; display: block; float: left; }
 .flow-label-enable span, .flow-label-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
 .flow-label-enable span { background-position: left -90px; padding: 0 10px; }
 .flow-label-disable span { background-position: right -180px;padding: 0 10px; }
