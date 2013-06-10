@@ -28,6 +28,12 @@ AC_FUNC_STRTOD
 AC_CHECK_FUNCS([memset])
 AC_CONFIG_FILES([Makefile
                  perl_modules/Makefile.PL
+                 examples/sample08/get_objs.cgi
+                 examples/sample09/get_objpos.cgi
+                 lib/cgi/change_objpos.cgi
+                 lib/cgi/get_otherobjs.cgi
+                 lib/cgi/get_rotateinfo.pl
+                 lib/cgi/get_rotation_array.cgi
                  lib/cgi/sdn.pm
                  lib/cgi/get_sdnobjs.cgi
                  tools/Makefile

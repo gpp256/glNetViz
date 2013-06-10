@@ -1,2 +1,16 @@
 *.org
 *~
+Makefile
+autom4te.cache
+config.h
+config.log
+config.status
+examples/sample08/get_objs.cgi
+examples/sample09/get_objpos.cgi
+lib/cgi/change_objpos.cgi
+lib/cgi/get_otherobjs.cgi
+lib/cgi/get_rotateinfo.pl
+lib/cgi/get_rotation_array.cgi
+lib/cgi/get_sdnobjs.cgi
+lib/cgi/sdn.pm
+Makefile.PL

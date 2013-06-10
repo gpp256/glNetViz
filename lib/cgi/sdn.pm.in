@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!@CMD_PERL@
 #
 # sdn.pm
 #
