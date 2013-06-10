@@ -9,6 +9,8 @@ Examples
 ---------
 ![http://gpp256.zapto.org/glNetViz/examples/sample08_01.png](http://gpp256.zapto.org/glNetViz/examples/sample08_01.png)
 
+Take a look at the demo:
+
 * [http://gpp256.zapto.org/glNetViz/examples/](http://gpp256.zapto.org/glNetViz/examples/)
 
 Quick Start
