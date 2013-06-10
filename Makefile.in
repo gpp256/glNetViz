@@ -12,6 +12,7 @@ all: $(TARGET)
 
 .c.built:
 	(cd perl_modules/; perl Makefile.PL; make)
+	(cd tools/; make)
 	touch perl_modules/myprimitive.built
 
 install: $(TARGET)
@@ -20,11 +21,12 @@ install: $(TARGET)
 	tar -C lib -cf - . | tar -C @prefix@/lib -xvf - >/dev/null 2>&1
 	tar -C docs -cf - . | tar -C @prefix@/docs -xvf - >/dev/null 2>&1
 	(cd perl_modules/; make install)
-	(cd tools/; make install)
 	find @prefix@ -type f -exec chmod 644 {} \;
 	find @prefix@ -name "*.pl" -exec chmod 755 {} \;
 	find @prefix@ -name "*.cgi" -exec chmod 755 {} \;
+	(cd tools/; make install)
 	$(INSTALL) -m640 htaccess @prefix@/.htaccess
 
 clean:
 	-file -f "$(TARGET)" && (cd perl_modules/; make clean; rm -f Makefile.old myprimitive.built)
+	-(cd tools; make clean)
