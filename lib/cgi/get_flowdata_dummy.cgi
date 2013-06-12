@@ -5,7 +5,7 @@
 # Copyright (c) 2013 Yoshi 
 # This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
 #
-# dpid, srcport, dstport, ingress srcid, ingress dstid, egress srcid, egress dstid, 
+# dpid, ingress port, egress port, ingress srcid, ingress dstid, egress srcid, egress dstid, 
 # tcp packets, tcp bytes, udp packets, udp bytes, 
 # icmp packets, icmp bytes, other packets, other bytes,
 cat <<END_OF_LINE
@@ -23,7 +23,3 @@ Access-Control-Max-Age: 1728000
 }
 END_OF_LINE
 
-#"0x000000000001:1:2":["02:3c:a3:00:0a:0b","0x000000000001","0x000000000001","0x000000000002",2,3,2,3,2,3,2,3],
-#"0x000000000001:2:1":["0x000000000002","0x000000000001","0x000000000001","02:3c:a3:00:0a:0b",2,3,2,3,2,3,2,3],
-#"0x000000000002:1:2":["02:09:77:00:0c:0b","0x000000000002","0x000000000002","0x000000000001",2,3,2,3,2,3,2,3],
-#"0x000000000002:2:1":["0x000000000001","0x000000000002","0x000000000002","02:09:77:00:0c:0b",2,3,2,3,2,3,2,3],

@@ -8,8 +8,6 @@
 
 use CGI qw(param);
 use JSON::PP;
-#use CGI::Carp qw(fatalsToBrowser); 
-#use Data::Dumper;
 
 my $flow_id = param('id');
 my $src = param('src');
@@ -36,7 +34,6 @@ if (@s_pos != 3 || @d_pos != 3 ) {
 }
 
 my $outinfo = { id => $flow_id, rot => &getRot(\@s_pos, \@d_pos), ret => 0 };
-#die sprintf("%s", Data::Dumper->Dump([$outinfo,], ["*list",]));
 my $data = encode_json $outinfo ;
 &printResult($data);
 exit 0;

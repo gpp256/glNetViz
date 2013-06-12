@@ -26,7 +26,6 @@ my $obj_index = 0;
 $conflist = undef;
 $pos_array = undef;
 
-# pos_index_poolは大き目にとる
 %used_pos_ids = ();
 $result_show_dpids = undef;
 $result_show_hosts = undef;
@@ -35,8 +34,6 @@ $result_show_flood_stats = undef;
 
 $conflist = &sdnLib::getConf();
 $pos_array = &sdnLib::getPosPool();
-#printf("%s", Data::Dumper->Dump([$conflist], ['list']));
-#printf("%s", Data::Dumper->Dump([$pos_array], ['list']));
 &create_controller();
 &print_results();
 exit 0;
@@ -61,8 +58,8 @@ sub addObj {
 	my $name = shift || 'Unknown';
 	my $id = $obj_index++;
 	$draw_objs->{"$id"} = {
-    	origin => $origin, # どこを原点とするか
-    	'pos'  => &getPos($posidx, $rad), # 原点からみた相対位置
+    	origin => $origin, 
+    	'pos'  => &getPos($posidx, $rad), 
 		texture=> $texture,
 		rad	=> $rad,
 		name => $name,
@@ -129,12 +126,6 @@ sub create_controller {
 			{},
 		);
 		$controller_list{$_->{ipaddr}}=$obj_id;
-		#die sprintf("%s", Data::Dumper->Dump([$draw_objs], ['list']));
-		#printf("%s", Data::Dumper->Dump([$result_show_dpids], ['list']));
-		#printf("%s", Data::Dumper->Dump([$result_show_hosts], ['list']));
-		#printf("%s", Data::Dumper->Dump([$result_show_links], ['list']));
-		#printf("%s", Data::Dumper->Dump([$result_show_flood_stats], ['list']));
-		# 各種コマンドを実行して情報をグローバル変数に格納
 		&getParams($_->{ipaddr});
 		&create_switch($_->{ipaddr}, $obj_id);
 	}
@@ -208,18 +199,12 @@ sub create_switch {
 
 	#print $pfc_id."\n";
 
-	# 接続されているスイッチのdpid取得
 	my @dpids = ();
 	push @dpids, $_->{dpid} foreach (@$result_show_dpids);
 
-	# スイッチオブジェクト作成
 	foreach ( @dpids ) {
-		#print $_."\n";
-		#print $conflist->{switch_list}->{$_}->{posidx}."\n";
-		#printf("%s", Data::Dumper->Dump([$draw_objs->{"$pfc_id"}->{pos}], ['list']));
 		my $pos = $draw_objs->{"$pfc_id"}->{'pos'};
 		my $obj_id = &addObj(
-			# Controllerの位置を原点にする
 			[$pos->[0], $pos->[1], $pos->[2] ],
 			(exists $conflist->{switch_list}->{$_}->{posidx}) ? 
 				getPosIndex($conflist->{switch_list}->{$_}->{posidx}) : 
@@ -242,11 +227,9 @@ END_OF_LINE
 		$res = `$cmd`;
 		$res = decode_json $res;
 
-		# Controllerとスイッチを接続
 		my @ports = sort {$a <=> $b} keys %$res;
 		foreach my $num (@ports) {
 			my $color = ($res->{$num}->{flood}) ?  'yellow' : 'gray';
-			# 接続先はcontroller?
 			if ($num == 65534) { # yes
 			&addLink (
 				[$pos->[0], $pos->[1], $pos->[2] ],
@@ -256,15 +239,11 @@ END_OF_LINE
 				1.0, # width
 			);
 			}
-		} # まずはControllerとの接続を完了させる
+		} 
 	} # foreach (@dpids)
 
-	# スイッチとスイッチを接続
 	&connectToSwitch();
-
-	# ホストオブジェクト生成、ホストとスイッチを接続
 	&create_host();
-
 	#printf("%s", Data::Dumper->Dump([$draw_objs], ['list']));
 	#printf("%s", Data::Dumper->Dump([$draw_links], ['list']));
 	#printf("%s", Data::Dumper->Dump([\%switch_list], ['list']));
@@ -280,7 +259,7 @@ sub getPosIndex {
 			$index = $_; 
 			last;
 		}
-		$index = 0 if (!defined $index) ; # 空きなし
+		$index = 0 if (!defined $index) ; 
 	}
 	$used_pos_ids{$index}++;
 	return $index;
@@ -294,22 +273,17 @@ sub create_host {
 		foreach (keys %$hosts) {
 			next if (exists $hlist{$_});
 			$hlist{$_}++;
-			# ホストオブジェクト生成
 			my $mac = $_;
 			my $ipaddr = $hosts->{$mac}->{'ipaddr'};
 			next if (!defined $ipaddr);
-			#print "hwaddr=$mac, ipaddr=$ipaddr"."\n";
 			my $dst_dpid = sprintf("0x%012x", $dpid);
 			my $pos1 = $draw_objs->{$switch_list{$dst_dpid}}->{'pos'};
 			my $obj_id = &addObj(
-				# 接続先switchの位置を原点にする
-#				$draw_objs->{$dst_dpid}->{'pos'},
 				[$pos1->[0], $pos1->[1], $pos1->[2] ],
 				(exists $conflist->{host_list}->{$mac}->{posidx}) ? 
 					getPosIndex($conflist->{host_list}->{$mac}->{posidx}) : 
 					getPosIndex(),
 				(exists $conflist->{host_list}->{$mac}->{rad}) ? 
-#					$conflist->{host_list}->{$mac}->{rad} : 1.5,
 					$conflist->{host_list}->{$mac}->{rad} : 2.5,
 				2,  # texture_id for host
 				(exists $conflist->{host_list}->{$mac}->{name}) ? 
@@ -321,11 +295,8 @@ sub create_host {
 
 			next if ($pos1->[0] == $pos2->[0] && $pos1->[1] == $pos2->[1] && $pos1->[2] == $pos2->[2]);
 
-			# ホストとスイッチを接続
 			my $pos2 = $draw_objs->{$obj_id}->{'pos'};
 			&addLink (
-#				$draw_objs->{$obj_id}->{'pos'}, 
-#				$draw_objs->{$dst_dpid}->{'pos'}, 
 				[$pos1->[0] + $pos2->[0], $pos1->[1] + $pos2->[1], $pos1->[2] + $pos2->[2] ],
 				[$pos1->[0], $pos1->[1], $pos1->[2] ],
 				&getColor($dpid, $port), 
@@ -354,16 +325,12 @@ sub getColor {
 	return $color;
 }
 
-# スイッチとスイッチを接続
 sub connectToSwitch {
-	# 接続ポート取得
 	my %linkinfo = ();
 	foreach (@$result_show_links) {
 		my @ports = sort ($_->[0], $_->[2]);
-		#print "port0=$ports[0], port1=$ports[1]\n";
-		#printf "linkinfo = %d, %d\n", $ports[1], $linkinfo{$ports[0]};
 		if (defined $linkinfo{"$ports[0]:$ports[1]"}) {
-			next ; # 接続済
+			next ; 
 		}
 		$linkinfo{"$ports[0]:$ports[1]"}++;
 		my $src_dpid = sprintf("0x%012x", $ports[0]);
@@ -375,8 +342,6 @@ sub connectToSwitch {
 		} else {
 			$src_port = $_->[3]; $dst_port = $_->[1];
 		}
-		#print "src_dpid=$src_dpid, src_port=$src_port, dst_dpid=$dst_dpid, dst_port=$dst_port\n";
-		# 退避させないと駄目?
 		my $pos1 = $draw_objs->{$switch_list{$src_dpid}}->{'pos'};
 		my $pos2 = $draw_objs->{$switch_list{$dst_dpid}}->{'pos'};
 		&addLink (

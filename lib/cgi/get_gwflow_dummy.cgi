@@ -5,7 +5,7 @@
 # Copyright (c) 2013 Yoshi 
 # This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
 #
-# src id, dst id, tcp packets, tcp bytes, udp packets, udp bytes, icmp packets, icmp bytes
+# "src id:dst id":[tcp packets, tcp bytes, udp packets, udp bytes, icmp packets, icmp bytes]
 cat <<END_OF_LINE
 Content-Type: application/json, charset=utf-8
 Access-Control-Allow-Origin: *

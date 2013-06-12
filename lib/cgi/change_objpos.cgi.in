@@ -8,13 +8,11 @@
 use CGI qw(param);
 use JSON::PP;
 
-#use Data::Dumper;
-#use CGI::Carp qw(fatalsToBrowser); # デバッグ用
 require 'sdn.pm';
 
 my $conflist = &sdnLib::getConf('../conf/network.conf');
 
-# 要入力チェック
+# check input data...
 my %posinfo = ();
 $posinfo{type} = param('type');
 $posinfo{type} = ($posinfo{type} eq '1') ? 'switch_list' : 'host_list';
@@ -28,7 +26,6 @@ if (exists $conflist->{$posinfo{type}}->{$posinfo{objid}}) {
 	&sdnLib::setConf($conflist, '../conf/network.conf');
 }
 
-#die sprintf("%s", Data::Dumper->Dump([$conflist,], ["*list",]));
 my $ret = 0;
 print <<END_OF_LINE;
 Content-Type: application/json, charset=utf-8

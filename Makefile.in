@@ -24,6 +24,7 @@ install: $(TARGET)
 	find @prefix@ -type f -exec chmod 644 {} \;
 	find @prefix@ -name "*.pl" -exec chmod 755 {} \;
 	find @prefix@ -name "*.cgi" -exec chmod 755 {} \;
+	find @prefix@ -name "*.in" -exec rm -f {} \;
 	(cd tools/; make install)
 	$(INSTALL) -m640 htaccess @prefix@/.htaccess
 

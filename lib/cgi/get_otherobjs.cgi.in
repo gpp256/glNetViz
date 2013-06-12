@@ -8,15 +8,13 @@
 use CGI qw(param);
 use JSON::PP;
 
-#use Data::Dumper;
-#use CGI::Carp qw(fatalsToBrowser); # デバッグ用
 require './sdn.pm';
 
 my $MAX_POS_NUM = 642;
 my $conflist = &sdnLib::getConf('../conf/network.conf');
 my $pos_array = &sdnLib::getPosPool();
 
-# 要入力チェック
+# check input data...
 my $outinfo = {
 	links => $conflist->{other_link},
 	objs => $conflist->{other_obj},

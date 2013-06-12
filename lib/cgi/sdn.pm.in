@@ -7,7 +7,6 @@
 #
 package sdnLib;
 use JSON::PP;
-#use Data::Dumper;
 use YAML;
 
 use constant NETWORK_CONF =>'../conf/network.conf';
@@ -29,10 +28,6 @@ sub getConf2 {
 sub setConf {
 	my $conf = shift;
 	my $file = shift;
-	#my $data = encode_json $conf ;
-	#open(DATA, ">$file");
-	#print DATA $data;
-	#close(DATA);
 	YAML::DumpFile($file, $conf);
 }
 
