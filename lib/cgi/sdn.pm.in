@@ -17,11 +17,10 @@ my $pos_pool = '../conf/pos642.json';
 sub getConf2 {
 	my $conf = shift || '../conf/sdn.conf';
 	my $lines = '';
-	open(DATA, "< ".$conf);
+	open(DATA, "< ".$conf) or return undef;
 	$lines .= $_ while(<DATA>);
 	close(DATA);
 	my $data = decode_json($lines);
-#die sprintf("%s", Data::Dumper->Dump([$data], ['list']));
 	return $data->{"data"};
 }
 
@@ -41,70 +40,13 @@ sub getConf {
 		return {};
 	}
 	return $conf;
-
-#	return $conflist = {
-#		controller_list => [
-#			{
-#				ipaddr => '192.168.1.4',
-#				origin => [ 0.0, 0.0, 0.0 ],
-#				posidx => 0,
-#				rad    => 0.0,
-#				name   => 'Controller01',
-#			},
-#		],
-##[{"dpid": "0x000000000001"}, {"dpid": "0x000000000002"}, {"dpid": "0x000000000003"}]
-#		switch_list => {
-#			'0x000000000001' => {
-#				posidx => 0,
-#				rad    => 5.0,
-#				name   => 'SW01',
-#			},
-#			'0x000000000002' => {
-#				posidx => 13,
-#				rad    => 5.0,
-#				name   => 'SW02',
-#			},
-#			'0x000000000003' => {
-#				posidx => 14,
-#				rad    => 5.0,
-#				name   => 'SW03',
-#			},
-#		},
-#		host_list => {
-#			'00:0c:29:03:17:33' => {
-#				posidx => 5,
-#				rad    => 3.0,
-#				name   => 'Host01',
-#			},
-#			'00:0c:29:e9:84:49' => {
-#				posidx => 4,
-#				rad    => 3.0,
-#				name   => 'Host02',
-#			},
-#			'00:0c:29:1f:8e:8a' => {
-#				posidx => 6,
-#				rad    => 3.0,
-#				name   => 'Host03',
-#			},
-#			'00:0c:29:d9:d2:0b' => {
-#				posidx => 26,
-#				rad    => 3.0,
-#				name   => 'FW-eth0',
-#			},
-#			'00:0c:29:d9:d2:15' => {
-#				posidx => 4,
-#				rad    => 3.0,
-#				name   => 'FW-eth1',
-#			},
-#		},
-#	};
 	# pos = 10, 20, 29 縺ｯ NG(x=0 or y=0縺ｯNG)
 }
 
 sub getPosPool {
 	my $conf = shift || $pos_pool;
 	my $lines = '';
-	open(DATA, "< $conf");
+	open(DATA, "< $conf") or return undef;
 	$lines .= $_ while(<DATA>);
 	close(DATA);
 	my $data = decode_json($lines);

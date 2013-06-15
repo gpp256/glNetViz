@@ -12,22 +12,30 @@ require 'sdn.pm';
 
 my $conflist = &sdnLib::getConf('../conf/network.conf');
 
-# check input data...
+# check input data
 my %posinfo = ();
 $posinfo{type} = param('type');
 $posinfo{type} = ($posinfo{type} eq '1') ? 'switch_list' : 'host_list';
 $posinfo{objid} = param('objid');
-$posinfo{rad} = param('rad');
-$posinfo{name} = param('name');
-$posinfo{pos} = param('pos');
+$posinfo{pos} = int(param('pos'));
+my $pospool = &sdnLib::getPosPool();
+&print_result(1) if (!defined $pospool); 
+&print_result(2) if ($posinfo{pos} <= 0 || $posinfo{pos} > scalar(@$pospool)) ;
 
+# move the specified object
 if (exists $conflist->{$posinfo{type}}->{$posinfo{objid}}) {
 	$conflist->{$posinfo{type}}->{$posinfo{objid}}->{posidx} = $posinfo{pos}-1;
 	&sdnLib::setConf($conflist, '../conf/network.conf');
+} else {
+	&print_result(3);
 }
 
-my $ret = 0;
-print <<END_OF_LINE;
+&print_result(0);
+exit(0);
+
+sub print_result {
+	my $result = shift;
+	print <<END_OF_LINE;
 Content-Type: application/json, charset=utf-8
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: POST, GET, OPTIONS
@@ -35,9 +43,10 @@ Access-Control-Allow-Credentials: true
 Access-Control-Max-Age: 1728000
 
 END_OF_LINE
-
-if ($ret) {
-	print '{"ret": 1}'."\n";
-} else {
-	print '{"ret": 0}'."\n";
+	if ($result) {
+		print '{"ret": 1}'."\n";
+	} else {
+		print '{"ret": 0}'."\n";
+	}
+	exit ($result);
 }
