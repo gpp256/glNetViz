@@ -35,8 +35,8 @@
 <!-- left ui -->
 <div id="framerate" style="font-size: x-small"></div>
 <div id="displayinfo" style="font-size: xx-small; "> 
-<font size"+2" color="yellow"><b>―</b></font> Flood Flag = true の口と接続中のケーブル<br>
-<font size"+2" color="gray"><b>―</b></font> Flood Flag = false の口と接続中のケーブル<br>
+<font size"+0" color="yellow"><b>-</b></font> Network cables (Flooding is enabled)<br>
+<font size"+0" color="gray"><b>-</b></font> Network cables (Flooding is disabled)<br>
 </div>
 <div id="objinfo" style="font-size: x-small; font-color: yellow"> 
 Device Infomation:<br>
@@ -45,12 +45,13 @@ Device Infomation:<br>
 <table><tr>
 <td nowrap> <canvas id="canvas"></canvas> </td>
 <td nowrap valign="top" style="font-size: x-small; margin: 20px">
-■描画パラメータ
-<br><br>
-・透視投影 or 平行投影: <p>
+<b><font size="+1">Drawing Parameters</font></b>
+<hr>
+<br>
+<b>Toggle Perspective/Orthographic:</b> <p>
 <p class="switch">
-<label id="perspective-enable" class="perspective-enable"><span>透視投影</span></label>
-<label id="perspective-disable" class="perspective-disable selected"><span>平行投影</span></label>
+<label id="perspective-enable" class="perspective-enable"><span>Perspective</span></label>
+<label id="perspective-disable" class="perspective-disable selected"><span>Orthographic</span></label>
 </p>
 </td>
 <tr></table>

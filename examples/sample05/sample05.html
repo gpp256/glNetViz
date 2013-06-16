@@ -35,11 +35,11 @@
 <!-- left ui -->
 <div id="framerate" style="font-size: x-small"></div>
 <div id="displayinfo" style="font-size: xx-small; "> 
-<font size"+0" color="yellow"><b>―</b></font> Flood Flag = true の口と接続中のケーブル<br>
-<font size"+0" color="gray"><b>―</b></font> Flood Flag = false の口と接続中のケーブル<br>
-<font size"+0" color="red"><b>←</b></font>TCPのパケットの流れを示す矢印<br>
-<font size"+0" color="blue"><b>←</b></font>UDPのパケットの流れを示す矢印<br>
-<font size"+0" color="mazenda"><b>←</b></font>ICMPのパケットの流れを示す矢印<br>
+<font size"+0" color="yellow"><b>-</b></font> Network cables (Flooding is enabled)<br>
+<font size"+0" color="gray"><b>-</b></font> Network cables (Flooding is disabled)<br>
+<font size"+0" color="red"><b>&lt;-</b></font> TCP Packets<br>
+<font size"+0" color="blue"><b>&lt;-</b></font> UDP Packets<br>
+<font size"+0" color="mazenda">&lt;-</b></font> ICMP Packets<br>
 </div>
 <div id="objinfo" style="font-size: x-small; font-color: yellow"> 
 Device Infomation:<br>
@@ -48,12 +48,13 @@ Device Infomation:<br>
 <table><tr>
 <td nowrap> <canvas id="canvas"></canvas> </td>
 <td nowrap valign="top" style="font-size: x-small; margin: 20px">
-■描画パラメータ
-<br><br>
-・透視投影 or 平行投影: <p>
+<b><font size="+1">Drawing Parameters</font></b>
+<hr>
+<br>
+<b>Toggle Perspective/Orthographic:</b> <p>
 <p class="switch">
-<label id="perspective-enable" class="perspective-enable"><span>透視投影</span></label>
-<label id="perspective-disable" class="perspective-disable selected"><span>平行投影</span></label>
+<label id="perspective-enable" class="perspective-enable"><span>Perspective</span></label>
+<label id="perspective-disable" class="perspective-disable selected"><span>Orthographic</span></label>
 </p>
 </td>
 <tr></table>
