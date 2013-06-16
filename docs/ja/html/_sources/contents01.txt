@@ -23,7 +23,40 @@ To install, run the following commands in the glNetViz directory.
 
 .. code-block:: bash
 
+    e.g.  
+    Debian GNU/Linux:
+    $ sudo apt-get install apache2
+    $ git clone https://github.com/gpp256/glNetViz.git
+    $ cd glNetViz/
+    $ ./configure --prefix=/opt/glNetViz
+    $ make 
+    $ sudo make install
+    $ sudo chown -R www-data:www-data /opt/glNetViz
+    $ sudo cp /etc/apache2/ports.conf{,.backup130506}
+    $ sudo vi /etc/apache2/ports.conf
+    $ sudo diff /etc/apache2/ports.conf{.backup130506,}
+    9c9
+    < Listen 80
+    ---
+    > Listen 0.0.0.0:80
+    $ sudo cp /etc/apache2/sites-enabled/000-default{,.backup130506}
+    $ sudo vi /etc/apache2/sites-enabled/000-default
+    $ sudo diff /etc/apache2/sites-enabled/000-default{.backup130506,}
+    0a1
+    > AddHandler cgi-script .cgi
+    40a41,48
+    >     Alias /glNetViz/ /opt/glNetViz/
+    >     <Directory "/opt/glNetViz">
+    >         AllowOverride All
+    >         Options ExecCGI
+    >         Order allow,deny
+    >         Allow from all
+    >     </Directory>
+    $ sudo /etc/init.d/apache2 restart
+
     e.g.
+    FreeBSD:
+    $ sudo pkg_add -r apache
     $ git clone https://github.com/gpp256/glNetViz.git
     $ cd glNetVis
     $ ./configure --prefix=/opt/glNetViz
@@ -41,8 +74,16 @@ To install, run the following commands in the glNetViz directory.
     >         Order allow,deny
     >         Allow from all
     >     </Directory>
-    $ sudo /usr/local/etc/rc.d/apache restart
-    $ sudo vi /opt/glNetViz/.htaccess
+    411c411
+    < #AddHandler cgi-script .cgi
+    ---
+    > AddHandler cgi-script .cgi
+    $ sudo cp /etc/rc.conf{,.backup130506}
+    $ sudo vi /etc/rc.conf
+    $ sudo diff /etc/rc.conf{.backup130506,}
+    0a1
+    > apache_enable="YES"
+    $ sudo /usr/local/etc/rc.d/apache start
 
 ..  check and edit the apache configuration file(/opt/glNetViz/.htaccess). 
 

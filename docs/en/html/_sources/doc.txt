@@ -1,15 +1,14 @@
 ###########################
-glNetViz Library Reference
+Library Reference
 ###########################
 
-This page is under construction.
+- :ref:`JavaScript<glnetviz-javascript>` 
 
-1. :ref:`JavaScript<glnetviz-javascript>` 
-2. :ref:`Perl<glnetviz-perl>` 
-3. :ref:`Python<glnetviz-python>` 
-4. :ref:`Ruby<glnetviz-ruby>` 
-5. :ref:`C<glnetviz-c>` 
-6. :ref:`Configuration Files<glnetviz-config>` 
+  + :ref:`lib/js/glNetViz.js <glnetviz_js>` 
+  + :ref:`Obsolete Functions <obsolete_js>` 
+
+- :ref:`Perl<glnetviz-perl>` 
+- :ref:`C<glnetviz-c>` 
 
 |
 
@@ -18,177 +17,1961 @@ This page is under construction.
 .. _glnetviz-javascript: 
 
 JavaScript
---------------------------
+------------------------------------
+
+.. _glnetviz_js:
 
 .. index:: 
-   pair: glNetViz; generateSphereObjects()
+   pair: JavaScript; lib/js/glNetViz.js
 
-**glNetViz.generateSphereObjects()**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**File: lib/js/glNetViz.js**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Generate sphere objects.  The parameters of sphere objects are stored in a sphader program object.
+**File Infomation**
 
-Specification: 
+.. table:: Variables
+   :class: glnetviz
+
+   +-----------------------------------------------+--------------------------------------------+
+   | name                                          | outline                                    |
+   +===============================================+============================================+
+   |glNetViz.version                               | the version number of this library         |
+   +-----------------------------------------------+--------------------------------------------+
+   |glNetViz.textureList                           | the texture data list                      |
+   +-----------------------------------------------+--------------------------------------------+
+   |glNetViz.mMatrix                               | the Modelview Matrix                       |
+   +-----------------------------------------------+--------------------------------------------+
+   |glNetViz.vpMatrix                              | the View and Projection Matrix             |
+   +-----------------------------------------------+--------------------------------------------+
+
+.. glNetViz.createCylinder() <createCylinder>                   | createCylinder() creates the cylinder object.                      |
+.. glNetViz.createTruncatedCone() <createTruncatedCone>         | createTruncatedCone() creates the truncated cone object.           |
+.. glNetViz.changeObjectsColor() <changeObjectsColor>           | changeObjectsColor() changes the color of various objects.         |
+.. glNetViz.changeArrowColor:() <changeArrowColor:>             | changeArrowColor() changes the color of arrow objects.             |
+.. glNetViz.createArrow() <createArrow>                         | createArrow() creates the arrow object.                            |
+.. glNetViz.setAttribute() <setAttribute>                       | setAttribute() defines an array of generic vertex attribute data.  |
+.. glNetViz.drawRectangle() <drawRectangle>                     | drawRectangle() draws the rectangle objects.                       |
+
+.. table:: Functions
+   :class: glnetviz
+
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   | name                                                               | outline                                                               |
+   +====================================================================+=======================================================================+
+   |:ref:`glNetViz.addTexture() <addTexture>`                           | add texture data                                                      |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.createIbo() <createIbo>`                             | create a Index Buffer Object                                          |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.createProgram() <createProgram>`                     | create a linked shader program                                        |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.createShader() <createShader>`                       | create a compiled shader program                                      |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.createTexture() <createTexture>`                     | create a texture and register the texture with the texture data list  |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.createVbo() <createVbo>`                             | create a Vertex Buffer Object                                         |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.degToRad() <degToRad>`                               | convert an angle from degrees to radians                              |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.drawFlows() <drawFlows>`                             | draw arrow objects                                                    |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.generateArrows() <generateArrows>`                   | generate arrow objects                                                |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.generateCones() <generateCones>`                     | generate cone objects                                                 |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.generateCubes() <generateCubes>`                     | generate cube objects of various colors                               |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.generateCylinders() <generateCylinders>`             | generate cylinder objects                                             |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.generateRectangles() <generateRectangles>`           | generate rectangle objects                                            |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.generateSpheres() <generateSpheres>`                 | generate sphere objects of various colors                             |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.getFragmentShader() <getFragmentShader>`             | return a fragment shader associated with specified id                 |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.getVertexShader() <getVertexShader>`                 | return a vertex shader associated with specified id                   |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.initEvent() <initEvent>`                             | register a touch event handler to move objects                        |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.initTextures() <initTextures>`                       | initialize the texture data list                                      |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.initUniformLocation() <initUniformLocation>`         | initialize the uniform location                                       |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.intersect() <intersect>`                             | return the result of ray tracing                                      |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.ipv4ToInt() <ipv4ToInt>`                             | convert a ip address to the integer                                   |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.mvPopMatrix() <mvPopMatrix>`                         | pop the Modelview Matrix                                              |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.mvPushMatrix() <mvPushMatrix>`                       | push the Modelview Matrix                                             |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putArrow() <putArrow>`                               | draw a arrow object                                                   |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putChar() <putChar>`                                 | draw a character                                                      |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putCone() <putCone>`                                 | draw cone objects                                                     |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putCube() <putCube>`                                 | draw cube objects                                                     |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putCylinder() <putCylinder>`                         | draw cylinder objects                                                 |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putSphere() <putSphere>`                             | draws sphere objects                                                  |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.putStr() <putStr>`                                   | draw characters                                                       |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+   |:ref:`glNetViz.setMatrixUniforms() <setMatrixUniforms>`             | set Matrix Uniforms                                                   |
+   +--------------------------------------------------------------------+-----------------------------------------------------------------------+
+
+|
+
+.. _intersect:
+
+.. index:: 
+   pair: glNetViz; intersect()
+
+* **void glNetViz.intersect(objid, result)**
+
+(glNetViz >= 0.9.0)
+
+intersect() investigates whether the eye ray has an intersection with the specified object or not. 
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | objid            | Specifies a object id that you want to investigate. |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | result           | Specifies the hash variable which stored the        |
+   |                     |                  | investigated result so far.                         |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | Returns the investigated result.                    |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
 
 .. code-block:: javascript
 
-   glNetViz.generateSphereObjects(program);
-   // ==============================================
-   // parameters: 
-   //         program: shader programs (object)
-   //
-   // returned values  : No value is returned.
-   //
-   // errors/exceptions: No error is returned. 
-   //
-   // changelog: 
-   // ==============================================
+   var glnv = new glNetViz(); 
+   // (...snip...)
+   var result_intersect = {tmin: 1.0e30, touch_flag: -1};
+   // draw a object
+   $.each(g.sdn_objs, function(k,v) {
+     $.each(v, function(key,val) {
+     // (...snip...)
+       glnv.mvPushMatrix();
+       m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+       m.scale(glnv.mMatrix, [1.0, 1.1, 1.0], glnv.mMatrix);
+       drawCube(1, 0.0);
+       if (g.check_intersect == 1) result_intersect = glnv.intersect(key, result_intersect);
+       glnv.mvPopMatrix();
+     // (...snip...)
+     });
+   });
+   // (...snip...)
+   // display the device information
+   if (g.check_intersect == 1) { 
+        // (...snip...)
+   }
 
-Usage example:
+.. **Change Log:**
+
+.. See Also:
+
+|
+
+.. _setMatrixUniforms:
+
+.. index:: 
+   pair: glNetViz; setMatrixUniforms()
+
+* **void glNetViz.setMatrixUniforms(s_prg, type)**
+
+(glNetViz >= 0.9.0)
+
+setMatrixUniforms() registers the value of variables which is included in the shader program for visualizing objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | s_prg            | Specifies a linked shader program.                  |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | type             | Specifies a type of shader program.                 |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | use_texture, default.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
 
 .. code-block:: javascript
 
-   // create shader programs
-   var prg = glNetViz.createProgram(v_shader, f_shader);
-   // create spheres
-   glNetViz.generateSphereObjects(prg);
-   (...snip...)
-   glNetViz.putSphere(
-   	prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
-   	prg.spheres["red"]["c"], prg.spheres["red"]["i"], 
-   	attLocation, [ 3, 3, 4 ]
+   var glnv = new glNetViz(); 
+   var v_shader = glnv.createShader(
+     'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+   var f_shader = glnv.createShader(
+     'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+   prg = glnv.createProgram(v_shader, f_shader);
+   glnv.initUniformLocation(prg, 'default');
+   // (...snip...)
+   glnv.mvPushMatrix();
+   m.scale(glnv.mMatrix, [20.0, 20.0, 20.0], glnv.mMatrix);
+   m.translate(glnv.mMatrix, [0.0, 5.0, 0.0], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putSphere(
+     prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
+     prg.spheres["red"]["c"], prg.spheres["red"]["i"], prg.attLocation, [ 3, 3, 4 ]
    );
+   glnv.mvPopMatrix();
 
-See Also: 
+.. **Change Log:**
 
-* glNetViz.createProgram()
-* glNetViz.putSphere()
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.initUniformLocation() <initUniformLocation>` 
 
 |
+
+.. _putStr:
 
 .. index:: 
-   pair: glNetViz; createProgram()
+   pair: glNetViz; putStr()
 
-**glNetViz.createProgram()**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* **void glNetViz.putStr(s_prg, outchar, size, pos, c_spacing, color)**
 
-Description: 
+(glNetViz >= 0.9.0)
+
+putStr() visualizes the specified character string in the 3D space.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | s_prg            | Specifies a linked shader program to include        |
+   |                     |                  | the texture processing for visualizing the          |
+   |                     |                  | character string in the 3D space.                   |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | outchar          | Specifies a character string that you want to       |
+   |                     |                  | output.                                             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | size             | Specifies a size of the character string.           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | pos              | Specifies a position that you want to output.       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | c_spacing        | Specifies a space between each characters.          |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | color            | Specifies a color of the drawing character string.  |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | red, green, blue.                                   |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz(); 
+   // create rectangles
+   glnv.generateRectangles(texprg);
+   // (...snip...)
+   glnv.mvPushMatrix();
+   m.rotate(glnv.mMatrix, glnv.degToRad(90.0), [0, 0, 1], glnv.mMatrix);
+   glnv.putStr(texprg, "0 <-            Source Port            -> 65535",
+     0.06, [ 0.05, 1.1, -1.0 ], 0.52, 'green');
+   glnv.putStr(texprg, "0 <-          Destination  Port          -> 65535",
+     0.06, [ 0.05, 1.1, 1.0 ], 0.52, 'green');
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.generateRectangles() <generateRectangles>` 
+* :ref:`glNetViz.putChar() <putChar>` 
 
 |
+
+.. _mvPushMatrix:
+
+.. index:: 
+   pair: glNetViz; mvPushMatrix()
+
+* **void glNetViz.mvPushMatrix()**
+
+(glNetViz >= 0.9.0)
+
+mvPushMatrix() appends the value to the end of the Modelview Matrix stack.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          |                  | N/A                                                 |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz(); 
+   // (...snip...)
+   glnv.mvPushMatrix();
+   m.rotate(glnv.mMatrix, glnv.degToRad(90.0), [0, 0, 1], glnv.mMatrix);
+   glnv.putStr(texprg, "0 <-            Source Port            -> 65535",
+     0.06, [ 0.05, 1.1, -1.0 ], 0.52, 'green');
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.mvPopMatrix() <mvPopMatrix>` 
+
+|
+
+.. _mvPopMatrix:
+
+.. index:: 
+   pair: glNetViz; mvPopMatrix()
+
+* **void glNetViz.mvPopMatrix()**
+
+(glNetViz >= 0.9.0)
+
+mvPopMatrix() pops off the value on top of the Modelview Matrix stack.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          |                  | N/A                                                 |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz(); 
+   // (...snip...)
+   glnv.mvPushMatrix();
+   m.rotate(glnv.mMatrix, glnv.degToRad(90.0), [0, 0, 1], glnv.mMatrix);
+   glnv.putStr(texprg, "0 <-            Source Port            -> 65535",
+     0.06, [ 0.05, 1.1, -1.0 ], 0.52, 'green');
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.mvPushMatrix() <mvPushMatrix>` 
+
+|
+
+.. _ipv4ToInt:
+
+.. index:: 
+   pair: glNetViz; ipv4ToInt()
+
+* **object glNetViz.ipv4ToInt(ipstr)**
+
+(glNetViz >= 0.9.1)
+
+ipv4ToInt() converts a specified value from the ip address to the integer.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | ipstr            | Specifies a IPv4 style address.                     |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | Returns a non-zero integer on success, and zero     |
+   |                     |                  | on failure.                                         |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var srcip = glnv.ipv4ToInt('10.1.1.1') / 2147483648 ; 
+   var dstip = glnv.ipv4ToInt('172.16.1.1') / 2147483648 ; 
+
+.. **Change Log:**
+
+.. See Also:
+
+|
+
+.. _initUniformLocation:
+
+.. index:: 
+   pair: glNetViz; initUniformLocation()
+
+* **void glNetViz.initUniformLocation(s_prg, type)**
+
+(glNetViz >= 0.9.0)
+
+initUniformLocation() gets the location of variables which is included in the shader program for visualizing objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | s_prg            | Specifies a linked shader program.                  |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | type             | Specifies a type of shader program.                 |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | use_texture, default.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // initialize shader programs
+   var v_shader = glnv.createShader(
+     'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+   var f_shader = glnv.createShader(
+     'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+   prg = glnv.createProgram(v_shader, f_shader);
+   glnv.initUniformLocation(prg, 'default');
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.getVertexShader() <getVertexShader>` 
+* :ref:`glNetViz.createShader() <createShader>` 
+* :ref:`glNetViz.createProgram() <createProgram>` 
+
+|
+
+.. _initTextures:
+
+.. index:: 
+   pair: glNetViz; initTextures()
+
+* **void glNetViz.initTextures(path)**
+
+(glNetViz >= 0.9.0)
+
+initTextures() generates the texture data list from texture files which stored in the specified directory.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | path             | Specifies a directory which stored texture files.   |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // create textures
+   glnv.initTextures('../../lib/textures');
+   glnv.addTexture('./images/earthmap.jpg', 1024, 512, 8);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.addTexture() <addTexture>` 
+
+|
+
+.. _generateArrows:
+
+.. index:: 
+   pair: glNetViz; generateArrows()
+
+* **void glNetViz.generateArrows(p, clist)**
+
+(glNetViz >= 0.9.1)
+
+generateArrows() generates arrow objects from the specified color data.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | p                | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing arrow        |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | clist            | Specifies a array object which stored the color     |
+   |                     |                  | data for visualizing arrow objects.                 |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   var texprg = glnv.createProgram(v_shader, f_shader);
+   // create arrows
+   glnv.generateArrows(prg, [
+     {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0}, 
+     {id: 'green', r: 0.0, g: 1.0, b: 0.0, a: 1.0}, 
+     {id: 'blue', r: 0.0, g: 0.0, b: 1.0, a: 1.0} ]);
+   // draw flows
+   gl.useProgram(prg);
+   glnv.drawFlows(prg, texprg, g.drawinfo_gwflows, g.arrow_default_pos, 0.4);
+   glnv.drawFlows(prg, texprg, g.drawinfo_flows, g.arrow_default_pos, g.arrow_delta);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.drawFlows() <drawFlows>` 
+
+|
+
+.. _drawFlows:
+
+.. index:: 
+   pair: glNetViz; drawFlows()
+
+* **void glNetViz.drawFlows(p, tp, flowinfo, poslist, delta)**
+
+(glNetViz >= 0.9.1)
+
+drawFlows() visualizes a flow of the object such as the network traffic.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | p                | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing arrow        |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | tp               | Specifies a linked shader program to include        |
+   |                     |                  | the texture processing for visualizing the          |
+   |                     |                  | character string in the 3D space.                   |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | flowinfo         | Specifies a array which stored the flow data.       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | poslist          | Specifies a array which stored the initial position | 
+   |                     |                  | of the arrow objects.                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | delta            | Specifies a moving distance of arrow objects        |
+   |                     |                  | in period between the one frame and the next frame. |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   var texprg = glnv.createProgram(v_shader, f_shader);
+   // create arrows
+   glnv.generateArrows(prg, [
+     {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0}, 
+     {id: 'green', r: 0.0, g: 1.0, b: 0.0, a: 1.0}, 
+     {id: 'blue', r: 0.0, g: 0.0, b: 1.0, a: 1.0} ]);
+   // draw flows
+   gl.useProgram(prg);
+   glnv.drawFlows(prg, texprg, g.drawinfo_gwflows, g.arrow_default_pos, 0.4);
+   glnv.drawFlows(prg, texprg, g.drawinfo_flows, g.arrow_default_pos, g.arrow_delta);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.generateArrows() <generateArrows>` 
+
+|
+
+.. _addTexture:
+
+.. index:: 
+   pair: glNetViz; addTexture()
+
+* **void glNetViz.addTexture(imgpath, width, height, id)**
+
+(glNetViz >= 0.9.1)
+
+addTexture() adds the specified texture data to the array variable which is called the glNetViz.textureList.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | imgpath          | Specifies the storage location of a texture image   |
+   |                     |                  | file.                                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | width            | Specifies the width of the texture image.           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | height           | Specifies the height of the texture image.          |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | id               | Specifies a number more than 8 to register          |
+   |                     |                  | the unique id of the texture list.                  |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned Values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // create textures
+   glnv.initTextures('../../lib/textures');
+   glnv.addTexture('./images/earthmap.jpg', 1024, 512, 8);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.initTextures() <initTextures>`  
+
+|
+
+.. _touchHandler:
+
+.. index:: 
+   pair: glNetViz; touchHandler()
+
+* **void glNetViz.touchHandler(object event)**
+
+(glNetViz >= 0.9.0)
+
+This function is touch events handler to move objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------+
+   | **Item**            | **Name**         | **Description**             |
+   +=====================+==================+=============================+
+   | Parameters          | event            | Specifies a event object.   |
+   +---------------------+------------------+-----------------------------+
+   | Returned Values     |                  | No value is returned.       |
+   +---------------------+------------------+-----------------------------+
+   | Errors/Exceptions   |                  | No error is returned.       |
+   +---------------------+------------------+-----------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // set touch event
+   initEvent: function() {
+     document.addEventListener("touchstart", this.touchHandler, true);
+     document.addEventListener("touchmove", this.touchHandler, true);
+     document.addEventListener("touchend", this.touchHandler, true);
+     document.addEventListener("touchcancel", this.touchHandler, true);
+   },
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.initEvent() <initEvent>`  
+
+|
+
+.. _initEvent:
+
+.. index:: 
+   pair: glNetViz; initEvent()
+
+* **void glNetViz.initEvent()**
+
+(glNetViz >= 0.9.0)
+
+initEvent() sets event listeners.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------+
+   | **Item**            | **Name**         | **Description**             |
+   +=====================+==================+=============================+
+   | Returned Values     |                  | No value is returned.       |
+   +---------------------+------------------+-----------------------------+
+   | Errors/Exceptions   |                  | No error is returned.       |
+   +---------------------+------------------+-----------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // jQuery Ready Function
+   $(function () { glnv = new glNetViz(); glnv.initEvent(); initUI(); });
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.touchHandler() <touchHandler>`  
+
+|
+
+.. _createIbo:
+
+.. index:: 
+   pair: glNetViz; createIbo()
+
+* **object = glNetViz.createIbo(data)**
+
+(glNetViz >= 0.9.0)
+
+createIbo() creates the Index Buffer Object.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | data             | Specifies a storage location of the indices array.  |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | Returns the Index Buffer Object.                    |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // glNetViz.js: 
+   // generate a sphere object
+   var objinfo = this.initSphere(vnum);
+   pos_vbo['sphere'] = this.createVbo(objinfo["vp"]);
+   nor_vbo['sphere'] = this.createVbo(objinfo["vn"]);
+   tex_vbo['sphere'] = this.createVbo(objinfo["tc"]);
+   ibo['sphere'] = this.createIbo(objinfo["vi"]);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createVbo() <createVbo>` 
+
+|
+
+.. _createTexture:
+
+.. index:: 
+   pair: glNetViz; createTexture()
+
+* **void glNetViz.createTexture(texture_list, source, number, width, height)**
+
+(glNetViz >= 0.9.0)
+
+createTexture() creates a texture data.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | texture_list     | Specifies a hash object which stored the texture    |
+   |                     |                  | data.                                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | source           | Specifies the storage location of the texture file. |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | number           | Specifies a unique id of the texture file.          |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | width            | Specifies the width of the texture file.            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | height           | Specifies the height of the texture file.           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // glNetViz.js:
+   // initialize textures
+   initTextures: function (path) {
+   	this.createTexture(this.textureList, path+'/pfc_texture01.png', 0, 256, 128);
+   	this.createTexture(this.textureList, path+'/sw_texture01.png', 1, 256, 128);
+   	this.createTexture(this.textureList, path+'/pc_texture01.png', 2, 256, 128);
+   	this.createTexture(this.textureList, path+'/fw_texture01.png', 3, 256, 128);
+   	this.createTexture(this.textureList, path+'/earthmap.png', 4, 256, 128);
+   	this.createTexture(this.textureList, path+'/font_red.png', 5, 256, 256);
+   	this.createTexture(this.textureList, path+'/font_green.png', 6, 256, 256);
+   	this.createTexture(this.textureList, path+'/font_blue.png', 7, 256, 256);
+   },
+
+.. **Change Log:**
+
+.. See Also:
+
+
+|
+
+.. _createVbo:
+
+.. index:: 
+   pair: glNetViz; createVbo()
+
+* **object = glNetViz.createVbo(data)**
+
+(glNetViz >= 0.9.0)
+
+createIbo() creates the Vertex Buffer Object.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | data             | Specifies a storage location of the vertices array. |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | this function returns the Vertex Buffer Object.     |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // glNetViz.js:
+   // generate a sphere object
+   var objinfo = this.initSphere(vnum);
+   pos_vbo['sphere'] = this.createVbo(objinfo["vp"]);
+   nor_vbo['sphere'] = this.createVbo(objinfo["vn"]);
+   tex_vbo['sphere'] = this.createVbo(objinfo["tc"]);
+   ibo['sphere'] = this.createIbo(objinfo["vi"]);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createIbo() <createIbo>` 
+
+|
+
+.. _degToRad:
+
+.. index:: 
+   pair: glNetViz; degToRad()
+
+* **object = glNetViz.degToRad(degrees)**
+
+(glNetViz >= 0.9.0)
+
+degToRad() converts the angle from degrees to radians.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | degrees          | Specifies a numerical value that expresses          |
+   |                     |                  | the degree of an angle.                             |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | this function returns an angle in radians.          |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // (...snip...)
+   m.rotate(glnv.mMatrix, glnv.degToRad(g.xRot), [1, 0, 0], glnv.mMatrix);
+   m.rotate(glnv.mMatrix, glnv.degToRad(g.yRot), [0, 1, 0], glnv.mMatrix);
+
+.. **Change Log:**
+
+.. See Also:
+
+|
+
+.. _generateCones:
+
+.. index:: 
+   pair: glNetViz; generateCones()
+
+* **void glNetViz.generateCones(prg, clist)**
+
+(glNetViz >= 0.9.1)
+
+generateCones() generates cone objects from the specified color data.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | prg              | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing cone         |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | clist            | Specifies a array object which stored the color     |
+   |                     |                  | data for visualizing cone objects.                  |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   // create cones
+   glnv.generateCones(prg, [{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0}]);
+   // draw cones
+   glnv.mvPushMatrix();
+   m.translate(glnv.mMatrix, [-pos[0], -pos[1]+1.7, -pos[2]], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putCone(
+     prg.cones[color]["v"], prg.cones[color]["n"], 
+     prg.cones[color]["c"], prg.cones[color]["i"], prg.attLocation, [ 3, 3, 4 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.putCone() <putCone>` 
+
+|
+
+.. _generateCubes:
+
+.. index:: 
+   pair: glNetViz; generateCubes()
+
+* **void glNetViz.generateCubes(prg, clist)**
+
+(glNetViz >= 0.9.1)
+
+generateCubes() generates cube objects from the specified color data.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | prg              | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing cube         |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | clist            | Specifies a array object which stored the color     | 
+   |                     |                  | data for visualizing cube objects.                  |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   // create cubes
+   glnv.generateCubes(prg, [ {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0} ]);
+   // draw cones
+   glnv.mvPushMatrix();
+   m.translate(glnv.mMatrix, [0.0, 0.0, 8.0], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putCube(
+     prg.cubes["green"]["v"], prg.cubes["green"]["n"], 
+     prg.cubes["green"]["c"], prg.cubes["green"]["i"], prg.attLocation, [ 3, 3, 4 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.putCube() <putCube>` 
+
+|
+
+.. _generateCylinders:
+
+.. index:: 
+   pair: glNetViz; generateCylinders()
+
+* **void glNetViz.generateCylinders(prg, clist)**
+
+(glNetViz >= 0.9.1)
+
+generateCylinders() generates cylinder objects from the specified color data.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | prg              | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing cylinder     |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | clist            | Specifies a array object which stored the color     | 
+   |                     |                  | data for visualizing cylinder objects.              |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   // create cylinders
+   glnv.generateCylinders(prg, [
+     {id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
+     {id: "gray", r: 0.1, g: 0.1, b: 0.1, a: 1.0} ]);
+   // draw cones
+   glnv.mvPushMatrix();
+   m.translate(glnv.mMatrix, [0.0, 0.0, 8.0], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putCylinder(
+     prg.cylinders[color]["v"], prg.cylinders[color]["n"], 
+     prg.cylinders[color]["c"], prg.cylinders[color]["i"], prg.attLocation, [ 3, 3, 4 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.putCylinder() <putCylinder>` 
+
+|
+
+.. _generateRectangles:
+
+.. index:: 
+   pair: glNetViz; generateRectangles()
+
+* **void glNetViz.generateRectangles(p)**
+
+(glNetViz >= 0.9.0)
+
+generateRectangles() generates the rectangle object.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | p                | Specifies a linked shader program to include        |
+   |                     |                  | the texture processing                              |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   // create rectangles
+   glnv.generateRectangles(texprg);
+   // draw labels
+   gl.useProgram(texprg);
+   glnv.mvPushMatrix();
+   m.rotate(glnv.mMatrix, glnv.degToRad(90.0), [0, 0, 1], glnv.mMatrix);
+   glnv.putStr(texprg, "0 <-            Source Port            -> 65535",
+     0.06, [ 0.05, 1.1, -1.0 ], 0.52, 'green');
+   glnv.mvPopMatrix();
+   gl.useProgram(prg);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.putStr() <putStr>` 
+
+|
+
+.. _generateSpheres:
+
+.. index:: 
+   pair: glNetViz; generateSpheres()
+
+* **void glNetViz.generateSpheres(prg, clist)**
+
+(glNetViz >= 0.9.1)
+
+generateSpheres() generates sphere objects from the specified color data.  The parameters of sphere objects are stored in a sphader program object.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | prg              | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing sphere       |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | clist            | Specifies a array object which stored the color     | 
+   |                     |                  | data for visualizing sphere objects.                |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   var prg = glnv.createProgram(v_shader, f_shader);
+   // create spheres
+   glnv.generateSpheres(prg, [
+     {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0},
+     {id: 'blue', r: 0.0, g: 0.0, b: 1.0, a: 1.0} ], 12);
+   // draw spheres
+   glnv.mvPushMatrix();
+   m.translate(glnv.mMatrix, pos, glnv.mMatrix);
+   m.scale(glnv.mMatrix, [0.04, 0.04, 0.04], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putSphere( 
+     prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
+     prg.spheres["red"]["c"], prg.spheres["red"]["i"], prg.attLocation, prg.attStride);
+   glnv.mvPopMatrix();
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.putSphere() <putSphere>` 
+
+|
+
+.. _putChar:
+
+.. index:: 
+   pair: glNetViz; putChar()
+
+* **void glNetViz.putChar(texprg, outchar, color)**
+
+(glNetViz >= 0.9.0)
+
+putChar() draws a character.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | textprg          | Specifies a linked shader program to include        |
+   |                     |                  | the texture processing for visualizing the          |
+   |                     |                  | character string in the 3D space.                   |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | outchar          | Specifies a character that you want to output.      |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | color            | Specifies a color of the drawing character.         |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | red, green, blue.                                   |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+    // glNetViz.js:
+    // draw text characters
+    putStr: function (s_prg, outchar, size, pos, c_spacing, color) {
+      gl.enable(gl.BLEND);
+      gl.disable(gl.DEPTH_TEST);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      gl.blendFuncSeparate( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE_MINUS_SRC_ALPHA);
+      
+      this.mvPushMatrix();
+      this._m.translate(this.mMatrix, pos, this.mMatrix);
+      this._m.scale(this.mMatrix, [size*c_spacing, size*0.9, size], this.mMatrix);
+      var dx = 1.4;
+      var start_pos = (outchar.length/2.0-0.5)*-dx;
+      for (var i=0; i<outchar.length; i++) {
+        this.mvPushMatrix();
+        this._m.translate(this.mMatrix, [start_pos+i*dx, 0.0, 0.0], this.mMatrix);
+        this.setMatrixUniforms(s_prg, 'use_texture');
+        this.putChar(s_prg, outchar[i], color);
+        this.mvPopMatrix();
+      }
+      this.mvPopMatrix();
+      
+      gl.enable(gl.DEPTH_TEST);
+      gl.disable(gl.BLEND);
+    },
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.putStr() <putStr>` 
+
+|
+
+.. _putArrow:
+
+.. index:: 
+   pair: glNetViz; putArrow()
+
+* **void glNetViz.putArrow(p, pos_vbo, nor_vbo, col_vbo, ibo, attLocation, attStride)**
+
+(glNetViz >= 0.9.1)
+
+putArrow() draws specified arrow objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | p                | Specifies a linked shader program not to include    |
+   |                     |                  | the texture processing for visualizing arrow        |
+   |                     |                  | objects in the 3D space.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | pos_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the vertices array.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | nor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the normal vector array.                       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | cor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the color array.                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | ibo              | Specifies a index buffer object which generated     |
+   |                     |                  | from the indices array.                             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attLocation      | Specifies a variable which take over as the first   |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attStride        | Specifies a variable which take over as the second  |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // create arrows
+   glnv.generateArrows(prg, [
+   	{id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0}, 
+   	{id: 'green', r: 0.0, g: 1.0, b: 0.0, a: 1.0}, 
+   	{id: 'blue', r: 0.0, g: 0.0, b: 1.0, a: 1.0}
+   ]);
+   // (...snip...)
+   // draw the Y axis
+   glnv.mvPushMatrix();
+   glnv.putArrow(prg,
+     prg.arrows["red"]["v"], prg.arrows["red"]["n"], 
+     prg.arrows["red"]["c"], prg.arrows["red"]["i"], prg.attLocation, prg.attStride);
+   glnv.mvPopMatrix();
+   // draw the Z axis
+   glnv.mvPushMatrix();
+   m.rotate(glnv.mMatrix, glnv.degToRad(90), [1, 0, 0], glnv.mMatrix);
+   glnv.putArrow(prg,
+     prg.arrows["green"]["v"], prg.arrows["green"]["n"], 
+     prg.arrows["green"]["c"], prg.arrows["green"]["i"], prg.attLocation, prg.attStride);
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.generateArrows() <generateArrows>` 
+
+|
+
+.. _putCone:
+
+.. index:: 
+   pair: glNetViz; putCone()
+
+* **void glNetViz.putCone(pos_vbo, nor_vbo, col_vbo, ibo, attLocation, attStride)**
+
+(glNetViz >= 0.9.0)
+
+putCone() draws specified cone objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | pos_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the vertices array.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | nor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the normal vector array.                       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | cor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the color array.                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | ibo              | Specifies a index buffer object which generated     |
+   |                     |                  | from the indices array.                             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attLocation      | Specifies a variable which take over as the first   |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attStride        | Specifies a variable which take over as the second  |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // create cones
+   glnv.generateCones(prg, [{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0}]);
+   // draw cone
+   glnv.mvPushMatrix();
+   m.translate(glnv.mMatrix, [-pos[0], -pos[1]+1.7, -pos[2]], glnv.mMatrix);
+   m.scale(glnv.mMatrix, [0.45, 0.45, 0.45], glnv.mMatrix);
+   m.rotate(glnv.mMatrix, glnv.degToRad(g.intersect_rot), [0, 1, 0], glnv.mMatrix);
+   m.rotate(glnv.mMatrix, glnv.degToRad(-180), [1, 0, 0], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putCone(
+     prg.cones[color]["v"], prg.cones[color]["n"], 
+     prg.cones[color]["c"], prg.cones[color]["i"], prg.attLocation, [ 3, 3, 4 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.generateCones() <generateCones>` 
+
+|
+
+.. _putCube:
+
+.. index:: 
+   pair: glNetViz; putCube()
+
+* **void glNetViz.putCube(pos_vbo, nor_vbo, col_vbo, ibo, attLocation, attStride)**
+
+(glNetViz >= 0.9.0)
+
+putCube() draws specified cube objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | pos_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the vertices array.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | nor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the normal vector array.                       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | cor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the color array.                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | ibo              | Specifies a index buffer object which generated     |
+   |                     |                  | from the indices array.                             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attLocation      | Specifies a variable which take over as the first   |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attStride        | Specifies a variable which take over as the second  |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+
+   var glnv = new glNetViz();
+   // (...snip...)
+   // create cubes
+   glnv.generateCubes(prg, [
+     {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0}, 
+     {id: 'green', r: 0.0, g: 1.0, b: 0.0, a: 1.0}
+   ]);
+   // draw cubes
+   glnv.mvPushMatrix();
+   m.scale(glnv.mMatrix, [12.0, 12.0, 12.0], glnv.mMatrix);
+   m.translate(glnv.mMatrix, [0.0, 0.0, 8.0], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putCube(
+     prg.cubes["green"]["v"], prg.cubes["green"]["n"], 
+     prg.cubes["green"]["c"], prg.cubes["green"]["i"], prg.attLocation, [ 3, 3, 4 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.generateCubes() <generateCubes>` 
+
+|
+
+.. _putCylinder:
+
+.. index:: 
+   pair: glNetViz; putCylinder()
+
+* **void glNetViz.putCylinder(pos_vbo, nor_vbo, col_vbo, ibo, attLocation, attStride)**
+
+(glNetViz >= 0.9.0)
+
+putCylinder() draws specified cylinder objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | pos_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the vertices array.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | nor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the normal vector array.                       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | cor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the color array.                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | ibo              | Specifies a index buffer object which generated     |
+   |                     |                  | from the indices array.                             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attLocation      | Specifies a variable which take over as the first   |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attStride        | Specifies a variable which take over as the second  |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // create rectangles
+   glnv.generateCylinders(prg, [
+   	{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
+   	{id: "gray", r: 0.1, g: 0.1, b: 0.1, a: 1.0}
+   ]);
+   // (...snip...)
+   // draw cylinders
+   glnv.mvPushMatrix();
+   m.translate(glnv.mMatrix, [start[0],start[1],start[2]], glnv.mMatrix);
+   glnv.setMatrixUniforms(prg, 'default');
+   glnv.putCylinder(
+     prg.cylinders["yellow"]["v"], prg.cylinders["yellow"]["n"], 
+     prg.cylinders["yellow"]["c"], prg.cylinders["yellow"]["i"], 
+     prg.attLocation, [ 3, 3, 4 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.generateCylinders() <generateCylinders>` 
+
+|
+
+.. _putSphere:
 
 .. index:: 
    pair: glNetViz; putSphere()
 
-**glNetViz.putSphere()**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* **glNetViz.putSphere(pos_vbo, nor_vbo, col_vbo, ibo, attLocation, attStride)**
 
-Description: 
+(glNetViz >= 0.9.0)
+
+putSphere() draws specified sphere objects.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | pos_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the vertices array.                            |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | nor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the normal vector array.                       |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | cor_vbo          | Specifies a vertex buffer object which generated    |
+   |                     |                  | from the color array.                               |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | ibo              | Specifies a index buffer object which generated     |
+   |                     |                  | from the indices array.                             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attLocation      | Specifies a variable which take over as the first   |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | attStride        | Specifies a variable which take over as the second  |
+   |                     |                  | argument of the gl.vertexAttribPointer().           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     |                  | No value is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz();
+   // create spheres
+   glnv.generateSpheres(prg, [
+     {id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0},
+     {id: 'blue', r: 0.0, g: 0.0, b: 1.0, a: 1.0}
+   ]);
+   // (...snip...)
+   // draw a texture sphere
+   glnv.mvPushMatrix();
+   m.scale(glnv.mMatrix, [20.0, 20.0, 20.0], glnv.mMatrix);
+   m.translate(glnv.mMatrix, [0.0, -2.0, 0.0], glnv.mMatrix);
+   glnv.setMatrixUniforms(texprg, 'use_texture');
+   gl.uniform1i(texprg.samplerUniform, 4); // the earth
+   glnv.putSphere(
+     prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
+     prg.spheres["red"]["t"], prg.spheres["red"]["i"], [
+       texprg.vertexPositionAttribute, texprg.vertexNormalAttribute, texprg.textureCoordAttribute
+     ], [ 3, 3, 2 ]
+   );
+   glnv.mvPopMatrix();
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.generateSpheres() <generateSpheres>` 
 
 |
 
+.. _createProgram:
 
+.. index:: 
+   pair: glNetViz; createProgram()
+
+* **object = glNetViz.createProgram(vs, fs)**
+
+(glNetViz >= 0.9.0)
+
+createProgram() creates a linked shader program.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | vs               | Specifies a compiled vertex shader program.         |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | fs               | Specifies a compiled fragment shader program.       |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | On success, this function returns the linked        |
+   |                     |                  | shader program. On failure, this function returns   |
+   |                     |                  | no value.                                           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz(); 
+   // create shader programs
+   var v_shader = glnv.createShader(
+   	'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+   var f_shader = glnv.createShader(
+   	'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+   var prg = glnv.createProgram(v_shader, f_shader);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createShader() <createShader>` 
+* :ref:`glNetViz.getVertexShader() <getVertexShader>` 
+* :ref:`glNetViz.getFragmentShader() <getFragmentShader>` 
+
+|
+
+.. index:: 
+   pair: glNetViz; createShader()
+
+.. _createShader:
+
+* **object = glNetViz.createShader(format, type, src)**
+
+(glNetViz >= 0.9.0)
+
+createShader() creates a compiled shader program.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | format           | Specifies the format of shader program.             |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | script, raw.                                        |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | type             | Specifies the type of shader program.               |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | x-shader/x-vertex, x-shader/x-fragment.             |
+   |                     +------------------+-----------------------------------------------------+
+   |                     | src              | Specifies the value which indicate storage location |
+   |                     |                  | of the shader program.                              |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | On success, this function returns the compiled      |
+   |                     |                  | shader program. On failure, this function returns   |
+   |                     |                  | no value.                                           |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   var glnv = new glNetViz(); 
+   // create shader programs
+   var v_shader = glnv.createShader(
+   	'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+   var f_shader = glnv.createShader(
+   	'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+   var prg = glnv.createProgram(v_shader, f_shader);
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.getVertexShader() <getVertexShader>` 
+* :ref:`glNetViz.getFragmentShader() <getFragmentShader>` 
+
+|
+
+.. _getFragmentShader:
+
+.. index:: 
+   pair: glNetViz; getFragmentShader()
+
+* **object = glNetViz.getFragmentShader(key)**
+
+(glNetViz >= 0.9.0)
+
+getFragmentShader() returns the specified fragment shader.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | key              | Specifies a id which indicate the shader program.   |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | default, use_texture.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | this function returns the fragment shader program.  |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // initialize shader programs
+   var v_shader = glnv.createShader(
+   	'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+   var f_shader = glnv.createShader(
+   	'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+   var prg = glnv.createProgram(v_shader, f_shader);
+   glnv.initUniformLocation(prg, 'default');
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.getVertexShader() <getVertexShader>` 
+
+|
+
+.. _getVertexShader:
+
+.. index:: 
+   pair: glNetViz; getVertexShader()
+
+* **object = glNetViz.getVertexShader(key)**
+
+(glNetViz >= 0.9.0)
+
+getFragmentShader() returns the specified vertex shader.
+
+Specification:
+
+.. table:: 
+   :class: glnetviz
+
+   +---------------------+------------------+-----------------------------------------------------+
+   | **Item**            | **Name**         | **Description**                                     |
+   +=====================+==================+=====================================================+
+   | Parameters          | key              | Specifies a id which indicate the shader program.   |
+   |                     |                  | Following values are accepted:                      |
+   |                     |                  | default, use_texture.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Returned values     | object           | this function returns the vertex shader program.    |
+   +---------------------+------------------+-----------------------------------------------------+
+   | Errors/Exceptions   |                  | No error is returned.                               |
+   +---------------------+------------------+-----------------------------------------------------+
+
+Examples:
+
+.. code-block:: javascript
+
+   // initialize shader programs
+   var v_shader = glnv.createShader(
+   	'raw', 'x-shader/x-vertex', glnv.getVertexShader('default'));
+   var f_shader = glnv.createShader(
+   	'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
+   var prg = glnv.createProgram(v_shader, f_shader);
+   glnv.initUniformLocation(prg, 'default');
+
+.. **Change Log:**
+
+See Also:
+
+* :ref:`glNetViz.createProgram() <createProgram>` 
+* :ref:`glNetViz.getFragmentShader() <getFragmentShader>` 
+
+|
+
+.. _obsolete_js:
+
+.. index:: 
+   pair: JavaScript; Obsolete Functions
+
+**Obsolete Functions**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Functions in the following table will be removed in the future. We strongly recommend to use the new names.
+
+.. table:: Obsolete Functions
+   :class: glnetviz
+
+   +-----------------------------------------------+-------------------------------------------------------------------------+
+   | Old Name                                      | New Name                                                                |
+   +===============================================+=========================================================================+
+   |glNetViz.generateSphereObjects()               | :ref:`glNetViz.generateSpheres() <generateSpheres>`                     |
+   +-----------------------------------------------+-------------------------------------------------------------------------+
+   |glNetViz.generateCubeObjects()                 | :ref:`glNetViz.generateCubes() <generateCubes>`                         |
+   +-----------------------------------------------+-------------------------------------------------------------------------+
+   |glNetViz.generateCylinderObjects()             | :ref:`glNetViz.generateCylinders() <generateCylinders>`                 |
+   +-----------------------------------------------+-------------------------------------------------------------------------+
+   |glNetViz.generateConeObjects()                 | :ref:`glNetViz.generateCones() <generateCones>`                         |
+   +-----------------------------------------------+-------------------------------------------------------------------------+
 
 .. _glnetviz-perl: 
 
 Perl
---------------------------
+------------------------------------
 
-.. _glnetviz-python: 
+.. .. _glnetviz-python: 
+.. 
+.. Python
+.. ------------------------------------
 
-Python
---------------------------
-
-.. _glnetviz-ruby: 
-
-
-Ruby
---------------------------
+.. .. _glnetviz-ruby: 
+.. 
+.. Ruby
+.. ------------------------------------
 .. _glnetviz-c: 
 
 C
---------------------------
-
-|
-
-.. _glnetviz-config: 
-
-Configuration Files 
---------------------------
-
-The steps for generating WebGL Pages are as follows.
-
-1. create the YAML format data.
-
-.. code-block:: bash
-  :linenos:
-
-  e.g. 
-  sample03 configuration file:
-  ---
-  controller_list:
-    - ipaddr: 192.168.1.4
-      name: Controller01
-      origin:
-        - 0
-        - 0
-        - 0
-      posidx: 0
-      rad: 0
-  switch_list:
-    0x000000000001:
-      name: SW01
-      posidx: 199
-      rad: 5
-    0x000000000002:
-      name: SW02
-      posidx: 259
-      rad: 5
-    0x000000000003:
-      name: SW03
-      posidx: 498
-      rad: 5
-   (...snip...)
-
-2. refer to the YAML format data from HTML(JavaScript).
-
-..   host_list:
-..     00:0c:29:03:17:33:
-..       name: Host01
-..       posidx: 553
-..       rad: 5
-..     00:0c:29:1f:8e:8a:
-..       name: Host02
-..       posidx: 28
-..       rad: 5
-..   other_link:
-..     - color: gray
-..       dobj: FW01
-..       name: FW_LINK01
-..       offset:
-..         - 0.0
-..         - 0.0
-..         - 0.0
-..       sobj: 0x000000000003
-..     - color: gray
-..       dobj: FW01
-..       name: FW_LINK02
-..       offset:
-..         - 0.2
-..         - 0.2
-..         - 0.2
-..       sobj: 0x000000000003
-..   other_obj:
-..     - name: FW01
-..       neighbor_obj: 0x000000000003
-..       objtype: cube
-..       posidx: 489
-..       rad: 5
-..       scale:
-..         - 1.2
-..         - 1.6
-..         - 1.2
-..       texture_id: 3
-
+------------------------------------
 
 |
 

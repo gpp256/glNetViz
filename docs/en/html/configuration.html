@@ -1,0 +1,544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Configuration</title>
+  <link rel="stylesheet" type="text/css" href="_static/general.css" />
+  <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  <meta name="description" content="Python製ドキュメンテーションビルダー、Sphinxの日本ユーザ会">
+  <meta name="keywords" content="Sphinx,スフィンクス,ドキュメンテーション,ツール,Python,reStructuredText,reST">
+  <script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+    URL_ROOT:    '#',
+    VERSION:     '0.9.1',
+    COLLAPSE_MODINDEX: false,
+    FILE_SUFFIX: '.html',
+    HAS_SOURCE:  true
+  };
+  </script>
+  <script type="text/javascript" src="_static/jquery.js"></script>
+  <script type="text/javascript" src="_static/underscore.js"></script>
+  <script type="text/javascript" src="_static/doctools.js"></script>
+  <!-- Sticky footer -->
+  <!--[if  IE 8]>
+  <style type="text/css">
+    #wrap {display:table;}
+  </style>
+  <![endif]-->
+</head>
+<body>
+<div id="wrapper">
+  
+  <!-- header -->
+  <div id="header">
+    <div id="projInfo">
+      <h1 id="title">
+        <a href="index.html">glNetViz</a>
+      </h1>
+      <p class="docdesc">glNetViz 0.9.1 documentation</p>
+    </div>
+    <div id="headerNav">
+      <div id="searchbox">
+        <form name="search" action="search.html" method="get">
+          <fieldset class="search">
+            <input type="text" class="hint" name="q" />
+            <button class="button" title="Go" />Go</button>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+    <div id="gnav">
+      <ul>
+        <li class="home"><p><a href="index.html" title="glNetViz">glNetViz</a></p></li>
+        <li class="doc"><p><a href="doc.html" title="ドキュメント">ドキュメント</a></p></li>
+        <li class="modindex">
+          <p><a title="Index" href="genindex.html">Index</a></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /header -->
+  
+  
+  <!-- content -->
+  <div id="content">
+    <!-- current document area -->
+    <div id="document" class="left">
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="#glnetviz-configuration"><em>How to visualize the network</em></a></li>
+<li><a class="reference internal" href="#spec-conf"><em>Specification of Configuration File</em></a></li>
+<li><a class="reference internal" href="#ref-conf"><em>See Also</em></a></li>
+</ul>
+<div class="section" id="how-to-visualize-the-network">
+<span id="glnetviz-configuration"></span><h2>How to visualize the network<a class="headerlink" href="#how-to-visualize-the-network" title="Permalink to this headline">¶</a></h2>
+<p>The steps to visualize network topologies are as follows.</p>
+<ol class="arabic simple">
+<li>create the YAML format data.</li>
+</ol>
+<div class="highlight-bash"><div class="highlight"><pre>e.g.
+examples/sample08/conf/network04.conf:
+---
+controller_list:
+  - ipaddr: 192.168.1.4
+    name: Controller01
+    origin:
+      - 0
+      - 0
+      - 0
+    posidx: 0
+    rad: 0
+switch_list:
+  0x000000000001:
+    name: SW01
+    posidx: 199
+    rad: 5
+    neighbor_list:
+      - dpid: 0x000000000002
+        color: yellow
+      - dpid: 0x000000000003
+        color: yellow
+  0x000000000002:
+    name: SW02
+    posidx: 259
+    rad: 5
+    neighbor_list:
+      - dpid: 0x000000000001
+        color: yellow
+      - dpid: 0x000000000003
+        color: gray
+<span class="o">(</span>...snip...<span class="o">)</span>
+host_list:
+  02:3c:a3:00:0a:0b:
+    name: host01
+    swport: 1
+    neighbor_obj: 0x000000000001
+    ipaddr: 10.1.1.1
+    rpos:
+      - 2.4
+      - -1.4
+      - -1.0
+    rad: 1.0
+  02:09:77:00:0c:0b:
+    name: host02
+    swport: 1
+    neighbor_obj: 0x000000000002
+    ipaddr: 10.1.1.2
+    posidx: 110
+    rad: 3.0
+<span class="o">(</span>...snip...<span class="o">)</span>
+other_link:
+  - color: gray
+    dobj: FW01
+    name: FW_LINK01
+    offset:
+      - 0.0
+      - 0.0
+      - 0.0
+    sobj: 0x000000000003
+<span class="o">(</span>...snip...<span class="o">)</span>
+other_obj:
+  - name: FW01
+    neighbor_obj: 0x000000000003
+    objtype: cube
+    posidx: 489
+    rad: 5
+    scale:
+      - 1.2
+      - 1.6
+      - 1.2
+    texture_id: 3
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>refer to the YAML format data from HTML(JavaScript).</li>
+</ol>
+<div class="highlight-bash"><div class="highlight"><pre>e.g.
+JavaScript<span class="o">(</span>examples/sample08/ajax.js<span class="o">)</span>:
+//--------------------------------------
+var <span class="nv">datapath</span> <span class="o">=</span> <span class="s2">&quot;./get_objs.cgi?id=&quot;</span>+key;
+g.sdn_objs <span class="o">=</span> <span class="o">{}</span>;
+<span class="nv">$.</span>ajax<span class="o">({</span>
+    url: datapath,
+    <span class="nb">type</span>: <span class="s2">&quot;GET&quot;</span>,
+    data: <span class="o">{}</span>,
+    contentType: <span class="s2">&quot;application/json&quot;</span>,
+    dataType: <span class="s2">&quot;json&quot;</span>,
+    success: <span class="k">function</span><span class="o">(</span>msg<span class="o">)</span> <span class="o">{</span> g.sdn_objs <span class="o">=</span> msg; <span class="o">}</span>,
+    error: <span class="k">function</span><span class="o">()</span> <span class="o">{</span> <span class="k">$(</span><span class="s2">&quot;#debug&quot;</span><span class="k">)</span>.append<span class="o">(</span> <span class="s2">&quot;Error: loadObject(): failed to get object parameters&quot;</span><span class="o">)</span>; <span class="o">}</span>,
+    <span class="nb">complete</span>: undefined
+<span class="o">})</span>;
+//--------------------------------------
+
+CGI<span class="o">(</span>examples/sample08/get_objs.cgi<span class="o">)</span>:
+<span class="c">#---------------------------------------</span>
+use YAML;
+<span class="c"># (...snip...)</span>
+<span class="o">(</span><span class="nv">$conf</span><span class="o">)</span> <span class="o">=</span> YAML::LoadFile<span class="o">(</span><span class="nv">$file</span><span class="o">)</span>;
+<span class="c"># (...snip...)</span>
+&amp;getControllerObjects<span class="o">()</span>;
+&amp;getSwitchObjects<span class="o">()</span>;
+&amp;getHostObjects<span class="o">()</span>;
+<span class="c"># (...snip...)</span>
+my <span class="nv">$data</span> <span class="o">=</span> encode_json <span class="nv">$conf</span> ;
+print <span class="s">&lt;&lt;END_OF_LINE;</span>
+<span class="s">Content-Type: application/json, charset=utf-8</span>
+<span class="s">Access-Control-Allow-Origin: *</span>
+<span class="s">Access-Control-Allow-Methods: POST, GET, OPTIONS</span>
+<span class="s">Access-Control-Allow-Credentials: true</span>
+<span class="s">Access-Control-Max-Age: 1728000</span>
+
+<span class="s">$data</span>
+<span class="s">END_OF_LINE</span>
+<span class="c">#---------------------------------------</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>visualize network topologies</li>
+</ol>
+<div class="highlight-bash"><div class="highlight"><pre>e.g.
+JavaScript<span class="o">(</span>examples/sample08/main.js<span class="o">)</span>:
+//--------------------------------------
+// drawing loop
+<span class="o">(</span><span class="k">function</span><span class="o">(){</span>
+  //<span class="o">(</span>...snip...<span class="o">)</span>
+  drawObjects<span class="o">()</span>;
+  gl.flush<span class="o">()</span>;
+  //<span class="o">(</span>...snip...<span class="o">)</span>
+  setTimeout<span class="o">(</span>arguments.callee, 1000 / 60<span class="o">)</span>;
+<span class="o">}</span>
+
+// visualize objects
+<span class="k">function </span>drawObjects<span class="o">()</span> <span class="o">{</span>
+    // draw lines
+    <span class="nv">$.</span>each<span class="o">(</span>g.sdn_objs, <span class="k">function</span><span class="o">(</span>k,v<span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="nv">k</span> <span class="o">==</span> <span class="s1">&#39;linkList&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nv">$.</span>each<span class="o">(</span>v, <span class="k">function</span><span class="o">(</span>key,val<span class="o">)</span> <span class="o">{</span> drawCylinders<span class="o">(</span>val<span class="o">[</span><span class="s1">&#39;src&#39;</span><span class="o">]</span>, val<span class="o">[</span><span class="s1">&#39;dst&#39;</span><span class="o">]</span>, val<span class="o">[</span><span class="s1">&#39;rot&#39;</span><span class="o">]</span>, val<span class="o">[</span><span class="s1">&#39;color&#39;</span><span class="o">])</span>; <span class="o">})</span>;
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="o">})</span>;
+
+    // draw objects
+    var <span class="nv">addedObj</span> <span class="o">=</span> <span class="o">{}</span>;
+    <span class="nv">$.</span>each<span class="o">(</span>g.sdn_objs, <span class="k">function</span><span class="o">(</span>k,v<span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="nv">k</span> <span class="o">==</span> <span class="s1">&#39;objList&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="nv">$.</span>each<span class="o">(</span>v, <span class="k">function</span><span class="o">(</span>key,val<span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span>val<span class="o">[</span><span class="s1">&#39;name&#39;</span><span class="o">]</span> !<span class="o">=</span> <span class="s1">&#39;unknown&#39;</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">if</span> <span class="o">(</span>addedObj<span class="o">[</span>val<span class="o">[</span><span class="s1">&#39;name&#39;</span><span class="o">]]</span> <span class="o">==</span> undefined<span class="o">)</span> <span class="o">{</span>
+            addedObj<span class="o">[</span>val<span class="o">[</span><span class="s1">&#39;name&#39;</span><span class="o">]]</span> <span class="o">=</span> 1;
+          <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return </span><span class="nb">true</span>;
+          <span class="o">}</span>
+        <span class="o">}</span>
+        glnv.mvPushMatrix<span class="o">()</span>;
+        // Switch
+        <span class="k">if</span> <span class="o">(</span>val<span class="o">[</span><span class="s1">&#39;texture&#39;</span><span class="o">]</span> <span class="o">==</span> 1<span class="o">)</span> <span class="o">{</span>
+          m.translate<span class="o">(</span>glnv.mMatrix, val<span class="o">[</span><span class="s1">&#39;pos&#39;</span><span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          m.scale<span class="o">(</span>glnv.mMatrix, <span class="o">[</span>1.5, 1.63, 1.5<span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          drawCube<span class="o">(</span>1, 0.0<span class="o">)</span>;
+        // Controller
+        <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>val<span class="o">[</span><span class="s1">&#39;texture&#39;</span><span class="o">]==</span>0<span class="o">)</span> <span class="o">{</span>
+          m.translate<span class="o">(</span>glnv.mMatrix, val<span class="o">[</span><span class="s1">&#39;pos&#39;</span><span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          m.scale<span class="o">(</span>glnv.mMatrix, <span class="o">[</span>1.5, 1.63, 1.5<span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          drawCube<span class="o">(</span>0, 0.0<span class="o">)</span>;
+        // Host
+        <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>val<span class="o">[</span><span class="s1">&#39;texture&#39;</span><span class="o">]==</span>2<span class="o">)</span> <span class="o">{</span>
+          m.translate<span class="o">(</span>glnv.mMatrix, val<span class="o">[</span><span class="s1">&#39;origin&#39;</span><span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          m.translate<span class="o">(</span>glnv.mMatrix, val<span class="o">[</span><span class="s1">&#39;pos&#39;</span><span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          m.scale<span class="o">(</span>glnv.mMatrix, <span class="o">[</span>1.1, 1.0, 1.1<span class="o">]</span>, glnv.mMatrix<span class="o">)</span>;
+          drawCube<span class="o">(</span>2, 90.0<span class="o">)</span>;
+        // Others
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="o">}</span>
+        glnv.mvPopMatrix<span class="o">()</span>;
+      <span class="o">})</span>;
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="o">})</span>;
+    //<span class="o">(</span>...snip...<span class="o">)</span>
+<span class="o">}</span>
+//--------------------------------------
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="specification-of-configuration-file">
+<span id="spec-conf"></span><h2>Specification of Configuration File<a class="headerlink" href="#specification-of-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the details of the above configuration file.</p>
+<table border="1" class="glnetviz docutils">
+<caption>Specification</caption>
+<colgroup>
+<col width="24%" />
+<col width="19%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Item</strong></th>
+<th class="head"><strong>Attribute</strong></th>
+<th class="head"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="5"><p class="first">controller_list</p>
+<div class="last line-block">
+<div class="line">(type: array)</div>
+</div>
+</td>
+<td>ipaddr</td>
+<td>Specifies the ip address of the controller.</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>Specifies the name indicating the controller.</td>
+</tr>
+<tr class="row-even"><td>origin</td>
+<td>Specifies a origin which is used to decide
+the position of the object.</td>
+</tr>
+<tr class="row-odd"><td>rad</td>
+<td>Specifies a radius which is used to decide
+the position of the controller.</td>
+</tr>
+<tr class="row-even"><td>posidx</td>
+<td>Specifies a index which is used to decide
+the position of the controller.</td>
+</tr>
+<tr class="row-odd"><td rowspan="5"><p class="first">switch_list</p>
+<div class="last line-block">
+<div class="line">(type: hash,</div>
+<div class="line">key: datapath id)</div>
+</div>
+</td>
+<td>name</td>
+<td>Specifies the name indicating the switch.</td>
+</tr>
+<tr class="row-even"><td>rad</td>
+<td>Specifies a radius which is used to decide
+the position of the switch.</td>
+</tr>
+<tr class="row-odd"><td>posidx <a class="footnote-reference" href="#f1" id="id1">[1]</a></td>
+<td>Specifies a index which is used to decide
+the position of the switch.</td>
+</tr>
+<tr class="row-even"><td>apos <a class="footnote-reference" href="#f1" id="id2">[1]</a></td>
+<td>Specifies an absolute position which is used to
+decide the position of the switch.</td>
+</tr>
+<tr class="row-odd"><td>neighbor_list</td>
+<td>Specifies a array including the information of
+the neighbor device.</td>
+</tr>
+<tr class="row-even"><td rowspan="7"><p class="first">host_list</p>
+<div class="last line-block">
+<div class="line">(type: hash,</div>
+<div class="line">key: MAC address)</div>
+</div>
+</td>
+<td>name</td>
+<td>Specifies the name indicating the host.</td>
+</tr>
+<tr class="row-odd"><td>neighbor_obj</td>
+<td>Specifies the unique id of the neighbor device.</td>
+</tr>
+<tr class="row-even"><td>swport</td>
+<td>Specifies a port of switch that this host is
+connected.</td>
+</tr>
+<tr class="row-odd"><td>ipaddr</td>
+<td>Specifies the ip address of the host.</td>
+</tr>
+<tr class="row-even"><td>rad</td>
+<td>Specifies a radius which is used to decide
+the position of the host.</td>
+</tr>
+<tr class="row-odd"><td>posidx <a class="footnote-reference" href="#f2" id="id3">[2]</a></td>
+<td>Specifies a index which is used to decide
+the position of the host.</td>
+</tr>
+<tr class="row-even"><td>rpos <a class="footnote-reference" href="#f2" id="id4">[2]</a></td>
+<td>Specifies a relative position which is used to
+decide the position of the object.</td>
+</tr>
+<tr class="row-odd"><td rowspan="5"><p class="first">other_link</p>
+<div class="last line-block">
+<div class="line">(type: array)</div>
+</div>
+</td>
+<td>name</td>
+<td>Specifies the name indicating the link object.</td>
+</tr>
+<tr class="row-even"><td>dobj</td>
+<td>Specifies the the unique id of the connection
+destination device.</td>
+</tr>
+<tr class="row-odd"><td>sobj</td>
+<td>Specifies the unique id of the connection source
+device.</td>
+</tr>
+<tr class="row-even"><td>color</td>
+<td>Specifies a color of the link object.</td>
+</tr>
+<tr class="row-odd"><td>offset</td>
+<td>Specifies a offset which is used to decide
+the position of the object.</td>
+</tr>
+<tr class="row-even"><td rowspan="7"><p class="first">other_obj</p>
+<div class="last line-block">
+<div class="line">(type: array)</div>
+</div>
+</td>
+<td>name</td>
+<td>Specifies the name indicating the network object
+which excepted above network devices.
+(e.g.  bridging firewalls that
+OpenFlow Controller can&#8217;t accurately discriminate.)</td>
+</tr>
+<tr class="row-odd"><td>neighbor_obj</td>
+<td>Specifies the unique id of the neighbor object.</td>
+</tr>
+<tr class="row-even"><td>objtype</td>
+<td>Specifies a type of the object.
+(e.g. cube, sphere)</td>
+</tr>
+<tr class="row-odd"><td>rad</td>
+<td>Specifies a radius which is used to decide
+the position of the object.</td>
+</tr>
+<tr class="row-even"><td>posidx</td>
+<td>Specifies a index which is used to decide
+the position of the object.</td>
+</tr>
+<tr class="row-odd"><td>scale</td>
+<td>Specifies a magnitude of the object.</td>
+</tr>
+<tr class="row-even"><td>texture_id</td>
+<td>Specifies the unique id of the texture that
+you want to attach.</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> You must specify either &#8216;posidx&#8217; or &#8216;apos&#8217; as specifying one of &#8216;posidx&#8217; or &#8216;apos&#8217; is mandatory.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id4">2</a>)</em> You must specify either &#8216;posidx&#8217; or &#8216;rpos&#8217; as specifying one of &#8216;posidx&#8217; or &#8216;rpos&#8217; is mandatory.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="see-also">
+<span id="ref-conf"></span><h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">sample08:</th><td class="field-body"><a class="reference external" href="../../../examples/sample08/sample08.html">demo</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">sample08 (network02.conf):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network02.conf">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network02.conf</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">sample08 (network03.conf):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network03.conf">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network03.conf</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">sample08 (network04.conf):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network04.conf">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network04.conf</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">sample08 (network08.conf):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network08.conf">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network08.conf</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">sample08 (network27.conf):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network27.conf">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network27.conf</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">sample08 (pos642.json):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/pos642.json">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/pos642.json</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">sample08 (get_objs.cgi):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/get_objs.cgi.in">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/get_objs.cgi.in</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">sample08 (ajax.js):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/ajax.js">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/ajax.js</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">sample08 (main.js):</th><td class="field-body"><a class="reference external" href="https://github.com/gpp256/glNetViz/blob/master/examples/sample08/main.js">https://github.com/gpp256/glNetViz/blob/master/examples/sample08/main.js</a></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+    <!-- /current document area -->
+    <!-- sidebar -->
+    
+  <div id="sidebar" class="left">
+    <div id="sidebarWrap">
+      <div id="toc" class="sidebarRow">
+        <h3>Table Of Contents</h3>
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contents01.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents02.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-visualize-the-network">How to visualize the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specification-of-configuration-file">Specification of Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+        </div>
+        <div id="rel" class="sidebarRow">
+          <div class="relRow prev">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="contents02.html" title="previous chapter">Examples</a></p>
+          </div>
+          <div class="relRow next">
+            <h4>Next topic</h4>
+            <p class="topless"><a href="doc.html" title="next chapter">Library Reference</a></p>
+          </div>
+      </div>
+      <div id="source" class="sidebarRow">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="_sources/configuration.txt" rel="nofollow">Show Source</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    <!-- /sidebar -->
+  </div>
+  
+  <!-- /content -->
+</div>
+  <!-- footer -->
+  
+  <div id="footer">
+    <div class="footerCol">
+      <h1><a href="index.html">glNetViz</a></h1>
+      <p class="copy">
+      &copy; Copyright 2013, Gpp Apps.
+      </p>
+      <p class="sp">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      </p>
+    </div>
+    <div class="footerCol">
+    
+  <div class="relbar">
+    <dl id="relPrev">
+      <dt class="prev">Previous topic</dt>
+      <dd class="relTitle"><a href="contents02.html" title="previous chapter" accesskey="N">Examples</a></dd>
+    </dl>
+    <dl id="relNext">
+      <dt class="next">Next topic</dt>
+      <dd class="relTitle"><a href="doc.html" title="next chapter" >Library Reference</a></dd>
+    </dl>
+  </div>
+    </div>
+  </div>
+ 
+ <!-- /footer -->
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>glNetViz サンプル</title>
+  <title>サンプル</title>
   <link rel="stylesheet" type="text/css" href="_static/general.css" />
   <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
   <meta name="description" content="Python製ドキュメンテーションビルダー、Sphinxの日本ユーザ会">
@@ -9,7 +9,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
     URL_ROOT:    '#',
-    VERSION:     '0.9.0',
+    VERSION:     '0.9.1',
     COLLAPSE_MODINDEX: false,
     FILE_SUFFIX: '.html',
     HAS_SOURCE:  true
@@ -35,7 +35,7 @@
       <h1 id="title">
         <a href="index.html">glNetViz</a>
       </h1>
-      <p class="docdesc">glNetViz 0.9.0 documentation</p>
+      <p class="docdesc">glNetViz 0.9.1 documentation</p>
     </div>
     <div id="headerNav">
       <div id="searchbox">
@@ -67,8 +67,8 @@
   <div id="content">
     <!-- current document area -->
     <div id="document" class="left">
-  <div class="section" id="glnetviz-examples">
-<h1>glNetViz サンプル<a class="headerlink" href="#glnetviz-examples" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="examples">
+<h1>サンプル<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="webgl">
 <h2>WebGL<a class="headerlink" href="#webgl" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <table border="1" class="glnetviz docutils">
@@ -85,15 +85,15 @@
 <tbody valign="top">
 <tr class="row-even"><td><strong>sample01:</strong>
 <a class="reference internal" href="_images/webgl_example01.png"><img alt="sample01" src="_images/webgl_example01.png" style="width: 192.0px; height: 136.2px;" /></a></td>
-<td><p class="first">一つのシェーダプログラムを用いて作成したWebGLのサンプルページです。</p>
+<td><p class="first">一つのシェーダプログラムを用いて作成したWebGLのサンプルです。</p>
 <ul class="last simple">
-<li>マウスイベントとタッチイベントの両方に対応しました。Android端末(4.0+Chrome Beta)からも表示したオブジェクトの操作が可能です。</li>
+<li>マウスイベントとタッチイベントの両方に対応しました。Android端末(4.0+Chrome Betaなど)からも表示したオブジェクトの操作が可能です。</li>
 </ul>
 </td>
 </tr>
 <tr class="row-odd"><td><strong>sample02:</strong>
 <a class="reference internal" href="_images/webgl_example02.png"><img alt="sample02" src="_images/webgl_example02.png" style="width: 192.0px; height: 134.7px;" /></a></td>
-<td>複数のシェーダプログラムを用いて作成したWebGLのサンプルページです。</td>
+<td>複数のシェーダプログラムを用いて作成したWebGLのサンプルです。</td>
 </tr>
 </tbody>
 </table>
@@ -159,6 +159,39 @@
 </ul>
 </td>
 </tr>
+<tr class="row-even"><td><strong>sample07:</strong>
+<a class="reference internal" href="_images/netviz_example05.png"><img alt="sample07" src="_images/netviz_example05.png" style="width: 192.0px; height: 159.6px;" /></a></td>
+<td>Nmapのようなネットワークスキャナを使って、ポートスキャンを実行した際の通信の特性を出力したサンプルです。</td>
+</tr>
+<tr class="row-odd"><td><strong>sample08:</strong>
+<a class="reference internal" href="_images/netviz_example06.png"><img alt="sample08" src="_images/netviz_example06.png" style="width: 192.0px; height: 126.6px;" /></a></td>
+<td><p class="first">OpenFlowネットワーク下で形成された仮想ネットワークの構成を見える化してみたサンプルです。</p>
+<p>sample06を改造し、次の機能に対応しました。</p>
+<ul class="last simple">
+<li>YAML形式の設定ファイルで指定された通りにネットワークトポロジを3Dで出力</li>
+<li>ネットワークトポロジの動的な切替</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><strong>sample09:</strong>
+<a class="reference internal" href="_images/netviz_example07.png"><img alt="sample09" src="_images/netviz_example07.png" style="width: 192.0px; height: 153.9px;" /></a></td>
+<td><p class="first">インターネットから流入、またはインターネットへ流出する通信を見える化したサンプルです。</p>
+<p>経度、緯度の情報をインプットとしてネットワークトラフィックを3D空間上に出力します。</p>
+<blockquote class="last">
+<div><div class="line-block">
+<div class="line">e.g. from latitude/longitude, to latitude/longitude, packets</div>
+<div class="line">[[30.0, 31.2, 35.7, 139.6, 100],</div>
+<div class="line-block">
+<div class="line">[-25.2, 133.7, 35.7, 139.6, 50]</div>
+<div class="line">[56.1, -106.3, 35.7, 139.6, 25]]</div>
+</div>
+<div class="line">// Egypt: (lat=30.0, lon=31.2) Japan: (lat=35.7, lon=139.6)</div>
+<div class="line">// Australia: (lat=-25.2, lon=133.7)</div>
+<div class="line">// Canada: lat=56.1, lon=-106.3</div>
+</div>
+</div></blockquote>
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -171,18 +204,43 @@
 <li><a class="reference external" href="../../../examples/sample04/sample04.html">sample04</a></li>
 <li><a class="reference external" href="../../../examples/sample05/sample05.html">sample05</a></li>
 <li><a class="reference external" href="../../../examples/sample06/sample06.html">sample06</a></li>
+<li><a class="reference external" href="../../../examples/sample07/sample07.html">sample07</a></li>
+<li><a class="reference external" href="../../../examples/sample08/sample08.html">sample08</a></li>
+<li><a class="reference external" href="../../../examples/sample09/sample09.html">sample09</a></li>
 </ul>
 </div>
-<div class="section" id="application-example">
-<h2>活用事例<a class="headerlink" href="#application-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="application-examples">
+<h2>活用事例<a class="headerlink" href="#application-examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>This contents is under construction.</p>
+<table border="1" class="glnetviz docutils">
+<caption>Application Examples</caption>
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">イメージ</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>jqplot01:</strong>
+<a class="reference internal" href="_images/netviz_example_jqplot.png"><img alt="jqplot01" src="_images/netviz_example_jqplot.png" style="width: 192.0px; height: 126.9px;" /></a></td>
+<td>glNetVizで出力した3Dオブジェクトの上に <a class="reference external" href="http://www.jqplot.com/">jqPlot</a> の2Dグラフを重ね合わせて出力したサンプルです。</td>
+</tr>
+<tr class="row-odd"><td><strong>sdashboard01:</strong>
+<a class="reference internal" href="_images/netviz_example_sdashboard01.png"><img alt="sdashboard01" src="_images/netviz_example_sdashboard01.png" style="width: 192.0px; height: 127.8px;" /></a></td>
+<td>glNetVizと <a class="reference external" href="https://github.com/ModelN/sDashboard">sDashboard</a> を組み合わせてみたサンプルです。</td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
+<li><a class="reference external" href="../../../examples/jqplot-example01/index.html">jqPlot + glNetViz</a></li>
+<li><a class="reference external" href="../../../examples/sdashboard-example01/index.html">sDashboard + glNetViz</a></li>
 <li>mongoDB + fluentd + glNetViz</li>
 <li>nox + glNetViz</li>
 <li>pox + glNetViz</li>
 <li>trema + glNetViz</li>
-<li>sDashboard + glNetViz</li>
-<li>jqPlot + glNetViz</li>
 <li>Vimage Jail + glNetViz</li>
 <li>Android + PhoneGap + glNetViz</li>
 <li>libgeoip + glNetViz</li>
@@ -205,14 +263,15 @@
         <h3>目次</h3>
         <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="contents01.html">セットアップ手順</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">glNetViz サンプル</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">サンプル</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#webgl">WebGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#network-visualization">Network Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#demo">デモ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#application-example">活用事例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-examples">活用事例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc.html">glNetViz ライブラリリファレンス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">設定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">ライブラリリファレンス</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">更新履歴</a></li>
 </ul>
 
@@ -224,7 +283,7 @@
           </div>
           <div class="relRow next">
             <h4>次のトピックへ</h4>
-            <p class="topless"><a href="doc.html" title="次の章へ">glNetViz ライブラリリファレンス</a></p>
+            <p class="topless"><a href="configuration.html" title="次の章へ">設定</a></p>
           </div>
       </div>
       <div id="source" class="sidebarRow">
@@ -261,7 +320,7 @@
     </dl>
     <dl id="relNext">
       <dt class="next">次のトピックへ</dt>
-      <dd class="relTitle"><a href="doc.html" title="次の章へ" >glNetViz ライブラリリファレンス</a></dd>
+      <dd class="relTitle"><a href="configuration.html" title="次の章へ" >設定</a></dd>
     </dl>
   </div>
     </div>

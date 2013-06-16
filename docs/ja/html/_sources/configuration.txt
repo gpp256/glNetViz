@@ -1,0 +1,334 @@
+###########################
+Configuration
+###########################
+
+- :ref:`How to visualize the network <glnetviz-configuration>` 
+- :ref:`Specification of Configuration File <spec-conf>` 
+- :ref:`See Also <ref-conf>` 
+
+.. _glnetviz-configuration: 
+
+How to visualize the network
+-----------------------------
+
+.. .. index:: 
+..    pair: JavaScript; lib/js/glNetViz.js
+
+.. **File: lib/js/glNetViz.js**
+.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. **File Infomation**
+.. 
+.. This function is touch events handler to move objects.
+.. 
+
+The steps to visualize network topologies are as follows.
+
+1. create the YAML format data.
+
+.. code-block:: bash
+
+   e.g. 
+   examples/sample08/conf/network04.conf:
+   ---
+   controller_list:
+     - ipaddr: 192.168.1.4
+       name: Controller01
+       origin:
+         - 0
+         - 0
+         - 0
+       posidx: 0
+       rad: 0
+   switch_list:
+     0x000000000001:
+       name: SW01
+       posidx: 199
+       rad: 5
+       neighbor_list:
+         - dpid: 0x000000000002
+           color: yellow
+         - dpid: 0x000000000003
+           color: yellow
+     0x000000000002:
+       name: SW02
+       posidx: 259
+       rad: 5
+       neighbor_list:
+         - dpid: 0x000000000001
+           color: yellow
+         - dpid: 0x000000000003
+           color: gray
+   (...snip...)
+   host_list:
+     02:3c:a3:00:0a:0b:
+       name: host01
+       swport: 1
+       neighbor_obj: 0x000000000001
+       ipaddr: 10.1.1.1
+       rpos: 
+         - 2.4
+         - -1.4
+         - -1.0
+       rad: 1.0
+     02:09:77:00:0c:0b:
+       name: host02
+       swport: 1
+       neighbor_obj: 0x000000000002
+       ipaddr: 10.1.1.2
+       posidx: 110
+       rad: 3.0
+   (...snip...)
+   other_link:
+     - color: gray
+       dobj: FW01
+       name: FW_LINK01
+       offset:
+         - 0.0
+         - 0.0
+         - 0.0
+       sobj: 0x000000000003
+   (...snip...)
+   other_obj:
+     - name: FW01
+       neighbor_obj: 0x000000000003
+       objtype: cube
+       posidx: 489
+       rad: 5
+       scale:
+         - 1.2
+         - 1.6
+         - 1.2
+       texture_id: 3
+
+2. refer to the YAML format data from HTML(JavaScript).
+
+.. code-block:: bash
+
+    e.g.  
+    JavaScript(examples/sample08/ajax.js):
+    //--------------------------------------
+    var datapath = "./get_objs.cgi?id="+key;
+    g.sdn_objs = {};
+    $.ajax({
+        url: datapath,
+        type: "GET",
+        data: {},
+        contentType: "application/json",
+        dataType: "json",
+        success: function(msg) { g.sdn_objs = msg; },
+        error: function() { $("#debug").append( "Error: loadObject(): failed to get object parameters"); },
+        complete: undefined
+    });
+    //--------------------------------------
+    
+    CGI(examples/sample08/get_objs.cgi):
+    #---------------------------------------
+    use YAML;
+    # (...snip...)
+    ($conf) = YAML::LoadFile($file);
+    # (...snip...)
+    &getControllerObjects();
+    &getSwitchObjects();
+    &getHostObjects();
+    # (...snip...)
+    my $data = encode_json $conf ;
+    print <<END_OF_LINE;
+    Content-Type: application/json, charset=utf-8
+    Access-Control-Allow-Origin: *
+    Access-Control-Allow-Methods: POST, GET, OPTIONS
+    Access-Control-Allow-Credentials: true
+    Access-Control-Max-Age: 1728000
+    
+    $data
+    END_OF_LINE
+    #---------------------------------------
+
+3. visualize network topologies
+
+.. code-block:: bash
+
+    e.g.  
+    JavaScript(examples/sample08/main.js):
+    //--------------------------------------
+    // drawing loop
+    (function(){
+      //(...snip...)
+      drawObjects();
+      gl.flush();
+      //(...snip...)
+      setTimeout(arguments.callee, 1000 / 60);
+    }
+    
+    // visualize objects
+    function drawObjects() {
+        // draw lines
+        $.each(g.sdn_objs, function(k,v) {
+          if (k == 'linkList') {
+            $.each(v, function(key,val) { drawCylinders(val['src'], val['dst'], val['rot'], val['color']); });
+          } else { }
+        });
+
+        // draw objects
+        var addedObj = {};
+        $.each(g.sdn_objs, function(k,v) {
+          if (k == 'objList') {
+          $.each(v, function(key,val) {
+            if (val['name'] != 'unknown') {
+              if (addedObj[val['name']] == undefined) {
+                addedObj[val['name']] = 1;
+              } else {
+                return true;
+              }
+            }
+            glnv.mvPushMatrix();
+            // Switch
+            if (val['texture'] == 1) {
+              m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+              m.scale(glnv.mMatrix, [1.5, 1.63, 1.5], glnv.mMatrix);
+              drawCube(1, 0.0);
+            // Controller
+            } else if (val['texture']==0) {
+              m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+              m.scale(glnv.mMatrix, [1.5, 1.63, 1.5], glnv.mMatrix);
+              drawCube(0, 0.0);
+            // Host
+            } else if (val['texture']==2) {
+              m.translate(glnv.mMatrix, val['origin'], glnv.mMatrix);
+              m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+              m.scale(glnv.mMatrix, [1.1, 1.0, 1.1], glnv.mMatrix);
+              drawCube(2, 90.0);
+            // Others
+            } else {
+            }
+            glnv.mvPopMatrix();
+          });
+        } else { }
+        });
+        //(...snip...)
+    }
+    //--------------------------------------
+
+|
+
+.. _spec-conf: 
+
+Specification of Configuration File
+--------------------------------------
+
+This section describes the details of the above configuration file.
+
+.. table:: Specification
+   :class: glnetviz
+
+   +----------------------+------------------+-----------------------------------------------------+
+   | **Item**             | **Attribute**    | **Description**                                     |
+   +======================+==================+=====================================================+
+   | controller_list      | ipaddr           | Specifies the ip address of the controller.         |
+   |                      |                  |                                                     |
+   | | (type: array)      +------------------+-----------------------------------------------------+
+   |                      | name             | Specifies the name indicating the controller.       |
+   |                      |                  |                                                     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | origin           | Specifies a origin which is used to decide          |
+   |                      |                  | the position of the object.                         |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | rad              | Specifies a radius which is used to decide          |
+   |                      |                  | the position of the controller.                     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | posidx           | Specifies a index which is used to decide           |
+   |                      |                  | the position of the controller.                     |
+   +----------------------+------------------+-----------------------------------------------------+
+   | switch_list          | name             | Specifies the name indicating the switch.           |
+   |                      |                  |                                                     |
+   | | (type: hash,       +------------------+-----------------------------------------------------+
+   | | key: datapath id)  | rad              | Specifies a radius which is used to decide          |
+   |                      |                  | the position of the switch.                         |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | posidx [#f1]_    | Specifies a index which is used to decide           |
+   |                      |                  | the position of the switch.                         |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | apos [#f1]_      | Specifies an absolute position which is used to     |
+   |                      |                  | decide the position of the switch.                  |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | neighbor_list    | Specifies a array including the information of      |
+   |                      |                  | the neighbor device.                                |
+   +----------------------+------------------+-----------------------------------------------------+
+   | host_list            | name             | Specifies the name indicating the host.             |
+   |                      |                  |                                                     |
+   | | (type: hash,       +------------------+-----------------------------------------------------+
+   | | key: MAC address)  | neighbor_obj     | Specifies the unique id of the neighbor device.     |
+   |                      |                  |                                                     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | swport           | Specifies a port of switch that this host is        |
+   |                      |                  | connected.                                          |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | ipaddr           | Specifies the ip address of the host.               |
+   |                      |                  |                                                     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | rad              | Specifies a radius which is used to decide          |
+   |                      |                  | the position of the host.                           |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | posidx [#f2]_    | Specifies a index which is used to decide           |
+   |                      |                  | the position of the host.                           |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | rpos [#f2]_      | Specifies a relative position which is used to      |
+   |                      |                  | decide the position of the object.                  |
+   +----------------------+------------------+-----------------------------------------------------+
+   | other_link           | name             | Specifies the name indicating the link object.      |
+   |                      |                  |                                                     |
+   | | (type: array)      +------------------+-----------------------------------------------------+
+   |                      | dobj             | Specifies the the unique id of the connection       |
+   |                      |                  | destination device.                                 |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | sobj             | Specifies the unique id of the connection source    |
+   |                      |                  | device.                                             |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | color            | Specifies a color of the link object.               |
+   |                      |                  |                                                     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | offset           | Specifies a offset which is used to decide          |
+   |                      |                  | the position of the object.                         |
+   +----------------------+------------------+-----------------------------------------------------+
+   | other_obj            | name             | Specifies the name indicating the network object    |
+   |                      |                  | which excepted above network devices.               |
+   | | (type: array)      |                  | (e.g.  bridging firewalls that                      |
+   |                      |                  | OpenFlow Controller can't accurately discriminate.) |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | neighbor_obj     | Specifies the unique id of the neighbor object.     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | objtype          | Specifies a type of the object.                     |
+   |                      |                  | (e.g. cube, sphere)                                 |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | rad              | Specifies a radius which is used to decide          |
+   |                      |                  | the position of the object.                         |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | posidx           | Specifies a index which is used to decide           |
+   |                      |                  | the position of the object.                         |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | scale            | Specifies a magnitude of the object.                |
+   |                      |                  |                                                     |
+   |                      +------------------+-----------------------------------------------------+
+   |                      | texture_id       | Specifies the unique id of the texture that         |
+   |                      |                  | you want to attach.                                 |
+   +----------------------+------------------+-----------------------------------------------------+
+
+.. [#f1] You must specify either 'posidx' or 'apos' as specifying one of 'posidx' or 'apos' is mandatory.
+.. [#f2] You must specify either 'posidx' or 'rpos' as specifying one of 'posidx' or 'rpos' is mandatory.
+
+.. _ref-conf: 
+
+See Also
+-----------------------------
+
+:sample08: `demo <../../../examples/sample08/sample08.html>`_ 
+:sample08 (network02.conf): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network02.conf
+:sample08 (network03.conf): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network03.conf
+:sample08 (network04.conf): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network04.conf
+:sample08 (network08.conf): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network08.conf
+:sample08 (network27.conf): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/network27.conf
+:sample08 (pos642.json): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/conf/pos642.json
+:sample08 (get_objs.cgi): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/get_objs.cgi.in
+:sample08 (ajax.js): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/ajax.js
+:sample08 (main.js): https://github.com/gpp256/glNetViz/blob/master/examples/sample08/main.js
+
+|

@@ -1,5 +1,5 @@
 ﻿##################
-glNetViz Examples
+Examples
 ##################
 
 WebGL 
@@ -23,18 +23,27 @@ WebGL
 .. |sample06| image:: images/netviz_example04.png
    :scale: 30
 
+.. |sample07| image:: images/netviz_example05.png
+   :scale: 30
+
+.. |sample08| image:: images/netviz_example06.png
+   :scale: 30
+
+.. |sample09| image:: images/netviz_example07.png
+   :scale: 30
+
 .. table:: WebGL Samples
    :class: glnetviz
 
    +--------------+-----------------------------------------------------+
    | Image        | Description                                         |
    +==============+=====================================================+
-   |**sample01:** | Left image shows the WebGL Sample Page that was     |
+   |**sample01:** | The left image shows the WebGL Sample Page that was |
    ||sample01|    | comprised of one shader program.                    |
    |              |                                                     |
    |              | * supported mouse and touch events                  |
    +--------------+-----------------------------------------------------+
-   |**sample02:** | Left image shows the WebGL Sample Page that was     |
+   |**sample02:** | The left image shows the WebGL Sample Page that was |
    ||sample02|    | comprised of multi shader programs.                 |
    +--------------+-----------------------------------------------------+
 
@@ -48,8 +57,8 @@ Network Visualization
    +--------------+-------------------------------------------------------------------+
    | Image        | Description                                                       |
    +==============+===================================================================+
-   |**sample03:** | Left image shows a virtual network topology that was              |
-   ||sample03|    | generated in an OpenFlow Network.                                 |
+   |**sample03:** | The left image shows a virtual network topology that was          |
+   ||sample03|    | generated in the OpenFlow Network.                                |
    |              |                                                                   |
    |              | * supported keyboard events                                       |
    |              |                                                                   |
@@ -57,30 +66,56 @@ Network Visualization
    |              |    | left or right: rotation around the y-axis                    |
    |              |    | up or down: rotation around the x-axis                       |
    +--------------+-------------------------------------------------------------------+
-   |**sample04:** | Left image shows a virtual network topology that was              |
-   ||sample04|    | generated in an OpenFlow Network.                                 |
+   |**sample04:** | The left image shows a virtual network topology that was          |
+   ||sample04|    | generated in the OpenFlow Network.                                |
    |              |                                                                   |
-   |              | The sample04 provide the following new functions.                 |
+   |              | The sample04 provides following new functions.                    |
    |              |                                                                   |
    |              | * picking with WebGL                                              |
    |              | * displaying the infomation of selected a network device          |
    +--------------+-------------------------------------------------------------------+
-   |**sample05:** | Left image shows a virtual network topology that was              |
-   ||sample05|    | generated in an OpenFlow Network.                                 |
+   |**sample05:** | The Left image shows a virtual network topology that was          |
+   ||sample05|    | generated in the OpenFlow Network.                                |
    |              |                                                                   |
-   |              | The sample05 provide the following new functions.                 |
+   |              | The sample05 provides following new functions.                    |
    |              |                                                                   |
-   |              | * visualizing network traffic flowing in the OpenFlow Network     |
+   |              | * visualizing the network traffic in the OpenFlow Network         |
    |              | * displaying the amount of network traffic                        |
    +--------------+-------------------------------------------------------------------+
-   |**sample06:** | Left image shows a virtual network topology that was              |
-   ||sample06|    | generated in an OpenFlow Network.                                 |
+   |**sample06:** | The left image shows a virtual network topology that was          |
+   ||sample06|    | generated in the OpenFlow Network.                                |
    |              |                                                                   |
-   |              | The sample06 provide the following new functions.                 |
+   |              | The sample06 provides following new functions.                    |
    |              |                                                                   |
    |              | * moving network devices                                          |
    |              | * rotation around the y-axis of network devices                   |
-   |              | * Toggle on/off of displaying information                         |
+   |              | * toggle on/off of displaying information                         |
+   +--------------+-------------------------------------------------------------------+
+   |**sample07:** | The left image shows network flows when a scanning utility        |
+   ||sample07|    | such as NMAP was executed.                                        |
+   |              |                                                                   |
+   +--------------+-------------------------------------------------------------------+
+   |**sample08:** | The left image shows a virtual network topology that was          |
+   ||sample08|    | generated in the OpenFlow Network.                                |
+   |              |                                                                   |
+   |              | The sample08 provides following new functions.                    |
+   |              |                                                                   |
+   |              | * visualizing network topologies from YAML files                  |
+   |              | * changing to the network topology which was specified            |
+   +--------------+-------------------------------------------------------------------+
+   |**sample09:** | The left image shows network traffics to/from the Internet.       |
+   ||sample09|    |                                                                   |
+   |              | The sample09 provides functions which visualizes the network      |
+   |              | traffic from the specified information involved of the longitude  |
+   |              | and latitude.                                                     |
+   |              |                                                                   |
+   |              |    | e.g. from latitude/longitude, to latitude/longitude, packets |
+   |              |    | [[30.0, 31.2, 35.7, 139.6, 100],                             |
+   |              |    |  [-25.2, 133.7, 35.7, 139.6, 50]                             |
+   |              |    |  [56.1, -106.3, 35.7, 139.6, 25]]                            |
+   |              |    | // Egypt: (lat=30.0, lon=31.2) Japan: (lat=35.7, lon=139.6)  |
+   |              |    | // Australia: (lat=-25.2, lon=133.7)                         |
+   |              |    | // Canada: lat=56.1, lon=-106.3                              |
    +--------------+-------------------------------------------------------------------+
 
 Demo
@@ -92,11 +127,39 @@ Demo
 * `sample04 <../../../examples/sample04/sample04.html>`_ 
 * `sample05 <../../../examples/sample05/sample05.html>`_ 
 * `sample06 <../../../examples/sample06/sample06.html>`_ 
+* `sample07 <../../../examples/sample07/sample07.html>`_ 
+* `sample08 <../../../examples/sample08/sample08.html>`_ 
+* `sample09 <../../../examples/sample09/sample09.html>`_ 
 
-Application Example
+Application Examples
 ----------------------
 
 This contents is under construction.
+
+.. |jqplot01| image:: images/netviz_example_jqplot.png
+   :scale: 30
+
+.. |sdashboard01| image:: images/netviz_example_sdashboard01.png
+   :scale: 30
+
+.. table:: Application Examples
+   :class: glnetviz
+
+   +-------------------+-------------------------------------------------------+
+   | Image             | Description                                           |
+   +===================+=======================================================+
+   |**jqplot01:**      | The left image shows the applied example which        |
+   ||jqplot01|         | combined the glNetViz with the                        |
+   |                   | `jqPlot <http://www.jqplot.com/>`_ .                  |
+   +-------------------+-------------------------------------------------------+
+   |**sdashboard01:**  | The left image shows the applied example which        |
+   ||sdashboard01|     | combined the glNetViz with the                        |
+   |                   | `sDashboard <https://github.com/ModelN/sDashboard>`_ .|
+   +-------------------+-------------------------------------------------------+
+
+* `jqPlot + glNetViz <../../../examples/jqplot-example01/index.html>`_ 
+
+* `sDashboard + glNetViz <../../../examples/sdashboard-example01/index.html>`_ 
 
 * mongoDB + fluentd + glNetViz
 
@@ -105,10 +168,6 @@ This contents is under construction.
 * pox + glNetViz
 
 * trema + glNetViz
-
-* sDashboard + glNetViz
-
-* jqPlot + glNetViz
 
 * Vimage Jail + glNetViz
 

@@ -9,7 +9,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
     URL_ROOT:    '#',
-    VERSION:     '0.9.0',
+    VERSION:     '0.9.1',
     COLLAPSE_MODINDEX: false,
     FILE_SUFFIX: '.html',
     HAS_SOURCE:  true
@@ -35,7 +35,7 @@
       <h1 id="title">
         <a href="index.html">glNetViz</a>
       </h1>
-      <p class="docdesc">glNetViz 0.9.0 documentation</p>
+      <p class="docdesc">glNetViz 0.9.1 documentation</p>
     </div>
     <div id="headerNav">
       <div id="searchbox">
@@ -73,6 +73,39 @@
 <span id="index-3"></span><h2>glNetVIzのインストール<a class="headerlink" href="#building-and-installing" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストール方法を以下に記述します。</p>
 <div class="highlight-bash"><div class="highlight"><pre>e.g.
+Debian GNU/Linux:
+<span class="nv">$ </span>sudo apt-get install apache2
+<span class="nv">$ </span>git clone https://github.com/gpp256/glNetViz.git
+<span class="nv">$ </span><span class="nb">cd </span>glNetViz/
+<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/opt/glNetViz
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+<span class="nv">$ </span>sudo chown -R www-data:www-data /opt/glNetViz
+<span class="nv">$ </span>sudo cp /etc/apache2/ports.conf<span class="o">{</span>,.backup130506<span class="o">}</span>
+<span class="nv">$ </span>sudo vi /etc/apache2/ports.conf
+<span class="nv">$ </span>sudo diff /etc/apache2/ports.conf<span class="o">{</span>.backup130506,<span class="o">}</span>
+9c9
+&lt; Listen 80
+---
+&gt; Listen 0.0.0.0:80
+<span class="nv">$ </span>sudo cp /etc/apache2/sites-enabled/000-default<span class="o">{</span>,.backup130506<span class="o">}</span>
+<span class="nv">$ </span>sudo vi /etc/apache2/sites-enabled/000-default
+<span class="nv">$ </span>sudo diff /etc/apache2/sites-enabled/000-default<span class="o">{</span>.backup130506,<span class="o">}</span>
+0a1
+&gt; AddHandler cgi-script .cgi
+40a41,48
+&gt;     Alias /glNetViz/ /opt/glNetViz/
+&gt;     &lt;Directory <span class="s2">&quot;/opt/glNetViz&quot;</span>&gt;
+&gt;         AllowOverride All
+&gt;         Options ExecCGI
+&gt;         Order allow,deny
+&gt;         Allow from all
+&gt;     &lt;/Directory&gt;
+<span class="nv">$ </span>sudo /etc/init.d/apache2 restart
+
+e.g.
+FreeBSD:
+<span class="nv">$ </span>sudo pkg_add -r apache
 <span class="nv">$ </span>git clone https://github.com/gpp256/glNetViz.git
 <span class="nv">$ </span><span class="nb">cd </span>glNetVis
 <span class="nv">$ </span>./configure --prefix<span class="o">=</span>/opt/glNetViz
@@ -90,8 +123,16 @@
 &gt;         Order allow,deny
 &gt;         Allow from all
 &gt;     &lt;/Directory&gt;
-<span class="nv">$ </span>sudo /usr/local/etc/rc.d/apache restart
-<span class="nv">$ </span>sudo vi /opt/glNetViz/.htaccess
+411c411
+&lt; <span class="c">#AddHandler cgi-script .cgi</span>
+---
+&gt; AddHandler cgi-script .cgi
+<span class="nv">$ </span>sudo cp /etc/rc.conf<span class="o">{</span>,.backup130506<span class="o">}</span>
+<span class="nv">$ </span>sudo vi /etc/rc.conf
+<span class="nv">$ </span>sudo diff /etc/rc.conf<span class="o">{</span>.backup130506,<span class="o">}</span>
+0a1
+&gt; <span class="nv">apache_enable</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span>
+<span class="nv">$ </span>sudo /usr/local/etc/rc.d/apache start
 </pre></div>
 </div>
 <span class="target" id="index-4"></span><span class="target" id="index-5"></span><span class="target" id="index-6"></span></div>
@@ -198,8 +239,9 @@ http://youripaddress/glNetViz/examples/
 <li class="toctree-l2"><a class="reference internal" href="#glnetviz-components">glNetVIz を構成するファイルの概要</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="contents02.html">glNetViz サンプル</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.html">glNetViz ライブラリリファレンス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents02.html">サンプル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">設定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">ライブラリリファレンス</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">更新履歴</a></li>
 </ul>
 
@@ -211,7 +253,7 @@ http://youripaddress/glNetViz/examples/
           </div>
           <div class="relRow next">
             <h4>次のトピックへ</h4>
-            <p class="topless"><a href="contents02.html" title="次の章へ">glNetViz サンプル</a></p>
+            <p class="topless"><a href="contents02.html" title="次の章へ">サンプル</a></p>
           </div>
       </div>
       <div id="source" class="sidebarRow">
@@ -248,7 +290,7 @@ http://youripaddress/glNetViz/examples/
     </dl>
     <dl id="relNext">
       <dt class="next">次のトピックへ</dt>
-      <dd class="relTitle"><a href="contents02.html" title="次の章へ" >glNetViz サンプル</a></dd>
+      <dd class="relTitle"><a href="contents02.html" title="次の章へ" >サンプル</a></dd>
     </dl>
   </div>
     </div>

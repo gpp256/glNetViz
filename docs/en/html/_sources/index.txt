@@ -6,12 +6,12 @@ The glNetViz Manual
 
 Last Update: |today| 
 
-Welcome!
+Overview
 ==================
 
 The glNetViz is a free tool for visualizing computer network topologies with WebGL.
 
-With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently.
+With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently. The glNetViz is aiming for the convenient tool which can easily visualize the network topology from the serialized data in YAML or JSON.
 
 .. youtube:: 5885VxNHXq0
    :width: 480
@@ -27,6 +27,7 @@ Here's what's available for documentation:
 
    contents01
    contents02
+   configuration
    doc
    history
 
@@ -69,6 +70,8 @@ References
 :mongoDB: http://www.mongodb.org/
 :fluentd: http://fluentd.org/
 :Chromeless-Ereader: https://github.com/taboca/Chromeless-Ereader/blob/master/ereader.html
+:jqPlot: http://www.jqplot.com/
+:sDashboard: https://github.com/ModelN/sDashboard
 
 Links
 =======
@@ -76,7 +79,7 @@ Links
 :users guide(en): http://gpp256.zapto.org/glNetViz/docs/en/html/index.html
 :users guide(ja): http://gpp256.zapto.org/glNetViz/docs/ja/html/index.html
 :repository: https://github.com/gpp256/glNetViz
-:blog: http://gpp256.blogspot.jp
+:applied examples: https://github.com/gpp256/glnetviz_examples
 
 License
 =======
