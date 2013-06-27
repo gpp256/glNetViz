@@ -5,6 +5,7 @@
  * This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
  */
 
+// get rotation arrays
 function getRotationArray (id, src, dst, type) {
 	if(typeof type === 'undefined') type = 'default';
     $.ajax({
@@ -20,13 +21,13 @@ function getRotationArray (id, src, dst, type) {
 			else 
 				g.drawinfo_flows[msg['id']]['rot'] = msg['rot'];
 		},
-        error: function() { $("#debug").append(
+        error: function() { $("#debug").text(
 			"Error: getRotationArray(): failed to get a rotation array."); },
         complete: undefined
     });
-
 }
 
+// load objects
 function loadObject () {
 	// Japan: lat=35.7, lon=139.6
 	// Egypt: lat=30.0, lon=31.2
@@ -53,15 +54,14 @@ function loadObject () {
 					rot  : msg['rot'],
 					start: msg['start'],
 					end  : msg['end'],
-					flows: msg['flows']
+					flows: msg['flows'],
+					lonlat: atklist[msg['id']]
 				};
 			},
-    	    error: function() { $("#debug").append(
+    	    error: function() { $("#debug").text(
 				"Error: loadObject(): failed to get object parameters"); },
     	    complete: undefined
     	});
 	}
 }
-
-
 

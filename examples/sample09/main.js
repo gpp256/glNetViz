@@ -54,6 +54,7 @@ window.onload = function(){
 	createSliderUI();
 
 	var flowList = [];
+	var result_intersect = undefined;
  
 	// drawing loop
 	(function(){
@@ -66,11 +67,6 @@ window.onload = function(){
 		// initialize the canvas
 		initCanvas();
 		// draw objects
-		//putCones(g.intersect_pos, "yellow");
-		//if (g.getflow_updateflag == 1) {
-		//	updateFlows();
-		//	g.getflow_updateflag = 0;
-		//}
 		drawObjects();
 		gl.flush();
 		// update framerate
@@ -78,10 +74,6 @@ window.onload = function(){
 		if (g.framerate_counter++%g.display_framerate_interval == 0) displayFramerate();
 		/// update xRot/yRot
 		handleKeys(); animate()
-		// get data for network flow visualization
-		//if ((g.getstat_counter++ % g.getstat_interval) == 0) {
-		//	getFlowData(); g.getflow_updateflag=1; //g.getstat_updateflag=1;
-		//}
 		// recursive loop
 		setTimeout(arguments.callee, 1000 / 60);
 	})();
@@ -91,6 +83,9 @@ window.onload = function(){
 	// ---------------------------------------------------------------
 	/// draw objects
 	function drawObjects() {
+
+		// initialize result_intersect
+		result_intersect = {tmin: 1.0e30, touch_flag: -1};
 		// change shader program
 		gl.useProgram(texprg);
 		//var result_intersect = {tmin: 1.0e30, touch_flag: -1};
@@ -108,6 +103,20 @@ window.onload = function(){
 			);
 		}
 		glnv.mvPopMatrix(); // earth
+
+		// show host information
+		if (g.check_intersect == 1) { 
+			g.check_intersect = 0;
+			$("#objinfo").text("Source Host: ");
+			if (result_intersect.touch_flag != -1) {
+				g.selected_obj = result_intersect.touch_flag;
+				$("#objinfo").append("latitude=" + g.atkinfo[g.selected_obj]["lonlat"][0]+ ", ");
+				$("#objinfo").append("longitude=" + g.atkinfo[g.selected_obj]["lonlat"][1]);
+			} else {
+				g.selected_obj = -1;
+				$("#objinfo").append("latitude=, longitude=");
+			}
+		}
 	}
 
 	function drawEarth(scale) {
@@ -115,9 +124,8 @@ window.onload = function(){
 		m.scale(glnv.mMatrix, [scale, scale, scale], glnv.mMatrix);
 		m.rotate(glnv.mMatrix, glnv.degToRad(90.0), 
 			[0.0, 1.0, 0.0], glnv.mMatrix);
-    	//m.translate(glnv.mMatrix, [0.0, -2.0, 0.0], glnv.mMatrix);
 		glnv.setMatrixUniforms(texprg, 'use_texture');
-    	gl.uniform1i(texprg.samplerUniform, 8);
+		gl.uniform1i(texprg.samplerUniform, 8);
 		glnv.putSphere(
 			prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
 			prg.spheres["red"]["t"], prg.spheres["red"]["i"], [
@@ -139,20 +147,23 @@ window.onload = function(){
 		}
 
 		// draw start point
+		var color = (g.selected_obj == -1 || index != g.selected_obj) ? 'blue' : 'red';
 		glnv.mvPushMatrix(); 
-    	m.translate(glnv.mMatrix, start, glnv.mMatrix);
+		m.translate(glnv.mMatrix, start, glnv.mMatrix);
 		m.scale(glnv.mMatrix, [0.05, 0.05, 0.05], glnv.mMatrix);
 		glnv.setMatrixUniforms(prg, 'default');
 		glnv.putSphere(
-			prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
-			prg.spheres["red"]["c"], prg.spheres["red"]["i"], 
+			prg.spheres[color]["v"], prg.spheres[color]["n"], 
+			prg.spheres[color]["c"], prg.spheres[color]["i"], 
 			prg.attLocation, [ 3, 3, 4 ]
 		);
+		if (g.check_intersect == 1) 
+			result_intersect = glnv.intersect(index, result_intersect);
 		glnv.mvPopMatrix(); 
 
 		// draw end point
 		glnv.mvPushMatrix(); 
-    	m.translate(glnv.mMatrix, end, glnv.mMatrix);
+		m.translate(glnv.mMatrix, end, glnv.mMatrix);
 		m.scale(glnv.mMatrix, [0.05, 0.05, 0.05], glnv.mMatrix);
 		glnv.setMatrixUniforms(prg, 'default');
 		glnv.putSphere(
@@ -177,7 +188,7 @@ window.onload = function(){
 			if (g.drawinfo_flows[k] == undefined ||
 				g.drawinfo_flows[k]['rot'] == undefined) continue;
 			glnv.mvPushMatrix(); 
-    		m.translate(glnv.mMatrix, g.drawinfo_flows[k]['start'], glnv.mMatrix);
+			m.translate(glnv.mMatrix, g.drawinfo_flows[k]['start'], glnv.mMatrix);
 			for (var j = 0; j < g.drawinfo_flows[k]['rot'].length; j++) {
 				m.rotate(glnv.mMatrix, glnv.degToRad(g.drawinfo_flows[k]['rot'][j][0]), [
 					g.drawinfo_flows[k]['rot'][j][1],
@@ -190,7 +201,7 @@ window.onload = function(){
 				0.01*g.drawinfo_flows[k]['size'], 
 				0.01*g.drawinfo_flows[k]['size'], 
 				0.01*g.drawinfo_flows[k]['size']], glnv.mMatrix);
-    		m.translate(glnv.mMatrix, [0.0, 1.75/2.0, 0.0], glnv.mMatrix);
+			m.translate(glnv.mMatrix, [0.0, 1.75/2.0, 0.0], glnv.mMatrix);
 			glnv.putArrow(prg, 
 				prg.arrows[g.drawinfo_flows[k]['color']]["v"], 
 				prg.arrows[g.drawinfo_flows[k]['color']]["n"], 
