@@ -39,8 +39,9 @@ function initUI() {
 		} else {
 		}
 	});
-	$('#perspective-disable').removeClass('selected');
-	$('#perspective-enable').addClass('selected');
+	$('#perspective-disable').addClass('selected');
+	$('#perspective-enable').removeClass('selected');
+	togglePerspective(0);
 }
 
 // initialize webgl

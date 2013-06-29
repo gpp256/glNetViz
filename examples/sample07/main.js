@@ -30,6 +30,7 @@ window.onload = function(){
 	// create spheres
 	glnv.generateSpheres(prg, [
 		{id: 'red', r: 1.0, g: 0.0, b: 0.0, a: 1.0},
+		{id: 'yellow', r: 1.0, g: 1.0, b: 0.0, a: 1.0}, 
 		{id: 'blue', r: 0.0, g: 0.0, b: 1.0, a: 1.0} ], 12);
 	// create rectangles
 	glnv.generateRectangles(texprg);
@@ -53,6 +54,8 @@ window.onload = function(){
 	var arrow_default_pos = [0, 48]; var arrow_delta = 0.5;
 	// create sliders
 	createSliderUI();
+
+	var result_intersect = undefined;
  
 	// drawing loop
 	(function(){
@@ -75,13 +78,16 @@ window.onload = function(){
 	// ---------------------------------------------------------------
 	// draw objects
 	function drawObjects() {
+
 		// draw rectangles
 		putRectangles([[0.0, 0.0, 1.0], [0.0, 0.0, -1.0]]);
 
+		// initialize result_intersect
+		result_intersect = {tmin: 1.0e30, touch_flag: -1};
 		// draw spheres
 		for (var i=0; i<g.conn_list.length ; i++) {
-			drawSphere([g.conn_list[i][7], g.conn_list[i][8], -1.0]);
-			drawSphere([g.conn_list[i][9], g.conn_list[i][10], 1.0]);
+			drawSphere(i, [g.conn_list[i][7], g.conn_list[i][8], -1.0]);
+			drawSphere(i, [g.conn_list[i][9], g.conn_list[i][10], 1.0]);
 		}
 
 		// draw flows
@@ -102,6 +108,21 @@ window.onload = function(){
 			0.06, [ 0.05, 1.1, 1.0 ], 0.52, 'green');
 		glnv.mvPopMatrix();
 		gl.useProgram(prg);
+
+		// show host information
+		if (g.check_intersect == 1) { 
+			g.check_intersect = 0;
+			if (result_intersect.touch_flag != -1) {
+				g.selected_obj = result_intersect.touch_flag;
+				$("#srcinfo").text("src_ip=" + g.conn_list[g.selected_obj][1]+ ", ");
+				$("#srcinfo").append("src_port=" + g.conn_list[g.selected_obj][2]+ ", ");
+				$("#dstinfo").text("dst_ip=" + g.conn_list[g.selected_obj][3]+ ", ");
+				$("#dstinfo").append("dst_port=" + g.conn_list[g.selected_obj][4]+ ", ");
+				$("#pktinfo").text("proto=" + g.conn_list[g.selected_obj][0]+ ", ");
+				$("#pktinfo").append("n_packets=" + g.conn_list[g.selected_obj][5]+ ", ");
+				$("#pktinfo").append("n_bytes=" + g.conn_list[g.selected_obj][6]);
+			} 
+		}
 	}
 
 	// draw Rectangles
@@ -124,15 +145,22 @@ window.onload = function(){
 	}
 
 	// draw sphere
-	function drawSphere(pos) {
-			glnv.mvPushMatrix();
-    		m.translate(glnv.mMatrix, pos, glnv.mMatrix);
-			m.scale(glnv.mMatrix, [0.04, 0.04, 0.04], glnv.mMatrix);
-			glnv.setMatrixUniforms(prg, 'default');
-			glnv.putSphere( 
-				prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
-				prg.spheres["red"]["c"], prg.spheres["red"]["i"], prg.attLocation, prg.attStride);
-			glnv.mvPopMatrix();
+	function drawSphere(index, pos) {
+		var color = 'red';
+		var scale = 0.04;
+		if (g.selected_obj != -1 && index == g.selected_obj) {
+			color = 'yellow'; scale = 0.05;
+		}
+		glnv.mvPushMatrix();
+		m.translate(glnv.mMatrix, pos, glnv.mMatrix);
+		m.scale(glnv.mMatrix, [scale, scale, scale], glnv.mMatrix);
+		glnv.setMatrixUniforms(prg, 'default');
+		glnv.putSphere( 
+			prg.spheres[color]["v"], prg.spheres[color]["n"], 
+			prg.spheres[color]["c"], prg.spheres[color]["i"], prg.attLocation, prg.attStride);
+		if (g.check_intersect == 1) 
+			result_intersect = glnv.intersect(index, result_intersect);
+		glnv.mvPopMatrix();
 	}
 	
 	// initialize shader programs
@@ -171,6 +199,8 @@ window.onload = function(){
 	function initVPMatrix() {
 		glnv.vpMatrix = m.identity(m.create());
 		m.lookAt([0.0, 0.0, 2.5], [0, 0, 0], [0, 1, 0], vMatrix);
+		g.mRatio = c.width / c.height;
+		gl.viewportWidth = c.width; gl.viewportHeight = c.height;
 		m.perspective(45, c.width / c.height, 0.1, 100, pMatrix);
 		m.multiply(pMatrix, vMatrix, glnv.vpMatrix);
 	}
@@ -178,7 +208,7 @@ window.onload = function(){
 	// initialize a canvas
 	function initCanvas() {
 		gl.clearColor(0.0, 0.0, 0.6, 1.0); gl.clearDepth(1.0);
-    	gl.viewport(0, 0, c.width, c.height);
+		gl.viewport(0, 0, c.width, c.height);
 		// active textures 
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, glnv.textureList[5]);
@@ -189,7 +219,7 @@ window.onload = function(){
 			m.perspective(45, c.width / c.height, 0.1, 100, pMatrix);
 			} else {
 			var ratio = c.width / c.height;
-			m.ortho(-1.2, 1.2, -1.2/ratio, 1.2/ratio, -50.0, 50.0, pMatrix);
+			m.ortho(-5, 5, -5/ratio, 5/ratio, -50.0, 50.0, pMatrix);
 			}
 			m.multiply(pMatrix, vMatrix, glnv.vpMatrix);
 			g.old_view_mode = g.view_mode;
@@ -198,8 +228,8 @@ window.onload = function(){
 		m.identity(glnv.mMatrix);
 
 		// -- Keyboard Event --
-		m.rotate(glnv.mMatrix, glnv.degToRad(g.xRot), [1, 0, 0], glnv.mMatrix);
-		m.rotate(glnv.mMatrix, glnv.degToRad(g.yRot), [0, 1, 0], glnv.mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(g.xRot+18.0), [1, 0, 0], glnv.mMatrix);
+		m.rotate(glnv.mMatrix, glnv.degToRad(g.yRot-26.0), [0, 1, 0], glnv.mMatrix);
 
 		// -- Mouse Event --
 		// dampen the velocity
@@ -220,7 +250,7 @@ window.onload = function(){
 		m.scale(glnv.mMatrix, [obj_size, obj_size, obj_size], glnv.mMatrix);
 		m.rotate(glnv.mMatrix, glnv.degToRad(g.xaxis_rotate_param*5.0), [1, 0, 0], glnv.mMatrix);
 
-		var size = 0.1;
+		var size = 0.45;
 		m.scale(glnv.mMatrix, [size, size, size], glnv.mMatrix);
 		m.multiply(glnv.vpMatrix, glnv.mMatrix, mvpMatrix);
 		m.inverse(glnv.mMatrix, invMatrix);

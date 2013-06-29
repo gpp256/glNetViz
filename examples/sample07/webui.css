@@ -23,6 +23,15 @@
   padding: 1em;
   color: white;
 }
+#objinfo {
+  position: absolute;
+  top: 91px;
+  left: 20px;
+  width: 220px;
+  background-color: rgba(0,0,0,0.3);
+  padding: 1em;
+  color: white;
+}
 #uiContainer {
   z-index: 2;
   padding: 1em;

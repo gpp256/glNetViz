@@ -41,6 +41,12 @@ var g = {
 	sdn_objs: {},
 	other_objs: {},
 	conn_list: [],
+	// for mouse picking
+	check_intersect: 0,
+	selected_obj: 7,
+	mRatio: 0.0,
+	viewportWidth: 0,
+	viewportHeight: 0,
 	// parameters to draw flows
 	drawinfo_flows: [],
 	// rotation arrays
