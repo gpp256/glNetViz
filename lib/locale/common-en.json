@@ -1,0 +1,9 @@
+{
+  "right-ui": {
+    "title": "Drawing Parameters",
+    "toggle-view": "Toggle Perspective/Orthographic:",
+    "select-topology": "Select a Network Topology:",
+    "button-view-left": "Perspective",
+    "button-view-right": "Orthographic"
+  }
+}

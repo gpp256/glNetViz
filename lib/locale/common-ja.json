@@ -1,0 +1,9 @@
+{
+  "right-ui": {
+    "title": "描画パラメータ",
+    "toggle-view": "投影方法:",
+    "select-topology": "ネットワークトポロジ:",
+    "button-view-left": "透視投影",
+    "button-view-right": "平行投影"
+  }
+}
