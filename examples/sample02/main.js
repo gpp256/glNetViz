@@ -123,7 +123,8 @@ window.onload = function(){
 		glnv.setMatrixUniforms(prg, 'default');
 		glnv.putSphere(
 			prg.spheres["red"]["v"], prg.spheres["red"]["n"], 
-			prg.spheres["red"]["c"], prg.spheres["red"]["i"], prg.attLocation, [ 3, 3, 4 ]
+			prg.spheres["red"]["c"], prg.spheres["red"]["i"], prg.attLocation, [ 3, 3, 4 ],
+			1 // wireframe flag
 		);
 		glnv.mvPopMatrix();
 
