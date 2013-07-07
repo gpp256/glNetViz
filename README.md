@@ -69,7 +69,7 @@ Links
 
 users guide(en): http://gpp256.zapto.org/glNetViz/docs/en/html/index.html  
 users guide(ja): http://gpp256.zapto.org/glNetViz/docs/ja/html/index.html  
-glNetViz Examples: https://github.com/gpp256/glnetviz_examples/
+glNetViz Examples: https://github.com/gpp256/glnetviz_examples
 blog: http://gpp256.blogspot.jp  
 
 License
