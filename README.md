@@ -78,3 +78,5 @@ Copyright &copy; 2013 Yoshi(@gpp256)
 Distributed under the [MIT License][mit].  
 
 [MIT]: http://www.opensource.org/licenses/mit-license.php
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/2cb7e77baf374d27f6bc8868ed0fd136 "githalytics.com")](http://githalytics.com/gpp256/glNetViz)
