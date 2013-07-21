@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 #AC_PREREQ([2.68])
-AC_INIT([glNetViz], [0.91], [@gpp256])
+AC_INIT([glNetViz], [0.92], [@gpp256])
 AC_CONFIG_SRCDIR([perl_modules/myprimitive.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -30,6 +30,9 @@ AC_CONFIG_FILES([Makefile
                  perl_modules/Makefile.PL
                  examples/sample08/get_objs.cgi
                  examples/sample09/get_objpos.cgi
+                 examples/sample10/change_objpos.cgi
+                 examples/sample10/get_objs.cgi
+                 examples/sample10/init.cgi
                  lib/cgi/change_objpos.cgi
                  lib/cgi/get_otherobjs.cgi
                  lib/cgi/get_rotateinfo.pl

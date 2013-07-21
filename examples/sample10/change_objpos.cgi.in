@@ -1,0 +1,87 @@
+#!@CMD_PERL@
+#
+# change_objpos.cgi
+#
+# Copyright (c) 2013 Yoshi 
+# This software is distributed under the MIT License.(../../MIT-LICENSE.txt)
+#
+use CGI qw(param);
+use JSON::PP;
+require '../../lib/cgi/sdn.pm';
+# --------------------------------
+# Main Routine
+# --------------------------------
+# check input data
+my %posinfo = ();
+$posinfo{vnetid} = &ck_vnetid(param('vnetid'));
+my $conffile = sprintf('./conf/network%02d.conf', $posinfo{vnetid});
+my $conflist = &sdnLib::getConf($conffile);
+$posinfo{type} = param('type');
+$posinfo{type} = ($posinfo{type} eq '1') ? 'switch_list' : 'host_list';
+$posinfo{pos} = [
+	&ck_num(param('dx'), -100.0, 100.0),
+	&ck_num(param('dy'), -100.0, 100.0),
+	&ck_num(param('dz'), -100.0, 100.0),
+];
+$posinfo{objid} = param('objid');
+# move the specified object
+if (exists $conflist->{$posinfo{type}}->{$posinfo{objid}}) {
+	if ($posinfo{type} eq 'switch_list') {
+	$conflist->{$posinfo{type}}->{$posinfo{objid}}->{apos} = $posinfo{pos};
+	} else {
+	$conflist->{$posinfo{type}}->{$posinfo{objid}}->{rpos} = $posinfo{pos};
+	}
+	&sdnLib::setConf($conflist, $conffile);
+} else {
+	&print_result(3);
+}
+&print_result(0);
+exit(0);
+
+# --------------------------------
+# Sub Routines
+# --------------------------------
+sub print_result {
+	my $result = shift;
+	print <<END_OF_LINE;
+Content-Type: application/json, charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1728000
+
+END_OF_LINE
+	if ($result) {
+		print "{\"ret\": $result}\n";
+	} else {
+		print '{"ret": 0}'."\n";
+	}
+	exit ($result);
+}
+
+sub ck_vnetid {
+	my $id = shift;
+	my $result = 0;
+	map { $id == $_ && do { $result = $id;}; } (2, 3, 4, 8, 27);
+	return ($result == 0) ? 8 : $result;
+}
+
+sub ck_num {
+	my $num = shift || 0.0; my $min = shift; my $max = shift;
+	$num = 0.0 unless ($num =~ /^(-)?[0-9]+\.[0-9]+$/);
+	return ($num < $min) ? $min : (($num > $max) ? $max : $num); 
+}
+__END__
+change_objpos.cgi?vnetid=8&objid=0x08&type=1&dx=1.1&dy=1.0&dz=1.0
+e.g.
+$list = {
+          'pos' => [
+                     '1.1',
+                     '1.0',
+                     '1.0'
+                   ],
+          'type' => 'switch_list',
+          'vnetid' => 8,
+          'objid' => '0x08'
+        };
+
