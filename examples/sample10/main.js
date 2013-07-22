@@ -69,6 +69,10 @@ window.onload = function(){
 	(function(){
 		// initialize the canvas
 		initCanvas();
+		// update lines
+		if (g.update_lineobjs_flag == 1) {
+			createLines(); g.update_lineobjs_flag = 0;
+		}
 		// draw objects
 		putCones(g.intersect_pos, "yellow");
 		if (g.getflow_updateflag == 1) {
@@ -98,12 +102,15 @@ window.onload = function(){
 	function drawObjects() {
 
 		// Draw Lines
-		$.each(g.sdn_objs, function(k,v) {
-			if (k == 'linkList') {
-				$.each(v, function(key,val) {
-					drawCylinders(val['src'], val['dst'], val['rot'], val['color']); });
-			} else { }
-		});
+		if (prg['lines'] != undefined) {
+		glnv.mvPushMatrix();
+		glnv.setMatrixUniforms(prg, 'default');
+		glnv.putLines(
+			prg.lines["yellow"]["v"], prg.lines["yellow"]["n"], 
+			prg.lines["yellow"]["c"], prg.lines["yellow"]["i"], prg.attLocation, [ 3, 3, 4 ], 2.0
+		);
+		glnv.mvPopMatrix();
+		}
 
 		if (g.other_objs["links"] != undefined) {
 			for (var i=0; i<g.other_objs["links"].length; i++) {
@@ -134,18 +141,18 @@ window.onload = function(){
 				glnv.mvPushMatrix();
 				// Switch
 				if (val['texture'] == 1) {
-	    			m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+					m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
 					m.scale(glnv.mMatrix, [1.5, 1.63, 1.5], glnv.mMatrix);
 					drawCube(1, 0.0);
 				// Controller
 				} else if (val['texture']==0) {
-	    		    m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+					m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
 					m.scale(glnv.mMatrix, [1.5, 1.63, 1.5], glnv.mMatrix);
 					drawCube(0, 0.0);
 				// Host
 				} else if (val['texture']==2) {
-	    		    m.translate(glnv.mMatrix, val['origin'], glnv.mMatrix);
-	    		    m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
+					m.translate(glnv.mMatrix, val['origin'], glnv.mMatrix);
+					m.translate(glnv.mMatrix, val['pos'], glnv.mMatrix);
 					m.scale(glnv.mMatrix, [1.1, 1.0, 1.1], glnv.mMatrix);
 					drawCube(2, 90.0);
 				// Others
@@ -216,6 +223,28 @@ window.onload = function(){
 		gl.useProgram(prg);
 		glnv.drawFlows(prg, texprg, g.drawinfo_gwflows, g.arrow_default_pos, g.arrow_delta);
 		glnv.drawFlows(prg, texprg, g.drawinfo_flows, g.arrow_default_pos, g.arrow_delta);
+	}
+
+	// create lines
+	function createLines() {
+		var objinfo = { vp: [], vn: [], vi: [] };
+		var i = 0;
+		$.each(g.sdn_objs, function(k,v) {
+			if (k == 'linkList') {
+				$.each(v, function(key,val) {
+				Array.prototype.push.apply(objinfo.vp, [
+					val['src'][0], val['src'][1], val['src'][2],
+					val['dst'][0], val['dst'][1], val['dst'][2]
+				]);
+				Array.prototype.push.apply(objinfo.vn, [0.2, 1.0, 1.0, 0.2, 1.0, 1.0]);
+				Array.prototype.push.apply(objinfo.vi, [i++, i++]);
+				});
+			}
+		});
+		glnv.generateLines(prg, [
+			{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
+			{id: "gray", r: 0.5, g: 0.5, b: 0.5, a: 1.0}
+		], objinfo);
 	}
 
 	// initialize canvas

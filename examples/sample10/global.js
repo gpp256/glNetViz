@@ -62,7 +62,8 @@ var g = {
 	getstat_interval: 500, // 1800: 65fps: 27s, 60fps: 30s
 	getstat_counter: 400,
 	change_pos_mode: 0,
-	update_objpos: 0
+	update_objpos: 0,
+	update_lineobjs_flag: 0
 	// rotation arrays
 	//rinfo: {}
 };

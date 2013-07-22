@@ -35,7 +35,10 @@ function getSdnObjects(key) {
 		data: {},
 		contentType: "application/json",
 		dataType: "json",
-		success: function(msg) { g.sdn_objs = msg; },
+		success: function(msg) { 
+			g.sdn_objs = msg; 
+			g.update_lineobjs_flag = 1;
+		},
 		error: function() { $("#debug").append(
 			"Error: loadObject(): failed to get object parameters"); },
 		complete: undefined
