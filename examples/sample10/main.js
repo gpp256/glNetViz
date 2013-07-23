@@ -70,7 +70,8 @@ window.onload = function(){
 		// initialize the canvas
 		initCanvas();
 		// update lines
-		if (g.update_lineobjs_flag == 1) {
+		if (g.update_lineobjs_flag >= 2) {
+			updateObjectPos();
 			createLines(); g.update_lineobjs_flag = 0;
 		}
 		// draw objects
@@ -110,14 +111,6 @@ window.onload = function(){
 			prg.lines["yellow"]["c"], prg.lines["yellow"]["i"], prg.attLocation, [ 3, 3, 4 ], 2.0
 		);
 		glnv.mvPopMatrix();
-		}
-
-		if (g.other_objs["links"] != undefined) {
-			for (var i=0; i<g.other_objs["links"].length; i++) {
-				var objinfo = g.other_objs["links"][i];
-				drawCylinders(objinfo['src'], objinfo['dst'], 
-					objinfo['rot'], objinfo['color']);
-			}
 		}
 
 		// change shader program
@@ -228,7 +221,7 @@ window.onload = function(){
 	// create lines
 	function createLines() {
 		var objinfo = { vp: [], vn: [], vi: [] };
-		var i = 0;
+		var n = 0;
 		$.each(g.sdn_objs, function(k,v) {
 			if (k == 'linkList') {
 				$.each(v, function(key,val) {
@@ -237,14 +230,67 @@ window.onload = function(){
 					val['dst'][0], val['dst'][1], val['dst'][2]
 				]);
 				Array.prototype.push.apply(objinfo.vn, [0.2, 1.0, 1.0, 0.2, 1.0, 1.0]);
-				Array.prototype.push.apply(objinfo.vi, [i++, i++]);
+				Array.prototype.push.apply(objinfo.vi, [n++, n++]);
 				});
 			}
 		});
+		if (g.other_objs["links"] != undefined) {
+			for (var i=0; i<g.other_objs["links"].length; i++) {
+				var linkinfo = g.other_objs["links"][i];
+				var offset = [
+					parseFloat(linkinfo['offset'][0]),
+					parseFloat(linkinfo['offset'][1]),
+					parseFloat(linkinfo['offset'][2])
+				];
+				Array.prototype.push.apply(objinfo.vp, [
+					linkinfo['src'][0]+offset[0], linkinfo['src'][1]+offset[1], linkinfo['src'][2]+offset[2],
+					linkinfo['dst'][0]+offset[0], linkinfo['dst'][1]+offset[1], linkinfo['dst'][2]+offset[2]
+				]);
+				Array.prototype.push.apply(objinfo.vn, [0.2, 1.0, 1.0, 0.2, 1.0, 1.0]);
+				Array.prototype.push.apply(objinfo.vi, [n++, n++]);
+			}
+		}
 		glnv.generateLines(prg, [
 			{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
 			{id: "gray", r: 0.5, g: 0.5, b: 0.5, a: 1.0}
 		], objinfo);
+	}
+
+	// update the object position
+	function updateObjectPos() {
+		var a_pos = {};
+		for (var i in g.other_objs["objs"]) {
+			var devid = g.other_objs["objs"][i]["neighbor_obj"];
+			for (var j in g.sdn_objs['objList']) {
+				if (g.sdn_objs['objList'][j]['texture'] != 1 || 
+				    devid != g.sdn_objs['objList'][j]['otherinfo']['dpid']) continue;
+				g.other_objs["objs"][i]['origin'] = [
+					parseFloat(g.sdn_objs['objList'][j]['origin'][0])
+						+parseFloat(g.sdn_objs['objList'][j]['pos'][0]),
+					parseFloat(g.sdn_objs['objList'][j]['origin'][1])
+						+parseFloat(g.sdn_objs['objList'][j]['pos'][1]),
+					parseFloat(g.sdn_objs['objList'][j]['origin'][2])
+						+parseFloat(g.sdn_objs['objList'][j]['pos'][2])
+				];
+				a_pos[g.other_objs["objs"][i]['name']] = {
+					src: g.other_objs["objs"][i]['origin'],
+					dst: [
+						g.other_objs["objs"][i]['origin'][0]+parseFloat(g.other_objs["objs"][i]['pos'][0]),
+						g.other_objs["objs"][i]['origin'][1]+parseFloat(g.other_objs["objs"][i]['pos'][1]),
+						g.other_objs["objs"][i]['origin'][2]+parseFloat(g.other_objs["objs"][i]['pos'][2])
+					],
+					sobj: devid
+				};
+				break;
+			}
+		}
+		for (var i in g.other_objs["links"]) {
+			var key = g.other_objs["links"][i]['dobj'];
+			if (key in a_pos && a_pos[key]['sobj'] == g.other_objs["links"][i]['sobj']) {
+			g.other_objs["links"][i]['src'] = a_pos[key]['src'];
+			g.other_objs["links"][i]['dst'] = a_pos[key]['dst'];
+			}
+		}
 	}
 
 	// initialize canvas

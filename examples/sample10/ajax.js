@@ -14,11 +14,14 @@ function getRotationArray (id, src, dst, type) {
 		contentType: "application/json",
 		dataType: "json",
 		success: function(msg) {  
-			if (msg['ret'] != 0) return 0;
-			if (type == 'gw') 
+			if (msg['ret'] != 0 || msg['rot'] == undefined) return 0;
+			if (type == 'gw') {
+				if (!msg['id'] in g.drawinfo_gwflows) g.drawinfo_gwflows[msg['id']] = {};
 				g.drawinfo_gwflows[msg['id']]['rot'] = msg['rot'];
-			else 
+			} else {
+				if (!msg['id'] in g.drawinfo_flows) g.drawinfo_flows[msg['id']] = {};
 				g.drawinfo_flows[msg['id']]['rot'] = msg['rot'];
+			}
 		},
 		error: function() { $("#debug").append(
 			"Error: getRotationArray(): failed to get a rotation array."); },
@@ -37,7 +40,7 @@ function getSdnObjects(key) {
 		dataType: "json",
 		success: function(msg) { 
 			g.sdn_objs = msg; 
-			g.update_lineobjs_flag = 1;
+			g.update_lineobjs_flag+=1;
 		},
 		error: function() { $("#debug").append(
 			"Error: loadObject(): failed to get object parameters"); },
@@ -47,14 +50,17 @@ function getSdnObjects(key) {
 
 function getOtherObjects(key) {
 	g.other_objs = {};
-	if (key != 4) return; 
+	if (key != 4) { g.update_lineobjs_flag+=1; return; }
 	$.ajax({
 		url: "../../lib/cgi/get_otherobjs.cgi",
 		type: "GET",
 		data: {},
 		contentType: "application/json",
 		dataType: "json",
-		success: function(msg) { g.other_objs = msg; },
+		success: function(msg) { 
+			g.other_objs = msg; 
+			g.update_lineobjs_flag+=1;
+		},
 		error: function() { $("#debug").append(
 			"Error: loadObject(): failed to get object parameters"); },
 		complete: undefined
