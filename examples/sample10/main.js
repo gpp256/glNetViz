@@ -17,7 +17,7 @@ window.onload = function(){
 	initWebGL(c);
 
 	// create shader programs
-	var prg = {}; var texprg = {} ;
+	var prg = {}; var mv_prg = {}; var texprg = {} ;
 	initShader();
 	// create textures
 	glnv.initTextures('../../lib/textures');
@@ -254,6 +254,16 @@ window.onload = function(){
 			{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
 			{id: "gray", r: 0.5, g: 0.5, b: 0.5, a: 1.0}
 		], objinfo);
+	}
+
+	// create line
+	function createLine(src, dst) {
+		glnv.generateLines(mv_prg, [
+			{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
+		], { 
+			vp: [ src[0], src[1], src[2], dst[0], dst[1], dst[2] ], 
+			vn: [0.2, 1.0, 1.0, 0.2, 1.0, 1.0], vi: [0, 1] 
+		});
 	}
 
 	// update the object position
@@ -493,6 +503,38 @@ window.onload = function(){
 		changeObjPos (arrow_intersect.selected_devid, a_pos, rad);
 		g.update_objpos = 0;
 		}
+
+		// move obj
+		gl.useProgram(texprg);
+		glnv.mvPushMatrix();
+		if (g.sdn_objs['objList'][key]['texture'] == 1) { // Switch
+			m.translate(glnv.mMatrix, a_pos, glnv.mMatrix);
+			m.scale(glnv.mMatrix, [1.5, 1.63, 1.5], glnv.mMatrix);
+			drawCube(1, 0.0);
+			createLine([0.0, 0.0, 0.0], a_pos);
+		} else if (g.sdn_objs['objList'][key]['texture']==2) { // Host
+			m.translate(glnv.mMatrix, a_pos, glnv.mMatrix);
+			m.scale(glnv.mMatrix, [1.1, 1.0, 1.1], glnv.mMatrix);
+			drawCube(2, 90.0);
+			createLine(g.sdn_objs['objList'][key]['origin'], a_pos);
+		} else {
+		}
+		glnv.mvPopMatrix();
+
+		// move link
+		if (g.sdn_objs['objList'][key]['texture'] != 0) {
+		gl.useProgram(mv_prg);
+		glnv.mvPushMatrix();
+		glnv.setMatrixUniforms(mv_prg, 'default');
+		glnv.putLines(
+			mv_prg.lines["yellow"]["v"], mv_prg.lines["yellow"]["n"], 
+			mv_prg.lines["yellow"]["c"], mv_prg.lines["yellow"]["i"], 
+			mv_prg.attLocation, [ 3, 3, 4 ], 2.0
+		);
+		glnv.mvPopMatrix();
+		}
+
+		gl.useProgram(prg);
 	}
 
 	function drawArrowObj (key, color, mpos, deg, rot) {
@@ -556,6 +598,9 @@ window.onload = function(){
 			'raw', 'x-shader/x-fragment', glnv.getFragmentShader('default'));
 		prg = glnv.createProgram(v_shader, f_shader);
 		glnv.initUniformLocation(prg, 'default');
+
+		mv_prg = glnv.createProgram(v_shader, f_shader);
+		glnv.initUniformLocation(mv_prg, 'default');
 
 		v_shader = glnv.createShader(
 			'raw', 'x-shader/x-vertex', glnv.getVertexShader('use_texture'));
