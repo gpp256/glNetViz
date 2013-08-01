@@ -256,16 +256,6 @@ window.onload = function(){
 		], objinfo);
 	}
 
-	// create line
-	function createLine(src, dst) {
-		glnv.generateLines(mv_prg, [
-			{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0},
-		], { 
-			vp: [ src[0], src[1], src[2], dst[0], dst[1], dst[2] ], 
-			vn: [0.2, 1.0, 1.0, 0.2, 1.0, 1.0], vi: [0, 1] 
-		});
-	}
-
 	// update the object position
 	function updateObjectPos() {
 		var a_pos = {};
@@ -511,12 +501,14 @@ window.onload = function(){
 			m.translate(glnv.mMatrix, a_pos, glnv.mMatrix);
 			m.scale(glnv.mMatrix, [1.5, 1.63, 1.5], glnv.mMatrix);
 			drawCube(1, 0.0);
-			createLine([0.0, 0.0, 0.0], a_pos);
+			glnv.generateLine(mv_prg, [0.0, 0.0, 0.0], a_pos, [ 
+				{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0} ]);
 		} else if (g.sdn_objs['objList'][key]['texture']==2) { // Host
 			m.translate(glnv.mMatrix, a_pos, glnv.mMatrix);
 			m.scale(glnv.mMatrix, [1.1, 1.0, 1.1], glnv.mMatrix);
 			drawCube(2, 90.0);
-			createLine(g.sdn_objs['objList'][key]['origin'], a_pos);
+			glnv.generateLine(mv_prg, g.sdn_objs['objList'][key]['origin'], a_pos, [ 
+				{id: "yellow", r: 1.0, g: 1.0, b: 0.0, a: 1.0} ]);
 		} else {
 		}
 		glnv.mvPopMatrix();
