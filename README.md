@@ -49,9 +49,9 @@ To install, run the following commands in the glNetViz directory.
     >     </Directory>
     $ sudo /etc/init.d/apache2 restart
 
-Some perl modules are needed for starting the glNetViz. 
+Some perl modules are needed for starting glNetViz. 
 
-To install some components, run the following commands.
+To install some components, run following commands.
 
     e.g.
     Debian GNU/Linux:
