@@ -9,7 +9,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
     URL_ROOT:    '#',
-    VERSION:     '0.9.1',
+    VERSION:     '0.9.2',
     COLLAPSE_MODINDEX: false,
     FILE_SUFFIX: '.html',
     HAS_SOURCE:  true
@@ -35,7 +35,7 @@
       <h1 id="title">
         <a href="index.html">glNetViz</a>
       </h1>
-      <p class="docdesc">glNetViz 0.9.1 documentation</p>
+      <p class="docdesc">glNetViz 0.9.2 documentation</p>
     </div>
     <div id="headerNav">
       <div id="searchbox">
@@ -151,14 +151,20 @@
 <tr class="row-even"><td><a class="reference internal" href="#generatearrows"><em>glNetViz.generateArrows()</em></a></td>
 <td>generate arrow objects</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#generatecones"><em>glNetViz.generateCones()</em></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#generatecolortable"><em>glNetViz.generateColorTable()</em></a></td>
+<td>generate a color table</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#generatecones"><em>glNetViz.generateCones()</em></a></td>
 <td>generate cone objects</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#generatecubes"><em>glNetViz.generateCubes()</em></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#generatecubes"><em>glNetViz.generateCubes()</em></a></td>
 <td>generate cube objects of various colors</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#generatecylinders"><em>glNetViz.generateCylinders()</em></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#generatecylinders"><em>glNetViz.generateCylinders()</em></a></td>
 <td>generate cylinder objects</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#generatelines"><em>glNetViz.generateLines()</em></a></td>
+<td>generate line objects</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#generaterectangles"><em>glNetViz.generateRectangles()</em></a></td>
 <td>generate rectangle objects</td>
@@ -208,13 +214,16 @@
 <tr class="row-odd"><td><a class="reference internal" href="#putcylinder"><em>glNetViz.putCylinder()</em></a></td>
 <td>draw cylinder objects</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#putsphere"><em>glNetViz.putSphere()</em></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#putlines"><em>glNetViz.putLines()</em></a></td>
+<td>draw line objects</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#putsphere"><em>glNetViz.putSphere()</em></a></td>
 <td>draws sphere objects</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#putstr"><em>glNetViz.putStr()</em></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#putstr"><em>glNetViz.putStr()</em></a></td>
 <td>draw characters</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#setmatrixuniforms"><em>glNetViz.setMatrixUniforms()</em></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#setmatrixuniforms"><em>glNetViz.setMatrixUniforms()</em></a></td>
 <td>set Matrix Uniforms</td>
 </tr>
 </tbody>
@@ -1592,7 +1601,7 @@ from the vertices array.</td>
 <td>Specifies a vertex buffer object which generated
 from the normal vector array.</td>
 </tr>
-<tr class="row-odd"><td>cor_vbo</td>
+<tr class="row-odd"><td>col_vbo</td>
 <td>Specifies a vertex buffer object which generated
 from the color array.</td>
 </tr>
@@ -1677,7 +1686,7 @@ from the vertices array.</td>
 <td>Specifies a vertex buffer object which generated
 from the normal vector array.</td>
 </tr>
-<tr class="row-even"><td>cor_vbo</td>
+<tr class="row-even"><td>col_vbo</td>
 <td>Specifies a vertex buffer object which generated
 from the color array.</td>
 </tr>
@@ -1756,7 +1765,7 @@ from the vertices array.</td>
 <td>Specifies a vertex buffer object which generated
 from the normal vector array.</td>
 </tr>
-<tr class="row-even"><td>cor_vbo</td>
+<tr class="row-even"><td>col_vbo</td>
 <td>Specifies a vertex buffer object which generated
 from the color array.</td>
 </tr>
@@ -1837,7 +1846,7 @@ from the vertices array.</td>
 <td>Specifies a vertex buffer object which generated
 from the normal vector array.</td>
 </tr>
-<tr class="row-even"><td>cor_vbo</td>
+<tr class="row-even"><td>col_vbo</td>
 <td>Specifies a vertex buffer object which generated
 from the color array.</td>
 </tr>
@@ -1918,7 +1927,7 @@ from the vertices array.</td>
 <td>Specifies a vertex buffer object which generated
 from the normal vector array.</td>
 </tr>
-<tr class="row-even"><td>cor_vbo</td>
+<tr class="row-even"><td>col_vbo</td>
 <td>Specifies a vertex buffer object which generated
 from the color array.</td>
 </tr>
@@ -2202,9 +2211,220 @@ default, use_texture.</td>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<span class="target" id="generatecolortable"></span><ul class="simple" id="index-33">
+<li><strong>object = glNetViz.generateColorTable(type)</strong></li>
+</ul>
+<p>(glNetViz &gt;= 0.9.2)</p>
+<p>generateColorTable() returns the color table of the specified type.</p>
+<p>関数仕様:</p>
+<table border="1" class="glnetviz docutils">
+<colgroup>
+<col width="23%" />
+<col width="20%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項目</th>
+<th class="head">名前</th>
+<th class="head">概要</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>パラメータ</td>
+<td>type</td>
+<td>Specifies a type of the color table.
+Following values are accepted:
+0(gray scale), undefined or 1(default color).</td>
+</tr>
+<tr class="row-odd"><td>戻り値</td>
+<td>object</td>
+<td>this function returns the color table.</td>
+</tr>
+<tr class="row-even"><td>例外</td>
+<td>&nbsp;</td>
+<td>なし</td>
+</tr>
+</tbody>
+</table>
+<p>使用例:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// show colorbar</span>
+<span class="nx">g</span><span class="p">.</span><span class="nx">CT</span> <span class="o">=</span> <span class="nx">glnv</span><span class="p">.</span><span class="nx">generateColorTable</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;colorbar&#39;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">canvas</span> <span class="o">||</span> <span class="o">!</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span> <span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+<span class="c1">// (...snip...)</span>
+<span class="c1">// show colorbar</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">g</span><span class="p">.</span><span class="nx">CT</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">ctx</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">);</span>
+     <span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&quot;rgba(&quot;</span><span class="o">+</span><span class="nx">g</span><span class="p">.</span><span class="nx">CT</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">+</span><span class="nx">g</span><span class="p">.</span><span class="nx">CT</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">+</span><span class="nx">g</span><span class="p">.</span><span class="nx">CT</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;, 1.0)&quot;</span><span class="p">;</span>
+     <span class="nx">ctx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="generatelines"></span><ul class="simple" id="index-34">
+<li><strong>void glNetViz.generateLines(prg, clist, objinfo)</strong></li>
+</ul>
+<p>(glNetViz &gt;= 0.9.2)</p>
+<p>generateLines() generates line objects from the specified color data.</p>
+<p>関数仕様:</p>
+<table border="1" class="glnetviz docutils">
+<colgroup>
+<col width="23%" />
+<col width="20%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項目</th>
+<th class="head">名前</th>
+<th class="head">概要</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="3">パラメータ</td>
+<td>prg</td>
+<td>Specifies a linked shader program not to include
+the texture processing for visualizing line
+objects in the 3D space.</td>
+</tr>
+<tr class="row-odd"><td>clist</td>
+<td>Specifies a array object which stored the color
+data for visualizing line objects.</td>
+</tr>
+<tr class="row-even"><td>objinfo</td>
+<td>Specifies a hash object which stored the vertices
+information for visualizing line objects.</td>
+</tr>
+<tr class="row-odd"><td>戻り値</td>
+<td>&nbsp;</td>
+<td>なし</td>
+</tr>
+<tr class="row-even"><td>例外</td>
+<td>&nbsp;</td>
+<td>なし</td>
+</tr>
+</tbody>
+</table>
+<p>使用例:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">glnv</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">glNetViz</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">prg</span> <span class="o">=</span> <span class="nx">glnv</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">v_shader</span><span class="p">,</span> <span class="nx">f_shader</span><span class="p">);</span>
+<span class="c1">// create lines</span>
+<span class="c1">// var objinfo = { vp: [], vn: [], vi: [] };</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">sdn_objs</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">k</span> <span class="o">==</span> <span class="s1">&#39;linkList&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">objinfo</span><span class="p">.</span><span class="nx">vp</span><span class="p">,</span> <span class="p">[</span>
+      <span class="nx">val</span><span class="p">[</span><span class="s1">&#39;src&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">val</span><span class="p">[</span><span class="s1">&#39;src&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">val</span><span class="p">[</span><span class="s1">&#39;src&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+      <span class="nx">val</span><span class="p">[</span><span class="s1">&#39;dst&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">val</span><span class="p">[</span><span class="s1">&#39;dst&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">val</span><span class="p">[</span><span class="s1">&#39;dst&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="p">]);</span>
+    <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">objinfo</span><span class="p">.</span><span class="nx">vn</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]);</span>
+    <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">objinfo</span><span class="p">.</span><span class="nx">vi</span><span class="p">,</span> <span class="p">[</span><span class="nx">n</span><span class="o">++</span><span class="p">,</span> <span class="nx">n</span><span class="o">++</span><span class="p">]);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="nx">glnv</span><span class="p">.</span><span class="nx">generateLines</span><span class="p">(</span><span class="nx">prg</span><span class="p">,</span> <span class="p">[</span>
+  <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="nx">r</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nx">g</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nx">b</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nx">a</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">}</span>
+<span class="p">],</span> <span class="nx">objinfo</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>関連項目:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#putlines"><em>glNetViz.putLines()</em></a></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="putlines"></span><ul class="simple" id="index-35">
+<li><strong>void glNetViz.putLines(pos_vbo, nor_vbo, col_vbo, ibo, attLocation, attStride, width)</strong></li>
+</ul>
+<p>(glNetViz &gt;= 0.9.2)</p>
+<p>putLines() draws specified line objects.</p>
+<p>関数仕様:</p>
+<table border="1" class="glnetviz docutils">
+<colgroup>
+<col width="23%" />
+<col width="20%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項目</th>
+<th class="head">名前</th>
+<th class="head">概要</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="7">パラメータ</td>
+<td>pos_vbo</td>
+<td>Specifies a vertex buffer object which generated
+from the vertices array.</td>
+</tr>
+<tr class="row-odd"><td>nor_vbo</td>
+<td>Specifies a vertex buffer object which generated
+from the normal vector array.</td>
+</tr>
+<tr class="row-even"><td>col_vbo</td>
+<td>Specifies a vertex buffer object which generated
+from the color array.</td>
+</tr>
+<tr class="row-odd"><td>ibo</td>
+<td>Specifies a index buffer object which generated
+from the indices array.</td>
+</tr>
+<tr class="row-even"><td>attLocation</td>
+<td>Specifies a variable which take over as the first
+argument of the gl.vertexAttribPointer().</td>
+</tr>
+<tr class="row-odd"><td>attStride</td>
+<td>Specifies a variable which take over as the second
+argument of the gl.vertexAttribPointer().</td>
+</tr>
+<tr class="row-even"><td>width</td>
+<td>Specifies a variable which take over as the first
+argument of the gl.lineWidth().</td>
+</tr>
+<tr class="row-odd"><td>戻り値</td>
+<td>&nbsp;</td>
+<td>なし</td>
+</tr>
+<tr class="row-even"><td>例外</td>
+<td>&nbsp;</td>
+<td>なし</td>
+</tr>
+</tbody>
+</table>
+<p>使用例:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">glnv</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">glNetViz</span><span class="p">();</span>
+<span class="c1">// (...snip...)</span>
+<span class="c1">// generate lines</span>
+<span class="nx">glnv</span><span class="p">.</span><span class="nx">generateLines</span><span class="p">(</span><span class="nx">prg</span><span class="p">,</span> <span class="p">[</span>
+     <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="nx">r</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nx">g</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nx">b</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nx">a</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">}</span>
+<span class="p">],</span> <span class="nx">objinfo</span><span class="p">);</span>
+<span class="c1">// (...snip...)</span>
+<span class="c1">// Draw Lines</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">prg</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">glnv</span><span class="p">.</span><span class="nx">mvPushMatrix</span><span class="p">();</span>
+<span class="nx">glnv</span><span class="p">.</span><span class="nx">setMatrixUniforms</span><span class="p">(</span><span class="nx">prg</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">);</span>
+<span class="nx">glnv</span><span class="p">.</span><span class="nx">putLines</span><span class="p">(</span>
+  <span class="nx">prg</span><span class="p">.</span><span class="nx">lines</span><span class="p">[</span><span class="s2">&quot;yellow&quot;</span><span class="p">][</span><span class="s2">&quot;v&quot;</span><span class="p">],</span> <span class="nx">prg</span><span class="p">.</span><span class="nx">lines</span><span class="p">[</span><span class="s2">&quot;yellow&quot;</span><span class="p">][</span><span class="s2">&quot;n&quot;</span><span class="p">],</span>
+  <span class="nx">prg</span><span class="p">.</span><span class="nx">lines</span><span class="p">[</span><span class="s2">&quot;yellow&quot;</span><span class="p">][</span><span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="nx">prg</span><span class="p">.</span><span class="nx">lines</span><span class="p">[</span><span class="s2">&quot;yellow&quot;</span><span class="p">][</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="nx">prg</span><span class="p">.</span><span class="nx">attLocation</span><span class="p">,</span> <span class="p">[</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span> <span class="p">],</span> <span class="mf">1.0</span>
+<span class="p">);</span>
+<span class="nx">glnv</span><span class="p">.</span><span class="nx">mvPopMatrix</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>関連項目:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#generatelines"><em>glNetViz.generateLines()</em></a></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <span class="target" id="obsolete-js"></span></div>
 <div class="section" id="obsolete-functions">
-<span id="index-33"></span><h3><strong>Obsolete Functions</strong><a class="headerlink" href="#obsolete-functions" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="index-36"></span><h3><strong>Obsolete Functions</strong><a class="headerlink" href="#obsolete-functions" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Functions in the following table will be removed in the future. We strongly recommend to use the new names.</p>
 <table border="1" class="glnetviz docutils">
 <caption>Obsolete Functions</caption>

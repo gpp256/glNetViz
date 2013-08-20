@@ -9,7 +9,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
     URL_ROOT:    '#',
-    VERSION:     '0.9.1',
+    VERSION:     '0.9.2',
     COLLAPSE_MODINDEX: false,
     FILE_SUFFIX: '.html',
     HAS_SOURCE:  true
@@ -34,7 +34,7 @@
       <h1 id="title">
         <a href="index.html">glNetViz</a>
       </h1>
-      <p class="docdesc">glNetViz 0.9.1 documentation</p>
+      <p class="docdesc">glNetViz 0.9.2 documentation</p>
     </div>
     <div id="headerNav">
       <div id="searchbox">
@@ -191,7 +191,7 @@ and latitude.</p>
 <div class="line">e.g. from latitude/longitude, to latitude/longitude, packets</div>
 <div class="line">[[30.0, 31.2, 35.7, 139.6, 100],</div>
 <div class="line-block">
-<div class="line">[-25.2, 133.7, 35.7, 139.6, 50]</div>
+<div class="line">[-25.2, 133.7, 35.7, 139.6, 50],</div>
 <div class="line">[56.1, -106.3, 35.7, 139.6, 25]]</div>
 </div>
 <div class="line">// Egypt: (lat=30.0, lon=31.2) Japan: (lat=35.7, lon=139.6)</div>
@@ -199,6 +199,17 @@ and latitude.</p>
 <div class="line">// Canada: lat=56.1, lon=-106.3</div>
 </div>
 </div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td><strong>sample10:</strong>
+<a class="reference internal" href="_images/netviz_example08.png"><img alt="sample10" src="_images/netviz_example08.png" style="width: 192.0px; height: 127.5px;" /></a></td>
+<td><p class="first">The left image shows a virtual network topology that was
+generated in the OpenFlow Network.</p>
+<p>The sample10 provides following new functions.</p>
+<ul class="last simple">
+<li>moving the specified device by the mouse</li>
+<li>saving position of network devices to YAML files</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -216,6 +227,7 @@ and latitude.</p>
 <li><a class="reference external" href="../../../examples/sample07/sample07.html">sample07</a></li>
 <li><a class="reference external" href="../../../examples/sample08/sample08.html">sample08</a></li>
 <li><a class="reference external" href="../../../examples/sample09/sample09.html">sample09</a></li>
+<li><a class="reference external" href="../../../examples/sample10/index.html">sample10</a></li>
 </ul>
 </div>
 <div class="section" id="application-examples">
@@ -224,8 +236,8 @@ and latitude.</p>
 <table border="1" class="glnetviz docutils">
 <caption>Application Examples</caption>
 <colgroup>
-<col width="26%" />
-<col width="74%" />
+<col width="23%" />
+<col width="77%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Image</th>
@@ -236,27 +248,58 @@ and latitude.</p>
 <tr class="row-even"><td><strong>jqplot01:</strong>
 <a class="reference internal" href="_images/netviz_example_jqplot.png"><img alt="jqplot01" src="_images/netviz_example_jqplot.png" style="width: 192.0px; height: 126.9px;" /></a></td>
 <td>The left image shows the applied example which
-combined the glNetViz with the
+combined glNetViz with
 <a class="reference external" href="http://www.jqplot.com/">jqPlot</a> .</td>
 </tr>
 <tr class="row-odd"><td><strong>sdashboard01:</strong>
 <a class="reference internal" href="_images/netviz_example_sdashboard01.png"><img alt="sdashboard01" src="_images/netviz_example_sdashboard01.png" style="width: 192.0px; height: 127.8px;" /></a></td>
 <td>The left image shows the applied example which
-combined the glNetViz with the
+combined glNetViz with
 <a class="reference external" href="https://github.com/ModelN/sDashboard">sDashboard</a> .</td>
+</tr>
+<tr class="row-even"><td><strong>geoip01:</strong>
+<a class="reference internal" href="_images/netviz_example_geoip.png"><img alt="geoip01" src="_images/netviz_example_geoip.png" style="width: 192.0px; height: 114.0px;" /></a></td>
+<td>The left image shows the applied example which
+combined glNetViz with
+<a class="reference external" href="http://dev.maxmind.com/geoip/legacy/geolite/">GeoIP</a> .</td>
+</tr>
+<tr class="row-odd"><td><strong>mmglu01:</strong>
+<a class="reference internal" href="_images/netviz_example_mmglu.png"><img alt="mmglu01" src="_images/netviz_example_mmglu.png" style="width: 192.0px; height: 128.4px;" /></a></td>
+<td>The left image shows the applied example which
+combined glNetViz with
+<a class="reference external" href="http://www.mayonakanouta.com/ja/node/12">Mmglu</a> .</td>
+</tr>
+<tr class="row-even"><td><strong>mongodb01:</strong>
+<a class="reference internal" href="_images/netviz_example_mongodb.png"><img alt="mongodb01" src="_images/netviz_example_mongodb.png" style="width: 192.0px; height: 130.2px;" /></a></td>
+<td>The left image shows the applied example which
+combined glNetViz with
+<a class="reference external" href="http://www.mongodb.org/">mongoDB</a> .</td>
+</tr>
+<tr class="row-odd"><td><strong>2dmap01:</strong>
+<a class="reference internal" href="_images/netviz_example_2dmap.png"><img alt="2dmap01" src="_images/netviz_example_2dmap.png" style="width: 192.0px; height: 126.3px;" /></a></td>
+<td>The left image shows the applied example which
+combined glNetViz with
+<a class="reference external" href="http://dev.maxmind.com/geoip/legacy/geolite/">GeoIP</a> .</td>
+</tr>
+<tr class="row-even"><td><strong>pox01:</strong>
+<a class="reference internal" href="_images/netviz_example_pox01.png"><img alt="pox01" src="_images/netviz_example_pox01.png" style="width: 192.0px; height: 151.2px;" /></a></td>
+<td>The left image shows the applied example which
+combined glNetViz with
+<a class="reference external" href="https://github.com/noxrepo/pox">POX</a> .</td>
 </tr>
 </tbody>
 </table>
 <ul class="simple">
 <li><a class="reference external" href="../../../examples/jqplot-example01/index.html">jqPlot + glNetViz</a></li>
 <li><a class="reference external" href="../../../examples/sdashboard-example01/index.html">sDashboard + glNetViz</a></li>
-<li>mongoDB + fluentd + glNetViz</li>
+<li><a class="reference external" href="../../../examples/geoip-example01/index.html">libgeoip + glNetViz</a></li>
+<li><a class="reference external" href="../../../examples/mmglu-example01/index.html">Mmglu.particle + glNetViz</a></li>
+<li><a class="reference external" href="../../../examples/geoip-example02/index.html">Vimage Jail + fluentd + mongoDB + glNetViz</a></li>
+<li><a class="reference external" href="../../../examples/geoip-example03/index.html">2D Map + glNetViz</a></li>
 <li>nox + glNetViz</li>
-<li>pox + glNetViz</li>
+<li><a class="reference external" href="http://gpp256.hopto.org/glNetViz/examples/pox-example01/">POX + glNetViz</a></li>
 <li>trema + glNetViz</li>
-<li>Vimage Jail + glNetViz</li>
 <li>Android + PhoneGap + glNetViz</li>
-<li>libgeoip + glNetViz</li>
 <li>Automating Dynamic Malware Analysis</li>
 </ul>
 <div class="line-block">

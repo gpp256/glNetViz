@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>The glNetViz Manual</title>
+  <title>glNetViz User&#8217;s Guide</title>
   <link rel="stylesheet" type="text/css" href="_static/general.css" />
   <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
   <meta name="description" content="Python製ドキュメンテーションビルダー、Sphinxの日本ユーザ会">
@@ -9,7 +9,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
     URL_ROOT:    '#',
-    VERSION:     '0.9.1',
+    VERSION:     '0.9.2',
     COLLAPSE_MODINDEX: false,
     FILE_SUFFIX: '.html',
     HAS_SOURCE:  true
@@ -34,7 +34,7 @@
       <h1 id="title">
         <a href="#">glNetViz</a>
       </h1>
-      <p class="docdesc">glNetViz 0.9.1 documentation</p>
+      <p class="docdesc">glNetViz 0.9.2 documentation</p>
     </div>
     <div id="headerNav">
       <div id="searchbox">
@@ -66,14 +66,14 @@
   <div id="content">
     <!-- current document area -->
     <div id="document" class="left">
-  <div class="section" id="the-glnetviz-manual">
-<span id="contents"></span><h1>The glNetViz Manual<a class="headerlink" href="#the-glnetviz-manual" title="Permalink to this headline">¶</a></h1>
-<p>Last Update: 2013-06-16</p>
+  <div class="section" id="glnetviz-user-s-guide">
+<span id="contents"></span><h1>glNetViz User&#8217;s Guide<a class="headerlink" href="#glnetviz-user-s-guide" title="Permalink to this headline">¶</a></h1>
+<p>Last Update: 2013-08-21</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The glNetViz is a free tool for visualizing computer network topologies with WebGL.</p>
-<p>With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently. The glNetViz is aiming for the convenient tool which can easily visualize the network topology from the serialized data in YAML or JSON.</p>
-<iframe src="http://www.youtube.com/embed/5885VxNHXq0" style="border: 0; height: 300px; width: 480px">
+<p>glNetViz is a tool for visualizing computer network topologies with WebGL.</p>
+<p>With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage the various network more easily and efficiently. glNetViz is intended to be a convenient tool that can easily visualize the network topology from the serialized data in YAML or JSON.</p>
+<iframe src="http://www.youtube.com/embed/gITuEVxONpg" style="border: 0; height: 300px; width: 480px">
 </iframe></div>
 <div class="section" id="id1">
 <h2>Contents<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
@@ -125,25 +125,29 @@
 </tr>
 <tr class="field-odd field"><th class="field-name">jquery-sprintf:</th><td class="field-body"><a class="reference external" href="https://github.com/azatoth/jquery-sprintf">https://github.com/azatoth/jquery-sprintf</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Sphinx:</th><td class="field-body"><a class="reference external" href="http://sphinx-doc.org/">http://sphinx-doc.org/</a></td>
+<tr class="field-even field"><th class="field-name">jquery-localize:</th><td class="field-body"><a class="reference external" href="https://github.com/coderifous/jquery-localize">https://github.com/coderifous/jquery-localize</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Mmglu:</th><td class="field-body"><a class="reference external" href="http://www.mayonakanouta.com/ja/node/12">http://www.mayonakanouta.com/ja/node/12</a></td>
+<tr class="field-odd field"><th class="field-name">Sphinx:</th><td class="field-body"><a class="reference external" href="http://sphinx-doc.org/">http://sphinx-doc.org/</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">OpenFlow:</th><td class="field-body"><a class="reference external" href="http://www.openflow.org/">http://www.openflow.org/</a></td>
+<tr class="field-even field"><th class="field-name">Mmglu:</th><td class="field-body"><a class="reference external" href="http://www.mayonakanouta.com/ja/node/12">http://www.mayonakanouta.com/ja/node/12</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Open Networking Foundation:</th><td class="field-body"><a class="reference external" href="http://www.opennetworkingfoundation.org/">http://www.opennetworkingfoundation.org/</a></td>
+<tr class="field-odd field"><th class="field-name">OpenFlow:</th><td class="field-body"><a class="reference external" href="http://www.openflow.org/">http://www.openflow.org/</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">SDNCentral:</th><td class="field-body"><a class="reference external" href="http://www.sdncentral.com/">http://www.sdncentral.com/</a></td>
+<tr class="field-even field"><th class="field-name">Open Networking Foundation:</th><td class="field-body"><a class="reference external" href="http://www.opennetworkingfoundation.org/">http://www.opennetworkingfoundation.org/</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">mongoDB:</th><td class="field-body"><a class="reference external" href="http://www.mongodb.org/">http://www.mongodb.org/</a></td>
+<tr class="field-odd field"><th class="field-name">SDNCentral:</th><td class="field-body"><a class="reference external" href="http://www.sdncentral.com/">http://www.sdncentral.com/</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">fluentd:</th><td class="field-body"><a class="reference external" href="http://fluentd.org/">http://fluentd.org/</a></td>
+<tr class="field-even field"><th class="field-name">mongoDB:</th><td class="field-body"><a class="reference external" href="http://www.mongodb.org/">http://www.mongodb.org/</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Chromeless-Ereader:</th><td class="field-body"><a class="reference external" href="https://github.com/taboca/Chromeless-Ereader/blob/master/ereader.html">https://github.com/taboca/Chromeless-Ereader/blob/master/ereader.html</a></td>
+<tr class="field-odd field"><th class="field-name">fluentd:</th><td class="field-body"><a class="reference external" href="http://fluentd.org/">http://fluentd.org/</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">jqPlot:</th><td class="field-body"><a class="reference external" href="http://www.jqplot.com/">http://www.jqplot.com/</a></td>
+<tr class="field-even field"><th class="field-name">Chromeless-Ereader:</th><td class="field-body"><a class="reference external" href="https://github.com/taboca/Chromeless-Ereader/blob/master/ereader.html">https://github.com/taboca/Chromeless-Ereader/blob/master/ereader.html</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">sDashboard:</th><td class="field-body"><a class="reference external" href="https://github.com/ModelN/sDashboard">https://github.com/ModelN/sDashboard</a></td>
+<tr class="field-odd field"><th class="field-name">jqPlot:</th><td class="field-body"><a class="reference external" href="http://www.jqplot.com/">http://www.jqplot.com/</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">sDashboard:</th><td class="field-body"><a class="reference external" href="https://github.com/ModelN/sDashboard">https://github.com/ModelN/sDashboard</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">GeoIP:</th><td class="field-body"><a class="reference external" href="http://dev.maxmind.com/geoip/legacy/geolite/">http://dev.maxmind.com/geoip/legacy/geolite/</a></td>
 </tr>
 </tbody>
 </table>

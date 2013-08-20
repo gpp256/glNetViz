@@ -1,7 +1,7 @@
 .. _contents: 
   
 ###################################
-The glNetViz Manual
+glNetViz User's Guide
 ###################################
 
 Last Update: |today| 
@@ -9,11 +9,12 @@ Last Update: |today|
 Overview
 ==================
 
-The glNetViz is a free tool for visualizing computer network topologies with WebGL.
+glNetViz is a tool for visualizing computer network topologies with WebGL.
 
-With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage and supervise the various network more easily and efficiently. The glNetViz is aiming for the convenient tool which can easily visualize the network topology from the serialized data in YAML or JSON.
+With the abilities of real time visualizing network traffics flowing around the local network and to/from the Internet, you can manage the various network more easily and efficiently. glNetViz is intended to be a convenient tool that can easily visualize the network topology from the serialized data in YAML or JSON.
 
-.. youtube:: 5885VxNHXq0
+.. .. youtube:: 5885VxNHXq0
+.. youtube:: gITuEVxONpg
    :width: 480
 
 
@@ -62,6 +63,7 @@ References
 :Learning WebGL: http://learningwebgl.com/blog/
 :jQuery: http://jquery.com/
 :jquery-sprintf: https://github.com/azatoth/jquery-sprintf
+:jquery-localize: https://github.com/coderifous/jquery-localize
 :Sphinx: http://sphinx-doc.org/
 :Mmglu: http://www.mayonakanouta.com/ja/node/12
 :OpenFlow: http://www.openflow.org/
@@ -72,6 +74,7 @@ References
 :Chromeless-Ereader: https://github.com/taboca/Chromeless-Ereader/blob/master/ereader.html
 :jqPlot: http://www.jqplot.com/
 :sDashboard: https://github.com/ModelN/sDashboard
+:GeoIP: http://dev.maxmind.com/geoip/legacy/geolite/
 
 Links
 =======
