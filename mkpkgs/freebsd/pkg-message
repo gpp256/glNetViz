@@ -1,0 +1,32 @@
+=================================================================
+To access glNetViz sample pages, run following commands.
+ 
+    e.g.
+    # cp /usr/local/etc/apache22/httpd.conf{,.backup130506}
+    # vi /usr/local/etc/apache22/httpd.conf
+    # diff /usr/local/etc/apache22/httpd.conf{.backup130506,}
+    315a316,323
+    >     Alias /glNetViz/ /usr/local/www/glnetviz/
+    >     <Directory "/usr/local/www/glnetviz">
+    >         AllowOverride All
+    >         Options ExecCGI
+    >         Order allow,deny
+    >         Allow from all
+    >     </Directory>
+    411c411
+    < #AddHandler cgi-script .cgi
+    ---
+    > AddHandler cgi-script .cgi
+    # cp /etc/rc.conf{,.backup130506}
+    # vi /etc/rc.conf
+    # diff /etc/rc.conf{.backup130506,}
+    0a1
+    > apache22_enable="YES"
+    # /usr/local/etc/rc.d/apache22 start
+
+You can access glNetViz sample pages with a web browser that 
+supported WebGL.
+
+    e.g.
+    http://youripaddress/glNetViz/examples/
+=================================================================

@@ -1,0 +1,340 @@
+%%WWWDIR_REL%%/.htaccess
+%%WWWDIR_REL%%/examples/common.js
+%%WWWDIR_REL%%/examples/index.html
+%%WWWDIR_REL%%/examples/sample01/ajax.js
+%%WWWDIR_REL%%/examples/sample01/event.js
+%%WWWDIR_REL%%/examples/sample01/global.js
+%%WWWDIR_REL%%/examples/sample01/index.html
+%%WWWDIR_REL%%/examples/sample01/main.js
+%%WWWDIR_REL%%/examples/sample01/webui.css
+%%WWWDIR_REL%%/examples/sample02/ajax.js
+%%WWWDIR_REL%%/examples/sample02/event.js
+%%WWWDIR_REL%%/examples/sample02/global.js
+%%WWWDIR_REL%%/examples/sample02/index.html
+%%WWWDIR_REL%%/examples/sample02/main.js
+%%WWWDIR_REL%%/examples/sample02/webui.css
+%%WWWDIR_REL%%/examples/sample03/ajax.js
+%%WWWDIR_REL%%/examples/sample03/event.js
+%%WWWDIR_REL%%/examples/sample03/global.js
+%%WWWDIR_REL%%/examples/sample03/index.html
+%%WWWDIR_REL%%/examples/sample03/main.js
+%%WWWDIR_REL%%/examples/sample03/webui.css
+%%WWWDIR_REL%%/examples/sample04/ajax.js
+%%WWWDIR_REL%%/examples/sample04/event.js
+%%WWWDIR_REL%%/examples/sample04/global.js
+%%WWWDIR_REL%%/examples/sample04/index.html
+%%WWWDIR_REL%%/examples/sample04/main.js
+%%WWWDIR_REL%%/examples/sample04/webui.css
+%%WWWDIR_REL%%/examples/sample05/ajax.js
+%%WWWDIR_REL%%/examples/sample05/event.js
+%%WWWDIR_REL%%/examples/sample05/global.js
+%%WWWDIR_REL%%/examples/sample05/index.html
+%%WWWDIR_REL%%/examples/sample05/main.js
+%%WWWDIR_REL%%/examples/sample05/webui.css
+%%WWWDIR_REL%%/examples/sample06/ajax.js
+%%WWWDIR_REL%%/examples/sample06/event.js
+%%WWWDIR_REL%%/examples/sample06/global.js
+%%WWWDIR_REL%%/examples/sample06/index.html
+%%WWWDIR_REL%%/examples/sample06/main.js
+%%WWWDIR_REL%%/examples/sample06/pos642.json
+%%WWWDIR_REL%%/examples/sample06/webui.css
+%%WWWDIR_REL%%/examples/sample07/ajax.js
+%%WWWDIR_REL%%/examples/sample07/event.js
+%%WWWDIR_REL%%/examples/sample07/get_connection_array.cgi
+%%WWWDIR_REL%%/examples/sample07/global.js
+%%WWWDIR_REL%%/examples/sample07/index.html
+%%WWWDIR_REL%%/examples/sample07/main.js
+%%WWWDIR_REL%%/examples/sample07/webui.css
+%%WWWDIR_REL%%/examples/sample08/ajax.js
+%%WWWDIR_REL%%/examples/sample08/conf/network02.conf
+%%WWWDIR_REL%%/examples/sample08/conf/network03.conf
+%%WWWDIR_REL%%/examples/sample08/conf/network04.conf
+%%WWWDIR_REL%%/examples/sample08/conf/network08.conf
+%%WWWDIR_REL%%/examples/sample08/conf/network27.conf
+%%WWWDIR_REL%%/examples/sample08/conf/pos642.json
+%%WWWDIR_REL%%/examples/sample08/event.js
+%%WWWDIR_REL%%/examples/sample08/get_flow.cgi
+%%WWWDIR_REL%%/examples/sample08/get_objs.cgi
+%%WWWDIR_REL%%/examples/sample08/global.js
+%%WWWDIR_REL%%/examples/sample08/index.html
+%%WWWDIR_REL%%/examples/sample08/main.js
+%%WWWDIR_REL%%/examples/sample08/webui.css
+%%WWWDIR_REL%%/examples/sample09/ajax.js
+%%WWWDIR_REL%%/examples/sample09/event.js
+%%WWWDIR_REL%%/examples/sample09/get_objpos.cgi
+%%WWWDIR_REL%%/examples/sample09/global.js
+%%WWWDIR_REL%%/examples/sample09/images/earthmap.jpg
+%%WWWDIR_REL%%/examples/sample09/index.html
+%%WWWDIR_REL%%/examples/sample09/main.js
+%%WWWDIR_REL%%/examples/sample09/webui.css
+%%WWWDIR_REL%%/examples/sample10/ajax.js
+%%WWWDIR_REL%%/examples/sample10/change_objpos.cgi
+%%WWWDIR_REL%%/examples/sample10/conf/network02.conf
+%%WWWDIR_REL%%/examples/sample10/conf/network03.conf
+%%WWWDIR_REL%%/examples/sample10/conf/network04.conf
+%%WWWDIR_REL%%/examples/sample10/conf/network08.conf
+%%WWWDIR_REL%%/examples/sample10/conf/network27.conf
+%%WWWDIR_REL%%/examples/sample10/conf/pos642.json
+%%WWWDIR_REL%%/examples/sample10/default_conf/network02.conf
+%%WWWDIR_REL%%/examples/sample10/default_conf/network03.conf
+%%WWWDIR_REL%%/examples/sample10/default_conf/network04.conf
+%%WWWDIR_REL%%/examples/sample10/default_conf/network08.conf
+%%WWWDIR_REL%%/examples/sample10/default_conf/network27.conf
+%%WWWDIR_REL%%/examples/sample10/event.js
+%%WWWDIR_REL%%/examples/sample10/get_flow.cgi
+%%WWWDIR_REL%%/examples/sample10/get_objs.cgi
+%%WWWDIR_REL%%/examples/sample10/global.js
+%%WWWDIR_REL%%/examples/sample10/index.html
+%%WWWDIR_REL%%/examples/sample10/init.cgi
+%%WWWDIR_REL%%/examples/sample10/main.js
+%%WWWDIR_REL%%/examples/sample10/webui.css
+%%WWWDIR_REL%%/lib/cgi/change_objpos.cgi
+%%WWWDIR_REL%%/lib/cgi/get_flowdata_dummy.cgi
+%%WWWDIR_REL%%/lib/cgi/get_gwflow_dummy.cgi
+%%WWWDIR_REL%%/lib/cgi/get_otherobjs.cgi
+%%WWWDIR_REL%%/lib/cgi/get_rotateinfo.pl
+%%WWWDIR_REL%%/lib/cgi/get_rotation_array.cgi
+%%WWWDIR_REL%%/lib/cgi/get_sdnobjs.cgi
+%%WWWDIR_REL%%/lib/cgi/get_sdnobjs_dummy.cgi
+%%WWWDIR_REL%%/lib/cgi/lib/perl5/5.14/mach/perllocal.pod
+%%WWWDIR_REL%%/lib/cgi/lib/perl5/auto/myprimitive/.packlist
+%%WWWDIR_REL%%/lib/cgi/lib/perl5/auto/myprimitive/myprimitive.bs
+%%WWWDIR_REL%%/lib/cgi/lib/perl5/auto/myprimitive/myprimitive.so
+%%WWWDIR_REL%%/lib/cgi/lib/perl5/myprimitive.pm
+%%WWWDIR_REL%%/lib/cgi/sdn.pm
+%%WWWDIR_REL%%/lib/conf/network.conf
+%%WWWDIR_REL%%/lib/conf/pos162.json
+%%WWWDIR_REL%%/lib/conf/pos42.json
+%%WWWDIR_REL%%/lib/conf/pos642.json
+%%WWWDIR_REL%%/lib/conf/sdn.conf
+%%WWWDIR_REL%%/lib/css/images/switch.gif
+%%WWWDIR_REL%%/lib/css/images/ui-bg_diagonals-thick_18_b81900_40x40.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_diagonals-thick_20_666666_40x40.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_flat_10_000000_40x100.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_glass_100_f6f6f6_1x400.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_glass_100_fdf5ce_1x400.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_glass_65_ffffff_1x400.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_gloss-wave_35_f6a828_500x100.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_highlight-soft_100_eeeeee_1x100.png
+%%WWWDIR_REL%%/lib/css/images/ui-bg_highlight-soft_75_ffe45c_1x100.png
+%%WWWDIR_REL%%/lib/css/images/ui-icons_222222_256x240.png
+%%WWWDIR_REL%%/lib/css/images/ui-icons_228ef1_256x240.png
+%%WWWDIR_REL%%/lib/css/images/ui-icons_ef8c08_256x240.png
+%%WWWDIR_REL%%/lib/css/images/ui-icons_ffd27a_256x240.png
+%%WWWDIR_REL%%/lib/css/images/ui-icons_ffffff_256x240.png
+%%WWWDIR_REL%%/lib/css/jquery-ui-1.css
+%%WWWDIR_REL%%/lib/css/jslider.css
+%%WWWDIR_REL%%/lib/js/event_common.js
+%%WWWDIR_REL%%/lib/js/glNetViz.js
+%%WWWDIR_REL%%/lib/js/glNetViz.min.js
+%%WWWDIR_REL%%/lib/js/jquery-1.7.min.js
+%%WWWDIR_REL%%/lib/js/jquery-ui-1.js
+%%WWWDIR_REL%%/lib/js/jquery.localize.js
+%%WWWDIR_REL%%/lib/js/jquery.sprintf.js
+%%WWWDIR_REL%%/lib/js/minMatrix.js
+%%WWWDIR_REL%%/lib/js/mouse_event.js
+%%WWWDIR_REL%%/lib/js/primitive_common.js
+%%WWWDIR_REL%%/lib/js/shader.js
+%%WWWDIR_REL%%/lib/js/shader_common.js
+%%WWWDIR_REL%%/lib/locale/common-en.json
+%%WWWDIR_REL%%/lib/locale/common-ja.json
+%%WWWDIR_REL%%/lib/textures/earthmap.png
+%%WWWDIR_REL%%/lib/textures/font_black.png
+%%WWWDIR_REL%%/lib/textures/font_blue.png
+%%WWWDIR_REL%%/lib/textures/font_green.png
+%%WWWDIR_REL%%/lib/textures/font_red.png
+%%WWWDIR_REL%%/lib/textures/fw_texture01.png
+%%WWWDIR_REL%%/lib/textures/pc_texture01.png
+%%WWWDIR_REL%%/lib/textures/pfc_texture01.png
+%%WWWDIR_REL%%/lib/textures/sw_texture01.png
+%%WWWDIR_REL%%/lib/tools/earthmap
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example01.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example02.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example03.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example04.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example05.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example06.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example07.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example08.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_2dmap.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_geoip.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_jqplot.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_mmglu.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_mongodb.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_pox01.png
+%%WWWDIR_REL%%/docs/en/html/_images/netviz_example_sdashboard01.png
+%%WWWDIR_REL%%/docs/en/html/_images/webgl_example01.png
+%%WWWDIR_REL%%/docs/en/html/_images/webgl_example02.png
+%%WWWDIR_REL%%/docs/en/html/_sources/configuration.txt
+%%WWWDIR_REL%%/docs/en/html/_sources/contents01.txt
+%%WWWDIR_REL%%/docs/en/html/_sources/contents02.txt
+%%WWWDIR_REL%%/docs/en/html/_sources/doc.txt
+%%WWWDIR_REL%%/docs/en/html/_sources/history.txt
+%%WWWDIR_REL%%/docs/en/html/_sources/index.txt
+%%WWWDIR_REL%%/docs/en/html/_sources/indexPdf.txt
+%%WWWDIR_REL%%/docs/en/html/_static/HatenaBookmark.js
+%%WWWDIR_REL%%/docs/en/html/_static/ajax-loader.gif
+%%WWWDIR_REL%%/docs/en/html/_static/basic.css
+%%WWWDIR_REL%%/docs/en/html/_static/comment-bright.png
+%%WWWDIR_REL%%/docs/en/html/_static/comment-close.png
+%%WWWDIR_REL%%/docs/en/html/_static/comment.png
+%%WWWDIR_REL%%/docs/en/html/_static/docBg.png
+%%WWWDIR_REL%%/docs/en/html/_static/doctools.js
+%%WWWDIR_REL%%/docs/en/html/_static/document.css
+%%WWWDIR_REL%%/docs/en/html/_static/down-pressed.png
+%%WWWDIR_REL%%/docs/en/html/_static/down.png
+%%WWWDIR_REL%%/docs/en/html/_static/file.png
+%%WWWDIR_REL%%/docs/en/html/_static/footer_bg.png
+%%WWWDIR_REL%%/docs/en/html/_static/general.css
+%%WWWDIR_REL%%/docs/en/html/_static/gnav_bg.png
+%%WWWDIR_REL%%/docs/en/html/_static/gnav_btn_doc.png
+%%WWWDIR_REL%%/docs/en/html/_static/gnav_home.png
+%%WWWDIR_REL%%/docs/en/html/_static/gnav_mod.png
+%%WWWDIR_REL%%/docs/en/html/_static/header_bg.png
+%%WWWDIR_REL%%/docs/en/html/_static/header_btn.png
+%%WWWDIR_REL%%/docs/en/html/_static/highlight.css
+%%WWWDIR_REL%%/docs/en/html/_static/index.css
+%%WWWDIR_REL%%/docs/en/html/_static/jquery.js
+%%WWWDIR_REL%%/docs/en/html/_static/logo.png
+%%WWWDIR_REL%%/docs/en/html/_static/minus.png
+%%WWWDIR_REL%%/docs/en/html/_static/next.png
+%%WWWDIR_REL%%/docs/en/html/_static/plus.png
+%%WWWDIR_REL%%/docs/en/html/_static/prev.png
+%%WWWDIR_REL%%/docs/en/html/_static/pygments.css
+%%WWWDIR_REL%%/docs/en/html/_static/reset.css
+%%WWWDIR_REL%%/docs/en/html/_static/search.png
+%%WWWDIR_REL%%/docs/en/html/_static/searchtools.js
+%%WWWDIR_REL%%/docs/en/html/_static/show_source.png
+%%WWWDIR_REL%%/docs/en/html/_static/translations.js
+%%WWWDIR_REL%%/docs/en/html/_static/underscore.js
+%%WWWDIR_REL%%/docs/en/html/_static/up-pressed.png
+%%WWWDIR_REL%%/docs/en/html/_static/up.png
+%%WWWDIR_REL%%/docs/en/html/_static/websupport.js
+%%WWWDIR_REL%%/docs/en/html/configuration.html
+%%WWWDIR_REL%%/docs/en/html/contents01.html
+%%WWWDIR_REL%%/docs/en/html/contents02.html
+%%WWWDIR_REL%%/docs/en/html/doc.html
+%%WWWDIR_REL%%/docs/en/html/genindex.html
+%%WWWDIR_REL%%/docs/en/html/history.html
+%%WWWDIR_REL%%/docs/en/html/index.html
+%%WWWDIR_REL%%/docs/en/html/indexPdf.html
+%%WWWDIR_REL%%/docs/en/html/objects.inv
+%%WWWDIR_REL%%/docs/en/html/search.html
+%%WWWDIR_REL%%/docs/en/html/searchindex.js
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example01.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example02.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example03.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example04.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example05.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example06.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example07.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example08.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_2dmap.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_geoip.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_jqplot.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_mmglu.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_mongodb.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_pox01.png
+%%WWWDIR_REL%%/docs/ja/html/_images/netviz_example_sdashboard01.png
+%%WWWDIR_REL%%/docs/ja/html/_images/webgl_example01.png
+%%WWWDIR_REL%%/docs/ja/html/_images/webgl_example02.png
+%%WWWDIR_REL%%/docs/ja/html/_sources/configuration.txt
+%%WWWDIR_REL%%/docs/ja/html/_sources/contents01.txt
+%%WWWDIR_REL%%/docs/ja/html/_sources/contents02.txt
+%%WWWDIR_REL%%/docs/ja/html/_sources/doc.txt
+%%WWWDIR_REL%%/docs/ja/html/_sources/history.txt
+%%WWWDIR_REL%%/docs/ja/html/_sources/index.txt
+%%WWWDIR_REL%%/docs/ja/html/_sources/indexPdf.txt
+%%WWWDIR_REL%%/docs/ja/html/_static/HatenaBookmark.js
+%%WWWDIR_REL%%/docs/ja/html/_static/ajax-loader.gif
+%%WWWDIR_REL%%/docs/ja/html/_static/basic.css
+%%WWWDIR_REL%%/docs/ja/html/_static/comment-bright.png
+%%WWWDIR_REL%%/docs/ja/html/_static/comment-close.png
+%%WWWDIR_REL%%/docs/ja/html/_static/comment.png
+%%WWWDIR_REL%%/docs/ja/html/_static/docBg.png
+%%WWWDIR_REL%%/docs/ja/html/_static/doctools.js
+%%WWWDIR_REL%%/docs/ja/html/_static/document.css
+%%WWWDIR_REL%%/docs/ja/html/_static/down-pressed.png
+%%WWWDIR_REL%%/docs/ja/html/_static/down.png
+%%WWWDIR_REL%%/docs/ja/html/_static/file.png
+%%WWWDIR_REL%%/docs/ja/html/_static/footer_bg.png
+%%WWWDIR_REL%%/docs/ja/html/_static/general.css
+%%WWWDIR_REL%%/docs/ja/html/_static/gnav_bg.png
+%%WWWDIR_REL%%/docs/ja/html/_static/gnav_btn_doc.png
+%%WWWDIR_REL%%/docs/ja/html/_static/gnav_home.png
+%%WWWDIR_REL%%/docs/ja/html/_static/gnav_mod.png
+%%WWWDIR_REL%%/docs/ja/html/_static/header_bg.png
+%%WWWDIR_REL%%/docs/ja/html/_static/header_btn.png
+%%WWWDIR_REL%%/docs/ja/html/_static/highlight.css
+%%WWWDIR_REL%%/docs/ja/html/_static/index.css
+%%WWWDIR_REL%%/docs/ja/html/_static/jquery.js
+%%WWWDIR_REL%%/docs/ja/html/_static/logo.png
+%%WWWDIR_REL%%/docs/ja/html/_static/minus.png
+%%WWWDIR_REL%%/docs/ja/html/_static/next.png
+%%WWWDIR_REL%%/docs/ja/html/_static/plus.png
+%%WWWDIR_REL%%/docs/ja/html/_static/prev.png
+%%WWWDIR_REL%%/docs/ja/html/_static/pygments.css
+%%WWWDIR_REL%%/docs/ja/html/_static/reset.css
+%%WWWDIR_REL%%/docs/ja/html/_static/search.png
+%%WWWDIR_REL%%/docs/ja/html/_static/searchtools.js
+%%WWWDIR_REL%%/docs/ja/html/_static/show_source.png
+%%WWWDIR_REL%%/docs/ja/html/_static/translations.js
+%%WWWDIR_REL%%/docs/ja/html/_static/underscore.js
+%%WWWDIR_REL%%/docs/ja/html/_static/up-pressed.png
+%%WWWDIR_REL%%/docs/ja/html/_static/up.png
+%%WWWDIR_REL%%/docs/ja/html/_static/websupport.js
+%%WWWDIR_REL%%/docs/ja/html/configuration.html
+%%WWWDIR_REL%%/docs/ja/html/contents01.html
+%%WWWDIR_REL%%/docs/ja/html/contents02.html
+%%WWWDIR_REL%%/docs/ja/html/doc.html
+%%WWWDIR_REL%%/docs/ja/html/genindex.html
+%%WWWDIR_REL%%/docs/ja/html/history.html
+%%WWWDIR_REL%%/docs/ja/html/index.html
+%%WWWDIR_REL%%/docs/ja/html/indexPdf.html
+%%WWWDIR_REL%%/docs/ja/html/objects.inv
+%%WWWDIR_REL%%/docs/ja/html/search.html
+%%WWWDIR_REL%%/docs/ja/html/searchindex.js
+@dirrmtry %%WWWDIR_REL%%/examples/sample01/
+@dirrmtry %%WWWDIR_REL%%/examples/sample02/
+@dirrmtry %%WWWDIR_REL%%/examples/sample03/
+@dirrmtry %%WWWDIR_REL%%/examples/sample04/
+@dirrmtry %%WWWDIR_REL%%/examples/sample05/
+@dirrmtry %%WWWDIR_REL%%/examples/sample06/
+@dirrmtry %%WWWDIR_REL%%/examples/sample07/
+@dirrmtry %%WWWDIR_REL%%/examples/sample08/conf/
+@dirrmtry %%WWWDIR_REL%%/examples/sample08/
+@dirrmtry %%WWWDIR_REL%%/examples/sample09/images/
+@dirrmtry %%WWWDIR_REL%%/examples/sample09/
+@dirrmtry %%WWWDIR_REL%%/examples/sample10/conf/
+@dirrmtry %%WWWDIR_REL%%/examples/sample10/default_conf/
+@dirrmtry %%WWWDIR_REL%%/examples/sample10/
+@dirrmtry %%WWWDIR_REL%%/examples/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/%%PERL_VERSION%%/mach/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/%%PERL_VERSION%%/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/%%PERL_VER%%/mach/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/%%PERL_VER%%/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/auto/myprimitive/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/auto/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/perl5/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/lib/
+@dirrmtry %%WWWDIR_REL%%/lib/cgi/
+@dirrmtry %%WWWDIR_REL%%/lib/conf/
+@dirrmtry %%WWWDIR_REL%%/lib/css/images/
+@dirrmtry %%WWWDIR_REL%%/lib/css/
+@dirrmtry %%WWWDIR_REL%%/lib/js/
+@dirrmtry %%WWWDIR_REL%%/lib/locale/
+@dirrmtry %%WWWDIR_REL%%/lib/textures/
+@dirrmtry %%WWWDIR_REL%%/lib/tools/
+@dirrmtry %%WWWDIR_REL%%/lib/
+@dirrmtry %%WWWDIR_REL%%/docs/en/html/_images/
+@dirrmtry %%WWWDIR_REL%%/docs/en/html/_sources/
+@dirrmtry %%WWWDIR_REL%%/docs/en/html/_static/
+@dirrmtry %%WWWDIR_REL%%/docs/en/html/
+@dirrmtry %%WWWDIR_REL%%/docs/en/
+@dirrmtry %%WWWDIR_REL%%/docs/ja/html/_images/
+@dirrmtry %%WWWDIR_REL%%/docs/ja/html/_sources/
+@dirrmtry %%WWWDIR_REL%%/docs/ja/html/_static/
+@dirrmtry %%WWWDIR_REL%%/docs/ja/html/
+@dirrmtry %%WWWDIR_REL%%/docs/ja/
+@dirrmtry %%WWWDIR_REL%%/docs/
+@dirrmtry %%WWWDIR_REL%%/

@@ -1,0 +1,30 @@
+# Created by: Yoshi <gpp65536@ybb.ne.jp>
+# $FreeBSD$
+
+PORTNAME=	glnetviz
+PORTVERSION=	0.9.2
+CATEGORIES=	www graphics
+MASTER_SITES=	http://gpp256.hopto.org/releases/ \
+		http://gpp256.sytes.net/releases/
+DISTNAME=       glNetViz-0.9.2
+
+MAINTAINER=	gpp65536@ybb.ne.jp
+COMMENT=	A tool to visualize the network topology from JSON data
+
+WRKSRC=         ${WRKDIR}/glNetViz-RELEASE_0_9_2
+USE_PERL5_BUILD=yes
+HAS_CONFIGURE=  yes
+CONFIGURE_ARGS= --prefix=${PREFIX}/${WWWDIR_REL}
+USE_GMAKE=	yes
+
+RUN_DEPENDS+=   curl:${PORTSDIR}/ftp/curl \
+		httpd:${PORTSDIR}/www/apache22
+BUILD_DEPENDS+= p5-YAML>=0:${PORTSDIR}/textproc/p5-YAML
+
+PLIST_SUB=      WWWDIR=${WWWDIR} WWWDIR_REL=${WWWDIR_REL}
+
+post-install:
+	@${CHOWN} -R ${WWWOWN}:${WWWGRP} ${WWWDIR}
+	@${CAT} ${WRKDIR}/../pkg-message
+
+.include <bsd.port.mk>

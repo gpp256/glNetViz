@@ -1,0 +1,9 @@
+glNetViz is a tool for visualizing computer network topologies with WebGL.
+
+With the abilities of real time visualizing network traffics flowing 
+around the local network and to/from the Internet, you can manage the 
+various network more easily and efficiently. glNetViz is intended to be 
+a convenient tool that can easily visualize the network topology from 
+the serialized data in YAML or JSON.
+
+WWW: https://github.com/gpp256/glNetViz
