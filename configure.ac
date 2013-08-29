@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 #AC_PREREQ([2.68])
-AC_INIT([glNetViz], [0.92], [@gpp256])
+AC_INIT([glNetViz], [0.9.2], [@gpp256], [glNetViz-RELEASE_0_9_2])
 AC_CONFIG_SRCDIR([perl_modules/myprimitive.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -39,6 +39,7 @@ AC_CONFIG_FILES([Makefile
                  lib/cgi/get_rotation_array.cgi
                  lib/cgi/sdn.pm
                  lib/cgi/get_sdnobjs.cgi
+                 mkpkgs/freebsd/Makefile
                  tools/Makefile
 ])
 AC_OUTPUT
