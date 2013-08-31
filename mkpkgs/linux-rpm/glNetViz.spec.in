@@ -1,0 +1,105 @@
+Name:           glNetViz
+URL:            https://github.com/gpp256/glNetViz/
+Summary:        A tool to visualize the network topology from JSON data
+Version:        @PACKAGE_VERSION@
+Release:        1
+License:        MIT
+Group:          Applications/Internet
+Source:	        http://gpp256.hopto.org/releases/%{name}-%{version}.tar.gz
+Prefix:		%{_prefix}
+Requires:	curl
+Requires:	httpd
+BuildRequires:  perl-YAML
+BuildRequires:  perl-JSON
+AutoReqProv: 	no
+
+%description 
+glNetViz is a tool for visualizing computer network topologies with WebGL.
+
+With the abilities of real time visualizing network traffics flowing
+around the local network and to/from the Internet, you can manage the
+various network more easily and efficiently. glNetViz is intended to be
+a convenient tool that can easily visualize the network topology from
+the serialized data in YAML or JSON.
+
+%prep
+%setup -q -n @PACKAGE_TARNAME@
+
+%build
+
+%{_configure} --host=%{_host} --build=%{_build} --prefix=$RPM_BUILD_ROOT/%{_prefix}
+make 
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/%{_prefix}
+make install
+if [ `uname -m` == x86_64 ] ; then
+        rm -f $RPM_BUILD_ROOT/%{_prefix}/lib/cgi/lib64/perl5/perllocal.pod
+else
+        rm -f $RPM_BUILD_ROOT/%{_prefix}/lib/cgi/lib/perl5/perllocal.pod
+fi
+
+%clean
+rm -rf ${RPM_BUILD_ROOT}
+
+%files -f ../%{name}.files
+%defattr(-,apache,apache)
+
+%post
+
+# upgrade/reinstall 
+if [ "$1" -eq 2 ]; then 
+	:
+# install
+elif [ "$1" -eq 1 ]; then
+cat <<END_OF_LINE
+================================================================
+To access glNetViz sample pages, run following commands.
+
+    e.g.
+    # cp /etc/httpd/conf/httpd.conf{,.org}
+    # vi /etc/httpd/conf/httpd.conf
+    # diff /etc/httpd/conf/httpd.conf{.org,}
+    588a589,596
+    > Alias /glNetViz/ /var/www/glNetViz/
+    > <Directory "/var/www/glNetViz">
+    >     AllowOverride All
+    >     Options ExecCGI
+    >     Order allow,deny
+    >     Allow from all
+    > </Directory>
+    >
+    796c804
+    < #AddHandler cgi-script .cgi
+    ---
+    > AddHandler cgi-script .cgi
+    # service httpd restart
+
+You can access glNetViz sample pages with a web browser that
+supported WebGL.
+
+    e.g.
+    http://youripaddress/glNetViz/examples/
+================================================================
+END_OF_LINE
+else
+	:
+fi
+exit 0
+
+%postun
+
+# upgrade 
+if [ "$1" -ge 1 ]; then
+	:
+fi
+exit 0
+
+%changelog
+* Tue Aug 20 2013 Yoshi <gpp65536@ybb.ne.jp> - 0.9.2-1
+- Updated to 0.9.2
+
+* Mon Jun 17 2013 Yoshi <gpp65536@ybb.ne.jp> 0.9.1-1
+- Initial Package
+

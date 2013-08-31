@@ -1,0 +1,29 @@
+PROXY_SERVER=
+PROXY_PORT=
+SOURCES=glNetViz-@PACKAGE_VERSION@.tar.gz
+SOURCE_DIR=@PACKAGE_TARNAME@
+RPM_OPTS= --define="_topdir $(PWD)" \
+	--define="_builddir $(PWD)" \
+	--define="_sourcedir $(PWD)" \
+	--define="_specdir $(PWD)" \
+	--define="_prefix /var/www/glNetViz" 
+
+.SUFFIXES: .built .spec
+TARGET= glNetViz.built
+
+all: $(TARGET)
+
+.spec.built: 
+	envval=""
+	@if [ "x$(PROXY_SERVER)" != "x" -a "x$(PROXY_PORT)" != "x" ] ; then \
+	envval="http_proxy=$(PROXY_SERVER):$(PROXY_PORT)"; \
+	fi
+	[ ! -f $(SOURCES) ] && \
+	$$envval wget http://gpp256.hopto.org/releases/$(SOURCES)
+	rpmbuild $(RPM_OPTS) -ba --clean glNetViz.spec
+	@[ $$? -eq 0 ] && touch $(TARGET)
+
+clean:
+	-test -f "$(TARGET)" && rm -f $(TARGET) && \
+	rm -rf BUILDROOT RPMS SRPMS $(SOURCES) $(SOURCE_DIR) || :
+

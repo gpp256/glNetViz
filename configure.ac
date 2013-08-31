@@ -40,6 +40,8 @@ AC_CONFIG_FILES([Makefile
                  lib/cgi/sdn.pm
                  lib/cgi/get_sdnobjs.cgi
                  mkpkgs/freebsd/Makefile
+                 mkpkgs/linux-rpm/Makefile
+                 mkpkgs/linux-rpm/glNetViz.spec
                  tools/Makefile
 ])
 AC_OUTPUT
