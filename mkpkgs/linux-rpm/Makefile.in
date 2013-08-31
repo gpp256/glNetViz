@@ -24,6 +24,6 @@ all: $(TARGET)
 	@[ $$? -eq 0 ] && touch $(TARGET)
 
 clean:
-	-test -f "$(TARGET)" && rm -f $(TARGET) && \
-	rm -rf BUILDROOT RPMS SRPMS $(SOURCES) $(SOURCE_DIR) || :
+	-test -f "$(TARGET)" && rm -f $(TARGET) || :
+	rm -rf BUILDROOT RPMS SRPMS $(SOURCES) $(SOURCE_DIR) 
 
