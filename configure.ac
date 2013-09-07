@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 #AC_PREREQ([2.68])
-AC_INIT([glNetViz], [0.9.2], [@gpp256], [glNetViz-RELEASE_0_9_2])
+AC_INIT([glNetViz], [0.9.3], [@gpp256], [glNetViz-RELEASE_0_9_3])
 AC_CONFIG_SRCDIR([perl_modules/myprimitive.c])
 AC_CONFIG_HEADERS([config.h])
 

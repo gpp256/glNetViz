@@ -34,6 +34,10 @@ override_dh_testdir:
 	rm -f perl_modules/MYMETA.yml
 	rm -f perl_modules/Makefile
 	rm -f perl_modules/Makefile.old
+	rm -f mkpkgs/freebsd/Makefile
+	rm -f mkpkgs/linux-rpm/Makefile
+	rm -f mkpkgs/linux-rpm/glNetViz.spec
+	rm -f mkpkgs/linux-dpkg/Makefile
 	rm -f tools/Makefile
 	dh_testdir
 

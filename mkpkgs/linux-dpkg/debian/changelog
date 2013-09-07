@@ -1,3 +1,11 @@
+glnetviz (0.9.3-1) unstable; urgency=low
+
+  * This release fixes several bugs that have been found in 
+    glNetViz.js, and adds scripts which builds .deb packages, .rpm 
+    packages, and FreeBSD packages.
+
+ -- Yoshi <gpp65536@ybb.ne.jp>  Mon, 09 Sep 2013 00:50:40 +0900
+
 glnetviz (0.9.2-1) unstable; urgency=low
 
   * This release adds three new functions (generateColorTable(), 
