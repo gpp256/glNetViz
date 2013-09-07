@@ -6,9 +6,12 @@ History
    :widths: 20, 20, 60
 
    Version, Date, Description
-   0.9.2, 21 Aug 2013, "This release adds three new functions, generateColorTable(), generateLines(), and putLines() to glNetViz.js, provides glNetViz.min.js and five applied examples."
+   0.9.3, 09 Sep 2013, "[lib] fixed several bugs that have been found in glNetViz.js. |br| [mkpkgs] added scripts which builds .deb packages, .rpm packages, and FreeBSD packages."
+   0.9.2, 21 Aug 2013, "This release adds three new functions (generateColorTable(), generateLines(), and putLines()) to glNetViz.js, and provides glNetViz.min.js and five applied examples."
    0.9.1, 16 Jun 2013, This is the initial public release.
    0.9.0, 07 May 2013, This is the first version.
 
-
+.. |br| raw:: html
+ 
+        <br />
 
