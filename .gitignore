@@ -16,4 +16,5 @@ lib/cgi/get_rotateinfo.pl
 lib/cgi/get_rotation_array.cgi
 lib/cgi/get_sdnobjs.cgi
 lib/cgi/sdn.pm
+mkpkgs/linux-rpm/glNetViz.spec
 Makefile.PL

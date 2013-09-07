@@ -6,6 +6,7 @@ Release:        1
 License:        MIT
 Group:          Applications/Internet
 Source:	        http://gpp256.hopto.org/releases/%{name}-%{version}.tar.gz
+Source1:	%{name}.files
 Prefix:		%{_prefix}
 Requires:	curl
 Requires:	httpd
@@ -43,7 +44,7 @@ fi
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
-%files -f ../%{name}.files
+%files -f %{_sourcedir}/%{name}.files
 %defattr(-,apache,apache)
 
 %post
