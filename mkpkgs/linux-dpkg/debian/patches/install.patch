@@ -1,0 +1,49 @@
+From: Yoshi <gpp65536@ybb.ne.jp>
+Subject: Modifies Makefile.in to change the install directory
+
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -16,17 +16,19 @@
+ 	touch perl_modules/myprimitive.built
+ 
+ install: $(TARGET)
+-	mkdir -p @prefix@/examples @prefix@/lib @prefix@/docs
+-	tar -C examples -cf - . | tar -C @prefix@/examples -xvf - >/dev/null 2>&1
+-	tar -C lib -cf - . | tar -C @prefix@/lib -xvf - >/dev/null 2>&1
+-	tar -C docs -cf - . | tar -C @prefix@/docs -xvf - >/dev/null 2>&1
+-	(cd perl_modules/; make install)
+-	find @prefix@ -type f -exec chmod 644 {} \;
+-	find @prefix@ -name "*.pl" -exec chmod 755 {} \;
+-	find @prefix@ -name "*.cgi" -exec chmod 755 {} \;
+-	find @prefix@ -name "*.in" -exec rm -f {} \;
+-	(cd tools/; make install)
+-	$(INSTALL) -m640 htaccess @prefix@/.htaccess
++	mkdir -p $(DESTDIR)/@prefix@/examples $(DESTDIR)/@prefix@/lib $(DESTDIR)/@prefix@/docs
++	tar -C examples -cf - . | tar -C $(DESTDIR)/@prefix@/examples -xvf - >/dev/null 2>&1
++	tar -C lib -cf - . | tar -C $(DESTDIR)/@prefix@/lib -xvf - >/dev/null 2>&1
++	tar -C docs -cf - . | tar -C $(DESTDIR)/@prefix@/docs -xvf - >/dev/null 2>&1
++	(cd perl_modules/; make install DESTDIR=$(DESTDIR) )
++	find $(DESTDIR)/@prefix@ -type f -exec chmod 644 {} \;
++	find $(DESTDIR)/@prefix@ -name "*.pl" -exec chmod 755 {} \;
++	find $(DESTDIR)/@prefix@ -name "*.cgi" -exec chmod 755 {} \;
++	find $(DESTDIR)/@prefix@ -name "*.in" -exec rm -f {} \;
++	(cd tools/; make install DESTDIR=$(DESTDIR) )
++	$(INSTALL) -m640 htaccess $(DESTDIR)/@prefix@/.htaccess
++	find $(DESTDIR)/@prefix@ -type d -exec chmod 755 {} \;
++	chown -R www-data:www-data $(DESTDIR)/@prefix@
+ 
+ clean:
+ 	-file -f "$(TARGET)" && (cd perl_modules/; make clean; rm -f Makefile.old myprimitive.built)
+--- a/tools/Makefile.in
++++ b/tools/Makefile.in
+@@ -8,8 +8,8 @@
+ all: $(TARGET)
+ 
+ install: $(TARGET)
+-	mkdir -p @prefix@/lib/tools
+-	$(INSTALL) -m755 $(TARGET) @prefix@/lib/tools/
++	mkdir -p $(DESTDIR)/@prefix@/lib/tools
++	$(INSTALL) -m755 $(TARGET) $(DESTDIR)/@prefix@/lib/tools/
+ 
+ earthmap: earthmap.o
+ 	$(CC) -o $@ $? $(LIBS)

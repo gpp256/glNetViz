@@ -3856,7 +3856,7 @@ _ACEOF
 fi
 done
 
-ac_config_files="$ac_config_files Makefile perl_modules/Makefile.PL examples/sample08/get_objs.cgi examples/sample09/get_objpos.cgi examples/sample10/change_objpos.cgi examples/sample10/get_objs.cgi examples/sample10/init.cgi lib/cgi/change_objpos.cgi lib/cgi/get_otherobjs.cgi lib/cgi/get_rotateinfo.pl lib/cgi/get_rotation_array.cgi lib/cgi/sdn.pm lib/cgi/get_sdnobjs.cgi mkpkgs/freebsd/Makefile mkpkgs/linux-rpm/Makefile mkpkgs/linux-rpm/glNetViz.spec tools/Makefile"
+ac_config_files="$ac_config_files Makefile perl_modules/Makefile.PL examples/sample08/get_objs.cgi examples/sample09/get_objpos.cgi examples/sample10/change_objpos.cgi examples/sample10/get_objs.cgi examples/sample10/init.cgi lib/cgi/change_objpos.cgi lib/cgi/get_otherobjs.cgi lib/cgi/get_rotateinfo.pl lib/cgi/get_rotation_array.cgi lib/cgi/sdn.pm lib/cgi/get_sdnobjs.cgi mkpkgs/freebsd/Makefile mkpkgs/linux-rpm/Makefile mkpkgs/linux-rpm/glNetViz.spec mkpkgs/linux-dpkg/Makefile tools/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4565,6 +4565,7 @@ do
     "mkpkgs/freebsd/Makefile") CONFIG_FILES="$CONFIG_FILES mkpkgs/freebsd/Makefile" ;;
     "mkpkgs/linux-rpm/Makefile") CONFIG_FILES="$CONFIG_FILES mkpkgs/linux-rpm/Makefile" ;;
     "mkpkgs/linux-rpm/glNetViz.spec") CONFIG_FILES="$CONFIG_FILES mkpkgs/linux-rpm/glNetViz.spec" ;;
+    "mkpkgs/linux-dpkg/Makefile") CONFIG_FILES="$CONFIG_FILES mkpkgs/linux-dpkg/Makefile" ;;
     "tools/Makefile") CONFIG_FILES="$CONFIG_FILES tools/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

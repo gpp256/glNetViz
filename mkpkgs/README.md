@@ -1,5 +1,5 @@
 
-FreeBSD: Ports
+FreeBSD: ports
 --------------
 
 To create package, run following commands.
@@ -13,7 +13,7 @@ To create package, run following commands.
     # make makesum
     # make package
 
-Linux: RPM
+Linux: rpm
 ----------
 
 To create package, run following commands.
@@ -27,4 +27,11 @@ To create package, run following commands.
 Linux: dpkg
 -----------
 
+To create package, run following commands.
+
+    e.g.
+    $ cd glNetViz/
+    $ ./configure --prefix=/opt/glNetViz
+    $ cd mkpkgs/linux-dpkg
+    $ make
 

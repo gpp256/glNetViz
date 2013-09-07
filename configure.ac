@@ -42,6 +42,7 @@ AC_CONFIG_FILES([Makefile
                  mkpkgs/freebsd/Makefile
                  mkpkgs/linux-rpm/Makefile
                  mkpkgs/linux-rpm/glNetViz.spec
+                 mkpkgs/linux-dpkg/Makefile
                  tools/Makefile
 ])
 AC_OUTPUT

@@ -1,0 +1,13 @@
+glnetviz (0.9.2-1) unstable; urgency=low
+
+  * This release adds three new functions (generateColorTable(), 
+    generateLines(), and putLines()) to glNetViz.js, and provides 
+    glNetViz.min.js and five applied examples.
+
+ -- Yoshi <gpp65536@ybb.ne.jp>  Tue, 20 Aug 2013 23:36:40 +0900
+
+glnetviz (0.9.1-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Yoshi <gpp65536@ybb.ne.jp>  Mon, 17 Jun 2013 00:07:10 +0900
